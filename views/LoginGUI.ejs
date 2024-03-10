@@ -7,30 +7,33 @@
     <link rel="stylesheet" href="css/LoginGUI.css">
 </head>
 <body>
-
-<div class="center-container">
-    <div class="container">
-        <div class="login-container">
-            <h2 class="login-header">Login</h2>
-            <div class="input-container">
-                <input type="text" placeholder="Username">
+<form action = "/LoginGUI" method = "POST">
+    <div class="center-container">
+        <div class="container">
+            <div class="login-container">
+                <h2 class="login-header">Login</h2>
+                <div class="input-container">
+                    <input type="text" name = "Username" placeholder="Username">
+                </div>
+                <div class="input-container">
+                    <input type="password" name = "Password" placeholder="Password">
+                </div>
             </div>
-            <div class="input-container">
-                <input type="password" placeholder="Password">
+            <div class="profile-dropdown">
+                <h2 class="profile-header">Profile</h2>
+                <select class="profile-select" name = "selectedoption">
+                    <% myList.forEach(item => {%>
+                        <option value = "<%= item%>"><%= item%></option>
+                    <% }); %>
+                </select>
             </div>
         </div>
-        <div class="profile-dropdown">
-            <h2 class="profile-header">Profile</h2>
-            <select class="profile-select">
-                <option value="profile1">Profile 1</option>
-                <option value="profile2">Profile 2</option>
-                <option value="profile3">Profile 3</option>
-            </select>
-        </div>
+        <input type="submit" value="Login" class="login-button">
     </div>
-
-    <input type="submit" value="Login" class="login-button">
-</div>
+    <% if(message.length>0) {%>
+        <div><%= message%></div>
+    <%}%>
+</form>
 
 </body>
 </html>

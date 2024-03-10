@@ -16,7 +16,7 @@ create TABLE userProfile(
 	EmployeeID int NOT NULL,
     MainRole varchar(50) NOT NULL,
     Job varchar(60),
-    PRIMARY KEY (CafeID),
+    PRIMARY KEY (EmployeeID),
     CONSTRAINT FK_EmployeeID FOREIGN KEY (EmployeeID)
     REFERENCES userAccount(EmployeeID)
     on update cascade

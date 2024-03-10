@@ -20,3 +20,5 @@ insert into userprofile values ('7','Cafe Staff','Chef');
 insert into userprofile values ('8','Cafe Staff','Waiter');
 insert into userprofile values ('9','Cafe Manager', 'NIL'); 
 insert into userprofile values ('10','Cafe Manager', 'NIL'); 
+
+select distinct mainrole From userprofile;
