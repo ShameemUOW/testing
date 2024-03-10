@@ -22,14 +22,14 @@ app.set('view engine','ejs')
 
 //static files
 app.use(express.static('public'))
-app.use('/css',express.static(__dirname +"public/css"))
-app.use('/js',express.static(__dirname +"public/js"))
-app.use('/img',express.static(__dirname +"public/img"))
+app.use('/css',express.static(__dirname +"public/css/"))
+app.use('/js',express.static(__dirname +"public/js/"))
+app.use('/img',express.static(__dirname +"public/img/"))
 
 app.use(express.json())
 
-app.get('',(req,res) =>{
-    res.render('index')
+app.get('/logingui', (req,res) =>{
+    res.render('LoginGUI',{message: req.flash('message')});
 })
 
 //Listening to port 3000
