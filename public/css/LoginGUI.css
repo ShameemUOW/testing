@@ -9,19 +9,35 @@ body {
     height: 100vh;
 }
 
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.login-container {
+.login-container,
+.profile-dropdown {
+    width: 250px; /* Adjusted width to be the same */
+    height: 250px;
     border-radius: 20px;
     background-color: #ffffff;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.login-container {
+    margin-right: 20px;
+}
+
+.profile-header,
 .login-header {
     text-align: center;
     font-size: 24px;
@@ -35,14 +51,14 @@ body {
 input[type="text"],
 input[type="password"],
 select {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     border-radius: 10px;
     border: 1px solid #ccc;
     outline: none;
 }
 
-input[type="submit"] {
+.login-button {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -50,17 +66,8 @@ input[type="submit"] {
     padding: 15px 20px;
     cursor: pointer;
     font-size: 16px;
-    width: 100%;
 }
 
-input[type="submit"]:hover {
+.login-button:hover {
     background-color: #45a049;
-}
-
-.profile-dropdown {
-    border-radius: 20px;
-    background-color: #ffffff;
-    padding: 20px;
-    margin-left: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
