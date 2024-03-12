@@ -99,6 +99,10 @@ app.post("/logingui", (req,res)=>{
             {
                 res.redirect('/adminpage')
             }
+            else if(req.body.selectedoption == "Cafe Manager")
+            {
+                res.redirect('/managerpage')
+            }
         }
         else{
             loggedin.length = 0
@@ -113,32 +117,7 @@ app.post("/logingui", (req,res)=>{
             {
                 res.redirect('/adminpage')
             }
-            
-        }
-        if(loggedin.length === 0)
-        {
-            var pythonProcess2 = spawn('python',["./GetManagerController.py",myJSON2])
-                pythonProcess2.stdout.on('data',(data)=>{
-                var alldata2 = JSON.parse(data.toString())
-                myJSON["employeeid"] = alldata2[0][0]   
-            })
-            loggedin.push(myJSON)
-            req.flash('message','Enter Details')
-            if(req.body.selectedoption == "Cafe Manager")
-            {
-                res.redirect('/managerpage')
-            }
-        }
-        else{
-            loggedin.length = 0
-            var pythonProcess2 = spawn('python',["./GetManagerIDController.py",myJSON2])
-                pythonProcess2.stdout.on('data',(data)=>{
-                var alldata2 = JSON.parse(data.toString())
-                myJSON["employeeid"] = alldata2[0][0]   
-            })
-            loggedin.push(myJSON)
-            req.flash('message','Enter Details')
-            if(req.body.selectedoption == "Cafe Manager")
+            else if(req.body.selectedoption == "Cafe Manager")
             {
                 res.redirect('/managerpage')
             }
