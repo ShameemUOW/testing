@@ -37,6 +37,16 @@ app.get('/managerpage', (req,res) =>{
     res.render('ManagerPage');
 })
 
+app.get('/manager_updateprofile', (req, res) => {
+    // Render the UpdateManagerAccount.ejs page
+    res.render('UpdateManagerAccount');
+});
+
+app.get('/manager_createws', (req, res) => {
+    // Render the UpdateManagerAccount.ejs page
+    res.render('CreateWorkShift');
+});
+
 
 app.get('/logingui', (req,res) =>{
     var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])

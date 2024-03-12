@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/UpdateManagerAccount.css">
+</head>
+<body>
+    <div id="managerpage">
+        <h1>Welcome to Manager Dashboard</h1>
+    </div>
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+        <a href="#" onclick="document.location='/logingui'" id="logout">Logout</a>
+        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+    </div>
+    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
+    <script>
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+        }
+
+        function goBack() {
+            // Add functionality to go back
+            window.history.back();
+        }
+
+    </script>
+    <div id="options">
+        <h1>Update Manager Account</h1><br>
+
+        <div class="container">
+            <form action="" method="post">
+                <fieldset>
+                    <label for="userID">User ID:</label><br>
+                    <input type="text" id="userID" name="userID"><br><br>
+                    <label for="typeVariable">Type Variable:</label><br>
+                    <input type="text" id="typeVariable" name="typeVariable"><br><br>
+                    <label for="category">Select Category to Update:</label><br>
+                    <select id="category" name="category">
+                        <option value="option1">Option 1</option>
+                        <option value="option2">Option 2</option>
+                        <option value="option3">Option 3</option>
+                    </select><br><br>
+                    <button type="submit" name="update">Update</button>
+                    <button type="button" name="back" onclick="goBack()">Back</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
