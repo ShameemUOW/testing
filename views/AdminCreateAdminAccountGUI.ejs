@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/Admincreatetable.css">
+    </head>
+    <body>
+        <div id="adminpage">
+            <h1>CAFE22</h1>
+        </div>
+
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+            <a href="#" onclick="document.location='/logingui'">Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image1"></button>
+        <script>
+            function openNav() {
+              document.getElementById("mySidepanel").style.width = "250px";
+            }
+            
+            function closeNav() {
+              document.getElementById("mySidepanel").style.width = "0";
+            }
+        </script>
+
+        <div id="backbutton">
+            <button id="back" onclick="document.location='/createuseraccount'"><b>&laquo;back</b></button>
+        </div>
+        <form action = "/createuseraccount" method = "POST">
+            <div id="options">
+                <table class = "creating">
+                    <h1>Create Admin Account</h1><br>
+                    <tr>
+                        <td><input id="username" class = "textbox" type="text" name="username" placeholder="Enter Username"></td>
+                        <td><input id="password" class = "textbox" type="text" name="password" placeholder="Enter password"></td>
+                        <td><input id="MaxHours" class = "textbox" type="text" name="MaxHours" placeholder="Enter Max Hours"></td>
+                    </tr>
+                    <tr>
+                        <td><input id="name" class = "textbox" type="text" name="name" placeholder="Enter Full Name"></td>
+                        <td><input id="Address" class = "textbox" type="text" name="Address" placeholder="Enter Address"></td>
+                    </tr>
+                    <tr>
+                        <td><input id="email" class = "textbox" type="text" name="email" placeholder="Enter Email"></td>
+                        <td><input id="Number" class = "textbox" type="text" name="Number" placeholder="Enter Number"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button class = "rounded-button" id="button"><b>Create</b></button></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </body>
+</html>

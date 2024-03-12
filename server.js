@@ -148,6 +148,18 @@ app.post("/logingui", (req,res)=>{
 })
 })
 
+app.get('/createuserorprofile', (req,res) =>{
+    res.render('CreateUserOrProfile');
+})
+
+app.get('/createadminaccount', (req,res) =>{
+    res.render('AdminCreateAdminAccountGUI');
+})
+
+app.get('/chooseaccount', (req,res) =>{
+    res.render('ChooseAccount');
+})
+
 
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))
