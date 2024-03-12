@@ -33,17 +33,17 @@
         <h1>Update Manager Account</h1><br>
 
         <div class="container">
-            <form action="" method="post">
+            <form action="/updatemanageraccount" method="post">
                 <fieldset>
-                    <label for="userID">User ID:</label><br>
-                    <input type="text" id="userID" name="userID"><br><br>
                     <label for="typeVariable">Type Variable:</label><br>
                     <input type="text" id="typeVariable" name="typeVariable"><br><br>
                     <label for="category">Select Category to Update:</label><br>
                     <select id="category" name="category">
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
+                        <option value="option1">Fullname</option>
+                        <option value="option2">Password</option>
+                        <option value="option3">Phone Number</option>
+                        <option value="option4">Email</option>
+                        <option value="option5">Max Hour</option>
                     </select><br><br>
                     <button type="submit" name="update">Update</button>
                     <button type="button" name="back" onclick="goBack()">Back</button>

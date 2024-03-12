@@ -169,6 +169,40 @@ app.get('/chooseaccount', (req,res) =>{
     res.render('ChooseAccount');
 })
 
+//UpdateManagerAccount
+app.get('/updatemanageraccount', (req,res) =>{
+    res.render('UpdateManagerAccount');
+})
+
+app.post('/updatemanageraccount', (req,res) =>{
+    const myJSON = {
+        fullname : req.body.name,
+        email : req.body.email,
+        phonenumber : req.body.Number,
+        username : req.body.username,
+        password : req.body.password,
+        Maxhrs : req.body.MaxHours
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON)
+    console.log(myJSON2)
+    var pythonProcess = spawn('python',["./UpdateManagerAccountController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message15','Unable to update account. Double check your values entered')
+        res.redirect('/UpdateManagerAccount')
+    }
+    else
+    {
+        req.flash('message15','Update Account successful')
+        res.redirect('/UpdateManagerAccount')
+    }
+})
+})
+
 
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))
