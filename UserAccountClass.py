@@ -38,3 +38,10 @@ class UserAccount:
                 print(result)
         except mysql.connector.Error as error:
             print ("Failed")
+    def createAdminAccount(self, fullname, address, email, mobile, username,password, MaxHours):
+        try:
+            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Admin')".format(fullname, address, email, mobile, username,password,MaxHours))
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")
