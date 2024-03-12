@@ -26,3 +26,15 @@ class UserAccount:
                 return True
             else:
                 return False
+    def getEmployeeID(self,username,password,mainrole):
+        try:
+            mycursor.execute("select employeeid from useraccount natural join userprofile where username = '{}' and pass = '{}' and mainrole = '{}'".format(username,password, mainrole))
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                result = json.dumps(data)
+                print(result)
+        except mysql.connector.Error as error:
+            print ("Failed")

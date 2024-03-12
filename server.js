@@ -29,6 +29,10 @@ app.use('/img',express.static(__dirname +"public/img/"))
 app.use(express.json())
 const loggedin = []
 
+app.get('/adminpage', (req,res) =>{
+    res.render('AdminPage');
+})
+
 
 app.get('/logingui', (req,res) =>{
     var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])
@@ -68,8 +72,35 @@ app.post("/logingui", (req,res)=>{
     }
     else
     {
-        req.flash('message','Correct User')
-        res.redirect('/logingui')
+        if(loggedin.length === 0)
+        {
+            var pythonProcess2 = spawn('python',["./GetEmployeeIDController.py",myJSON2])
+                pythonProcess2.stdout.on('data',(data)=>{
+                var alldata2 = JSON.parse(data.toString())
+                myJSON["employeeid"] = alldata2[0][0]   
+            })
+            loggedin.push(myJSON)
+            req.flash('message','Enter Details')
+            if(req.body.selectedoption == "System Admin")
+            {
+                res.redirect('/adminpage')
+            }
+        }
+        else{
+            loggedin.length = 0
+            var pythonProcess2 = spawn('python',["./GetEmployeeIDController.py",myJSON2])
+                pythonProcess2.stdout.on('data',(data)=>{
+                var alldata2 = JSON.parse(data.toString())
+                myJSON["employeeid"] = alldata2[0][0]   
+            })
+            loggedin.push(myJSON)
+            req.flash('message','Enter Details')
+            if(req.body.selectedoption == "System Admin")
+            {
+                res.redirect('/adminpage')
+            }
+            
+        }
     }
 })
 })
