@@ -33,6 +33,10 @@ app.get('/adminpage', (req,res) =>{
     res.render('AdminPage');
 })
 
+app.get('/managerpage', (req,res) =>{
+    res.render('ManagerPage');
+})
+
 
 app.get('/logingui', (req,res) =>{
     var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])
@@ -98,6 +102,35 @@ app.post("/logingui", (req,res)=>{
             if(req.body.selectedoption == "System Admin")
             {
                 res.redirect('/adminpage')
+            }
+            
+        }
+        if(loggedin.length === 0)
+        {
+            var pythonProcess2 = spawn('python',["./GetManagerController.py",myJSON2])
+                pythonProcess2.stdout.on('data',(data)=>{
+                var alldata2 = JSON.parse(data.toString())
+                myJSON["employeeid"] = alldata2[0][0]   
+            })
+            loggedin.push(myJSON)
+            req.flash('message','Enter Details')
+            if(req.body.selectedoption == "Cafe Manager")
+            {
+                res.redirect('/managerpage')
+            }
+        }
+        else{
+            loggedin.length = 0
+            var pythonProcess2 = spawn('python',["./GetManagerIDController.py",myJSON2])
+                pythonProcess2.stdout.on('data',(data)=>{
+                var alldata2 = JSON.parse(data.toString())
+                myJSON["employeeid"] = alldata2[0][0]   
+            })
+            loggedin.push(myJSON)
+            req.flash('message','Enter Details')
+            if(req.body.selectedoption == "Cafe Manager")
+            {
+                res.redirect('/managerpage')
             }
             
         }

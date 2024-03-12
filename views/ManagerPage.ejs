@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/Manager.css">
+    </head>
+    <body>
+        <div id="managerpage">
+            <h1>Welcome to Manager Dashboard</h1>
+        </div>
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+            <a href="#" onclick="document.location='/logingui'" id = "logout">Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()" id ="settingsbtn"><img src="img/settings.png" class="image1"></button>
+        <script>
+            function openNav() {
+              document.getElementById("mySidepanel").style.width = "250px";
+            }
+            
+            function closeNav() {
+              document.getElementById("mySidepanel").style.width = "0";
+            }
+        </script>
+        <div id="options">
+            <h1>What would you like to do?</h1><br>
+
+            <div class="container">
+                <table>
+                    <td><button id="manager_updatebutton" onclick="document.location='/manager_updateprofile'"><img src="img/update.png" class="image"><h3>Update profile</h3></button></td>
+                    <td><button id="manager_createwsbutton" onclick="document.location='/manager_createws'"><img src="img/create.png" class="image"><h3>Create WorkShift</h3></button></td>
+                    <td><button id="manager_updatewsbutton" onclick="document.location='/manager_updatews'"><img src="img/update.png" class="image"><h3>Update WorkShift</h3></button></td>
+                    <td><button id="manager_deletewsbutton" onclick="document.location='/manager_deletews'"><img src="img/delete.png" class="image"><h3>Delete WorkShift</h3></button></td>
+                    <td><button id="manager_viewallbutton" onclick="document.location='/manager_viewws'"><img src="img/view_all.png" class="image"><h3>View Workshift</h3></button></td>
+                    <td><button id="manager_viewempleavebutton" onclick="document.location='/manager_viewempleave'"><img src="img/view_all.png" class="image"><h3>Employee Leave</h3></button></td>
+                    <td><button id="manager_viewshiftprefbutton" onclick="document.location='/manager_viewshiftpref'"><img src="img/view_all.png" class="image"><h3>Shift Preference</h3></button></td>
+                    <td><button id="manager_viewattendancebutton" onclick="document.location='/manager_viewattendance'"><img src="img/view_all.png" class="image"><h3>Attendence</h3></button></td>              
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
