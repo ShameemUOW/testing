@@ -47,7 +47,14 @@ class UserAccount:
             print("Failed")
     def createEmployeeAccount(self, fullname, address, email, mobile, username,password, MaxHours):
         try:
-            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Admin')".format(fullname, address, email, mobile, username,password,MaxHours))
+            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Employee')".format(fullname, address, email, mobile, username,password,MaxHours))
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")
+    def createManagerAccount(self, fullname, address, email, mobile, username,password, MaxHours):
+        try:
+            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Manager')".format(fullname, address, email, mobile, username,password,MaxHours))
             mydb.commit()
             print("Success")
         except mysql.connector.Error as error:

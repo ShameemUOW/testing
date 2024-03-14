@@ -203,6 +203,40 @@ app.post('/createemployeeaccount', (req,res) =>{
 })
 })
 
+app.get('/createmanageraccount', (req,res) =>{
+    res.render('ManagerCreateManagerAccountGUI');
+})
+
+app.post('/createmanageraccount', (req,res) =>{
+    const myJSON = {
+        fullname : req.body.name,
+        address : req.body.Address,
+        email : req.body.email,
+        phonenumber : req.body.Number,
+        username : req.body.username,
+        password : req.body.password,
+        Maxhrs : req.body.MaxHours
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON)
+    console.log(myJSON2)
+    var pythonProcess = spawn('python',["./ManagerCreateManagerAccountController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message15','Unable to create User. Double check your values entered')
+        res.redirect('/createmanageraccount')
+    }
+    else
+    {
+        req.flash('message15','User Account Created')
+        res.redirect('/createmanageraccount')
+    }
+})
+})
+
 app.get('/chooseaccount', (req,res) =>{
     res.render('ChooseAccount');
 })
