@@ -11,13 +11,13 @@ insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Pl
 insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Noa','America 7','Noa@gmail.com','23121234','noa','noa22','40','Manager');
 
 insert into userprofile values ('1','System Admin','NIL');
-insert into userprofile values ('2','Cafe Staff','Waiter');
+insert into userprofile values ('2','Cafe Employee','Waiter');
 insert into userprofile values ('3','Cafe Manager','NIL');
 insert into userprofile values ('4','Cafe Owner','NIL');
 insert into userprofile values ('5','Cafe Owner','NIL');
-insert into userprofile values ('6','Cafe Staff','Cashier');
-insert into userprofile values ('7','Cafe Staff','Chef');
-insert into userprofile values ('8','Cafe Staff','Waiter');
+insert into userprofile values ('6','Cafe Employee','Cashier');
+insert into userprofile values ('7','Cafe Employee','Chef');
+insert into userprofile values ('8','Cafe Employee','Waiter');
 insert into userprofile values ('9','Cafe Manager', 'NIL'); 
 insert into userprofile values ('10','Cafe Manager', 'NIL'); 
 

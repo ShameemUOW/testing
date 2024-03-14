@@ -4,6 +4,7 @@ const bodyParser = require("body-parser")
 var session = require('express-session')
 var flush = require('connect-flash')
 const spawn = require("child_process").spawn
+var userprof = ''
 
 const app = express()
 const port = 3000
@@ -29,16 +30,8 @@ app.use('/img',express.static(__dirname +"public/img/"))
 app.use(express.json())
 const loggedin = []
 
-app.get('/adminpage', (req,res) =>{
-    res.render('AdminPage');
-})
-
-app.get('/employeepage', (req,res) =>{
-    res.render('EmployeePage');
-})
-
-app.get('/managerpage', (req,res) =>{
-    res.render('ManagerPage');
+app.get('/homepage', (req,res) =>{
+    res.render(userprof + 'Page');
 })
 
 app.get('/manager_updateprofile', (req, res) => {
@@ -51,6 +44,9 @@ app.get('/manager_createws', (req, res) => {
     res.render('CreateWorkShift');
 });
 
+app.get('/', (req, res) => {
+    res.redirect('/logingui')
+})
 
 app.get('/logingui', (req,res) =>{
     var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])
@@ -90,26 +86,10 @@ app.post("/logingui", (req,res)=>{
     }
     else
     {
-        if(loggedin.length === 0)
-        {
-            var pythonProcess2 = spawn('python',["./GetEmployeeIDController.py",myJSON2])
-                pythonProcess2.stdout.on('data',(data)=>{
-                var alldata2 = JSON.parse(data.toString())
-                myJSON["employeeid"] = alldata2[0][0]   
-            })
-            loggedin.push(myJSON)
-            req.flash('message','Enter Details')
-            if(req.body.selectedoption == "System Admin")
-            {
-                res.redirect('/adminpage')
-            }
-            else if(req.body.selectedoption == "Cafe Manager")
-            {
-                res.redirect('/managerpage')
-            }
-        }
-        else{
+        if(loggedin.length != 0){
             loggedin.length = 0
+        }
+        if(loggedin.length === 0){
             var pythonProcess2 = spawn('python',["./GetEmployeeIDController.py",myJSON2])
                 pythonProcess2.stdout.on('data',(data)=>{
                 var alldata2 = JSON.parse(data.toString())
@@ -117,15 +97,10 @@ app.post("/logingui", (req,res)=>{
             })
             loggedin.push(myJSON)
             req.flash('message','Enter Details')
-            if(req.body.selectedoption == "System Admin")
-            {
-                res.redirect('/adminpage')
-            }
-            else if(req.body.selectedoption == "Cafe Manager")
-            {
-                res.redirect('/managerpage')
-            }
-            
+            const parseprof = req.body.selectedoption.split(' ')
+            userprof = parseprof[1]
+            console.log(userprof)
+            res.redirect('/homepage')    
         }
     }
 })
