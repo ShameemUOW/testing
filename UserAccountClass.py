@@ -45,6 +45,13 @@ class UserAccount:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def createEmployeeAccount(self, fullname, address, email, mobile, username,password, MaxHours):
+        try:
+            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Admin')".format(fullname, address, email, mobile, username,password,MaxHours))
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")
     def updateManagerAccount(self, fullname, email, password, mobile, username):
         try:
             mycursor.execute("UPDATE useraccount SET fullname = '{}', email = '{}', pass = '{}', mobile = '{}' WHERE username = '{}'".format(fullname,email,password,mobile,username))

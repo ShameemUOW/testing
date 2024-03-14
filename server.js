@@ -33,6 +33,10 @@ app.get('/adminpage', (req,res) =>{
     res.render('AdminPage');
 })
 
+app.get('/employeepage', (req,res) =>{
+    res.render('EmployeePage');
+})
+
 app.get('/managerpage', (req,res) =>{
     res.render('ManagerPage');
 })
@@ -161,6 +165,40 @@ app.post('/createadminaccount', (req,res) =>{
     {
         req.flash('message15','User Account Created')
         res.redirect('/createadminaccount')
+    }
+})
+})
+
+app.get('/createemployeeaccount', (req,res) =>{
+    res.render('EmployeeCreateEmployeeAccountGUI');
+})
+
+app.post('/createemployeeaccount', (req,res) =>{
+    const myJSON = {
+        fullname : req.body.name,
+        address : req.body.Address,
+        email : req.body.email,
+        phonenumber : req.body.Number,
+        username : req.body.username,
+        password : req.body.password,
+        Maxhrs : req.body.MaxHours
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON)
+    console.log(myJSON2)
+    var pythonProcess = spawn('python',["./EmployeeCreateEmployeeAccountController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message15','Unable to create User. Double check your values entered')
+        res.redirect('/createemployeeaccount')
+    }
+    else
+    {
+        req.flash('message15','User Account Created')
+        res.redirect('/createemployeeaccount')
     }
 })
 })
