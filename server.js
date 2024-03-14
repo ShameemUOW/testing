@@ -145,7 +145,7 @@ app.post('/createadminaccount', (req,res) =>{
 })
 
 app.get('/createemployeeaccount', (req,res) =>{
-    res.render('EmployeeCreateEmployeeAccountGUI');
+    res.render('AdminCreateEmployeeAccountGUI');
 })
 
 app.post('/createemployeeaccount', (req,res) =>{
@@ -161,7 +161,7 @@ app.post('/createemployeeaccount', (req,res) =>{
     const myJSON2 = JSON.stringify(myJSON)
     console.log(myJSON)
     console.log(myJSON2)
-    var pythonProcess = spawn('python',["./EmployeeCreateEmployeeAccountController.py",myJSON2])
+    var pythonProcess = spawn('python',["./AdminCreateEmployeeAccountController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
@@ -179,7 +179,7 @@ app.post('/createemployeeaccount', (req,res) =>{
 })
 
 app.get('/createmanageraccount', (req,res) =>{
-    res.render('ManagerCreateManagerAccountGUI');
+    res.render('AdminCreateManagerAccountGUI');
 })
 
 app.post('/createmanageraccount', (req,res) =>{
@@ -195,7 +195,7 @@ app.post('/createmanageraccount', (req,res) =>{
     const myJSON2 = JSON.stringify(myJSON)
     console.log(myJSON)
     console.log(myJSON2)
-    var pythonProcess = spawn('python',["./ManagerCreateManagerAccountController.py",myJSON2])
+    var pythonProcess = spawn('python',["./AdminCreateManagerAccountController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)

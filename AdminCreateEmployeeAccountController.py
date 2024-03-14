@@ -13,9 +13,9 @@ password = x["password"]
 max = x["Maxhrs"]
 
 
-class EmployeeCreateEmployeeAccountController:
+class AdminCreateEmployeeAccountController:
     def createemployeeaccount(fullname,address,email,phonenumber,username,password,max):
         createemployee = UserAccountClass.UserAccount()
         createemployee.createEmployeeAccount(fullname,address,email,phonenumber,username,password,max)
 
-createemployee = EmployeeCreateEmployeeAccountController.createemployeeaccount(fullname,address,email,phonenumber,username,password,max)
+createemployee = AdminCreateEmployeeAccountController.createemployeeaccount(fullname,address,email,phonenumber,username,password,max)

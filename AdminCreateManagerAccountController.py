@@ -12,9 +12,9 @@ username = x["username"]
 password = x["password"]
 max = x["Maxhrs"]
 
-class ManagerCreateManagerAccountController:
+class AdminCreateManagerAccountController:
     def createmanageraccount(fullname,address,email,phonenumber,username,password,max):
         createmanager = UserAccountClass.UserAccount()
         createmanager.createManagerAccount(fullname,address,email,phonenumber,username,password,max)
 
-createmanager = ManagerCreateManagerAccountController.createmanageraccount(fullname,address,email,phonenumber,username,password,max)
+createmanager = AdminCreateManagerAccountController.createmanageraccount(fullname,address,email,phonenumber,username,password,max)
