@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/Managercreatetable.css">
+    </head>
+    <body>
+        <div id="managerpage">
+            <h1>SER</h1>
+        </div>
+
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+            <a href="#" onclick="document.location='/logingui'">Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image1"></button>
+        <script>
+            function openNav() {
+              document.getElementById("mySidepanel").style.width = "250px";
+            }
+            
+            function closeNav() {
+              document.getElementById("mySidepanel").style.width = "0";
+            }
+        </script>
+
+        <div id="backbutton">
+            <button id="back" onclick="document.location='/createuseraccount'"><b>&laquo;back</b></button>
+        </div>
+        <form action = "/adminupdatemanageraccount" method = "POST">
+            <div id="options">
+                <table class = "creating">
+                    <h1>Update Manager Account</h1><br>
+                    <tr>
+                        <td></td>
+                        <td><input id="employeeid" class = "textbox" type="text" name="employeeid" placeholder="Enter Employee ID"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><select class="profile-select" name = "selectedoption">
+                            <% myList.forEach(item => {%>
+                                <option value = "<%= item%>"><%= item%></option>
+                            <% }); %>
+                        </select></td>
+                        <td><input id="value" class = "textbox" type="text" name="value" placeholder="Enter New Value"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button class = "rounded-button" id="button"><b>Update</b></button></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <% if(message.length>0) {%>
+                <div><%= message%></div>
+            <%}%>
+        </form>
+    </body>
+</html>

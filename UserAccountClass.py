@@ -59,6 +59,38 @@ class UserAccount:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def AdminUpdateAdminAccount(self,employeeid,selectedoption,value):
+        try:
+            mycursor.execute("select mainrole from userprofile where employeeid = '{}'".format(employeeid))
+            data = mycursor.fetchone()
+            result = data[0]
+            if (result == 'Admin'):
+                try:
+                    mycursor.execute("update useraccount SET {} = '{}' where employeeid = '{}'".format(selectedoption,value,employeeid))
+                    mydb.commit()
+                    print("Success")
+                except mysql.connector.Error as error:
+                    print("Failed")
+            else:
+                print("Failed")
+        except mysql.connector.Error as error:
+            print("Failed")
+    def AdminUpdateManagerAccount(self,employeeid,selectedoption,value):
+        try:
+            mycursor.execute("select mainrole from userprofile where employeeid = '{}'".format(employeeid))
+            data = mycursor.fetchone()
+            result = data[0]
+            if (result == 'Manager'):
+                try:
+                    mycursor.execute("update useraccount SET {} = '{}' where employeeid = '{}'".format(selectedoption,value,employeeid))
+                    mydb.commit()
+                    print("Success")
+                except mysql.connector.Error as error:
+                    print("Failed")
+            else:
+                print("Failed")
+        except mysql.connector.Error as error:
+            print("Failed")
     def updateManagerAccount(self, fullname, email, password, mobile, username):
         try:
             mycursor.execute("UPDATE useraccount SET fullname = '{}', email = '{}', pass = '{}', mobile = '{}' WHERE username = '{}'".format(fullname,email,password,mobile,username))
@@ -66,3 +98,9 @@ class UserAccount:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def grabUserAccountTableColumns(self):
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('EmployeeID')")
+        data = mycursor.fetchall()
+        result = json.dumps(data)
+        print(result)
+
