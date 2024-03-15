@@ -372,13 +372,55 @@ app.post('/adminupdatemanageraccount', (req,res) =>{
     console.log(bool)
     if (bool.trim() == "Failed")
     {
-        req.flash('message','Unable to update Admin Account. Double check your values entered')
+        req.flash('message','Unable to update Manager Account. Double check your values entered')
         res.redirect('/adminupdatemanageraccount')
     }
     else
     {
-        req.flash('message','Admin Account Updated')
+        req.flash('message','Manager Account Updated')
         res.redirect('/adminupdatemanageraccount')
+    }
+})
+})
+
+app.get('/adminupdateemployeeaccount', (req,res) =>{
+    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('AdminUpdateEmployeeAccountGUI',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/adminupdateemployeeaccount', (req,res) =>{
+    const myJSON = {
+        employeeid : req.body.employeeid,
+        selectedoption : req.body.selectedoption,
+        value : req.body.value
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON2)
+    var pythonProcess = spawn('python',["./AdminUpdateEmployeeAccountController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message','Unable to update Employee Account. Double check your values entered')
+        res.redirect('/adminupdateemployeeaccount')
+    }
+    else
+    {
+        req.flash('message','Employee Account Updated')
+        res.redirect('/adminupdateemployeeaccount')
     }
 })
 })
