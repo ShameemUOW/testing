@@ -646,5 +646,46 @@ app.post('/updatemanageraccount', (req,res) =>{
 })
 
 
+
+// CreateWorkShift route
+app.get('/CreateWorkShift', (req, res) => {
+    var pythonProcess = spawn('python', ["./CreatewsController.py"])
+    pythonProcess.stdout.on('data', (data) => {
+        try {
+            var myList = JSON.parse(data.toString())
+            res.render('CreateWorkShift', { myList, message: req.flash('message') })
+        } catch (error) {
+            console.error('Error parsing JSON data:', error)
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data', (data) => {
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/CreateWorkShift', (req, res) => {
+    const myJSON = {
+        date: req.body.date,
+        shift: req.body.shift,
+        start: req.body.start,
+        end: req.body.end
+    };
+    const myJSON2 = JSON.stringify(myJSON);
+    var pythonProcess = spawn('python', ["./CreatewsController.py", myJSON2]); // Pass JSON data as argument
+    pythonProcess.stdout.on('data', (data) => {
+        var bool = data.toString().trim();
+        console.log(bool);
+        if (bool == "Failed") {
+            req.flash('message', 'Unable to create workshift. Double check your values entered');
+        } else {
+            req.flash('message', 'Workshift Created');
+        }
+        res.redirect('/CreateWorkShift');
+    });
+});
+
+
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))

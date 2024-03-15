@@ -25,4 +25,13 @@ create TABLE userProfile(
     on delete cascade
 );
 
+
+CREATE TABLE workshift (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    shift VARCHAR(255) NOT NULL,
+    start TIME NOT NULL,
+    end TIME NOT NULL
+);
+
 drop database FYP;
