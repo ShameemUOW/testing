@@ -38,6 +38,8 @@ class UserProfile:
             try:
                 mycursor.execute("update userprofile SET mainrole = '{}' where employeeid = '{}'".format(role,employeeid))
                 mydb.commit()
+                mycursor.execute("update useraccount SET placeholder = '{}' where employeeid = '{}'".format(role,employeeid))
+                mydb.commit()
                 print("Success")
             except mysql.connector.Error as error:
                 print("Failed")
