@@ -16,8 +16,8 @@ end = z["end"]
 
 class CreatewsController:
     @staticmethod
-    def createworkshift(date, shift, start, end):
+    def create_workshift(date, shift, start, end):
         createws = WorkShiftClass.WorkShift()
         createws.createws(date, shift, start, end)
 
-CreatewsController.createworkshift(date, shift, start, end)
+CreatewsController.create_workshift(date, shift, start, end)

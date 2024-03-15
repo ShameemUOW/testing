@@ -17,10 +17,8 @@ class WorkShift:
 
     def createws(self, date, shift, start, end):
         try:
-            sql = "INSERT INTO workshift (Date, shift, start, end) VALUES (%s, %s, %s, %s)"
-            val = (date, shift, start, end)
-            mycursor.execute(sql, val)
+            mycursor.execute("INSERT INTO  workshift (date, shift, start, end) VALUES ('{}','{}', '{}','{}')".format(date, shift, start, end))
             mydb.commit()
             print("Success")
         except mysql.connector.Error as error:
-            print("Failed:", error)
+            print("Failed")
