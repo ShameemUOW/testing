@@ -33,6 +33,22 @@ class UserProfile:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def updateUserProfile(self,employeeid,selectedoption,role):
+        if (selectedoption == "Profile"):
+            try:
+                mycursor.execute("update userprofile SET mainrole = '{}' where employeeid = '{}'".format(role,employeeid))
+                mydb.commit()
+                print("Success")
+            except mysql.connector.Error as error:
+                print("Failed")
+        elif (selectedoption == "Role"):
+            try:
+                mycursor.execute("update userprofile SET job = '{}' where employeeid = '{}'".format(role,employeeid))
+                mydb.commit()
+                print("Success")
+            except mysql.connector.Error as error:
+                print("Failed")
+
 
             
 
