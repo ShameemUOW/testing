@@ -11,6 +11,8 @@ insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Pl
 insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Noa','America 7','Noa@gmail.com','23121234','noa','noa22','40','Manager');
 insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Noas','America 7','Noa@gmail.com','23121234','noas','noas22','40','Employee');
 
+
+
 insert into userprofile values ('1','Admin','NIL');
 insert into userprofile values ('2','Employee','Waiter');
 insert into userprofile values ('3','Manager','NIL');

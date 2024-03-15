@@ -198,6 +198,42 @@ class UserAccount:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def searchAdminAccount(self, selectedoption,value):
+        try:
+            mycursor.execute("select Fullname,Address,Email,Mobile,Username,pass,MaxHours from useraccount where {} = '{}' and placeholder = 'Admin'".format(selectedoption,value))
+            searchingdata = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                searchingresult = json.dumps(searchingdata)
+                print(searchingresult)
+        except mysql.connector.Error as error:
+            print ("Failed")
+    def searchManagerAccount(self, selectedoption,value):
+        try:
+            mycursor.execute("select Fullname,Address,Email,Mobile,Username,pass,MaxHours from useraccount where {} = '{}' and placeholder = 'Manager'".format(selectedoption,value))
+            searchingdata = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                searchingresult = json.dumps(searchingdata)
+                print(searchingresult)
+        except mysql.connector.Error as error:
+            print ("Failed")
+    def searchEmployeeAccount(self, selectedoption,value):
+        try:
+            mycursor.execute("select Fullname,Address,Email,Mobile,Username,pass,MaxHours from useraccount where {} = '{}' and placeholder = 'Employee'".format(selectedoption,value))
+            searchingdata = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                searchingresult = json.dumps(searchingdata)
+                print(searchingresult)
+        except mysql.connector.Error as error:
+            print ("Failed")
     def grabUserAccountTableColumns(self):
         mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('EmployeeID')")
         data = mycursor.fetchall()
