@@ -107,6 +107,54 @@ class UserAccount:
                 print("Failed")
         except mysql.connector.Error as error:
             print("Failed")
+    def DeleteAdminAccount(self,employeeid):
+        try:
+            mycursor.execute("select mainrole from userprofile where employeeid = '{}'".format(employeeid))
+            data = mycursor.fetchone()
+            result = data[0]
+            if (result == 'Admin'):
+                try:
+                    mycursor.execute("delete from useraccount where employeeid = '{}'".format(employeeid))
+                    mydb.commit()
+                    print("Success")
+                except mysql.connector.Error as error:
+                    print("Failed")
+            else:
+                print("Failed")
+        except mysql.connector.Error as error:
+            print("Failed")
+    def DeleteManagerAccount(self,employeeid):
+        try:
+            mycursor.execute("select mainrole from userprofile where employeeid = '{}'".format(employeeid))
+            data = mycursor.fetchone()
+            result = data[0]
+            if (result == 'Manager'):
+                try:
+                    mycursor.execute("delete from useraccount where employeeid = '{}'".format(employeeid))
+                    mydb.commit()
+                    print("Success")
+                except mysql.connector.Error as error:
+                    print("Failed")
+            else:
+                print("Failed")
+        except mysql.connector.Error as error:
+            print("Failed")
+    def DeleteEmployeeAccount(self,employeeid):
+        try:
+            mycursor.execute("select mainrole from userprofile where employeeid = '{}'".format(employeeid))
+            data = mycursor.fetchone()
+            result = data[0]
+            if (result == 'Employee'):
+                try:
+                    mycursor.execute("delete from useraccount where employeeid = '{}'".format(employeeid))
+                    mydb.commit()
+                    print("Success")
+                except mysql.connector.Error as error:
+                    print("Failed")
+            else:
+                print("Failed")
+        except mysql.connector.Error as error:
+            print("Failed")
     def updateManagerAccount(self, fullname, email, password, mobile, username):
         try:
             mycursor.execute("UPDATE useraccount SET fullname = '{}', email = '{}', pass = '{}', mobile = '{}' WHERE username = '{}'".format(fullname,email,password,mobile,username))

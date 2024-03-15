@@ -425,6 +425,92 @@ app.post('/adminupdateemployeeaccount', (req,res) =>{
 })
 })
 
+app.get('/admindeleteaccountchoose', (req,res) =>{
+    res.render('AdminDeleteAccountChoiceGUI')
+})
+
+app.get('/admindeleteadminaccount', (req,res) =>{
+    res.render('AdminDeleteAdminAccountGUI',{ message: req.flash('message')})
+})
+
+app.post('/admindeleteadminaccount', (req,res) =>{
+    const myJSON = {
+        employeeid : req.body.employeeid
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON2)
+    var pythonProcess = spawn('python',["./AdminDeleteAdminAccountController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message','Unable to delete Admin Account. Double check your values entered')
+        res.redirect('/admindeleteadminaccount')
+    }
+    else
+    {
+        req.flash('message','Admin Account Deleted')
+        res.redirect('/admindeleteadminaccount')
+    }
+})
+})
+
+app.get('/admindeletemanageraccount', (req,res) =>{
+    res.render('AdminDeleteManagerAccountGUI',{ message: req.flash('message')})
+})
+
+app.post('/admindeletemanageraccount', (req,res) =>{
+    const myJSON = {
+        employeeid : req.body.employeeid
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON2)
+    var pythonProcess = spawn('python',["./AdminDeleteManagerAccountController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message','Unable to delete Manager Account. Double check your values entered')
+        res.redirect('/admindeletemanageraccount')
+    }
+    else
+    {
+        req.flash('message','Manager Account Deleted')
+        res.redirect('/admindeletemanageraccount')
+    }
+})
+})
+
+app.get('/admindeleteemployeeaccount', (req,res) =>{
+    res.render('AdminDeleteEmployeeAccountGUI',{ message: req.flash('message')})
+})
+
+app.post('/admindeleteemployeeaccount', (req,res) =>{
+    const myJSON = {
+        employeeid : req.body.employeeid
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON2)
+    var pythonProcess = spawn('python',["./AdminDeleteEmployeeAccountController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message','Unable to delete Employee Account. Double check your values entered')
+        res.redirect('/admindeleteemployeeaccount')
+    }
+    else
+    {
+        req.flash('message','Employee Account Deleted')
+        res.redirect('/admindeleteemployeeaccount')
+    }
+})
+})
+
+
 //UpdateManagerAccount
 app.get('/updatemanageraccount', (req,res) =>{
     res.render('UpdateManagerAccount');

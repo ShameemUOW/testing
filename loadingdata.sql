@@ -9,6 +9,7 @@ insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Pl
 insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Jack','America 6','Jack@gmail.com','23121212','jack','jack22','40','Employee');
 insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Noah','America 7','Noah@gmail.com','23121234','noah','noah22','40','Manager');
 insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Noa','America 7','Noa@gmail.com','23121234','noa','noa22','40','Manager');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Noas','America 7','Noa@gmail.com','23121234','noas','noas22','40','Employee');
 
 insert into userprofile values ('1','Admin','NIL');
 insert into userprofile values ('2','Employee','Waiter');
@@ -20,6 +21,7 @@ insert into userprofile values ('7','Employee','Chef');
 insert into userprofile values ('8','Employee','Waiter');
 insert into userprofile values ('9','Manager', 'NIL'); 
 insert into userprofile values ('10','Manager', 'NIL'); 
+insert into userprofile values ('14','Employee', 'NIL'); 
 
 select distinct mainrole From userprofile;
 select * from useraccount;

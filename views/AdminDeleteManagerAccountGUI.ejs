@@ -27,26 +27,18 @@
         <div id="backbutton">
             <button id="back" onclick="document.location='/createuseraccount'"><b>&laquo;back</b></button>
         </div>
-        <form action = "/adminupdatemanageraccount" method = "POST">
+        <form action = "/admindeletemanageraccount" method = "POST">
             <div id="options">
                 <table class = "creating">
-                    <h1>Update Manager Account</h1><br>
+                    <h1>Delete Manager Account</h1><br>
                     <tr>
                         <td></td>
                         <td><input id="employeeid" class = "textbox" type="text" name="employeeid" placeholder="Enter Manager ID"></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td><select class="profile-select" name = "selectedoption">
-                            <% myList.forEach(item => {%>
-                                <option value = "<%= item%>"><%= item%></option>
-                            <% }); %>
-                        </select></td>
-                        <td><input id="value" class = "textbox" type="text" name="value" placeholder="Enter New Value"></td>
-                    </tr>
-                    <tr>
                         <td></td>
-                        <td><button class = "rounded-button" id="button"><b>Update</b></button></td>
+                        <td><button class = "rounded-button" id="button"><b>Delete</b></button></td>
                         <td></td>
                     </tr>
                 </table>
