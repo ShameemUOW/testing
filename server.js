@@ -4,7 +4,6 @@ const bodyParser = require("body-parser")
 var session = require('express-session')
 var flush = require('connect-flash')
 const spawn = require("child_process").spawn
-var userprof = ''
 
 const app = express()
 const port = 3000
@@ -12,7 +11,7 @@ const port = 3000
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(session({
-    secret:'secret',
+    secret:'oHn2mKV567n1m$%^',
     resave:false,
     saveUninitialized:false
 }))
@@ -31,12 +30,13 @@ app.use(express.json())
 const loggedin = []
 
 app.get('/homepage', (req,res) =>{
-    res.render(userprof + 'Page');
+    res.render(ssn.userprof + 'Page');
 })
 
 app.get('/manager_updateprofile', (req, res) => {
     // Render the UpdateManagerAccount.ejs page
     res.render('UpdateManagerAccount');
+    console.log(ssn.userprof)
 });
 
 app.get('/manager_createws', (req, res) => {
@@ -48,12 +48,26 @@ app.get('/', (req, res) => {
     res.redirect('/logingui')
 })
 
+app.get('/logout', (req,res) => {
+    ssn = req.session
+    if(ssn.userprof){
+        delete ssn.userprof
+    }
+    res.redirect('/')
+})
+
+app.get('/manager_viewempleave', (req, res) => {
+    res.render('ManagerViewEmployeeLeave')
+})
+
 app.get('/logingui', (req,res) =>{
+    ssn = req.session
     var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
             res.render('LoginGUI',{myList, message: req.flash('message')})
+            console.log(myList)
         }catch(error){
             console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')
@@ -63,10 +77,13 @@ app.get('/logingui', (req,res) =>{
         console.error('Error from Python Script:', data.toString())
         res.status(500).send('Error from python script')
     })
+    if(ssn.userprof){
+        res.redirect("/homepage")
+    }
 })
 
 app.post("/logingui", (req,res)=>{
-    
+    ssn = req.session
     const myJSON = {
         username: req.body.Username,
         password: req.body.Password,
@@ -98,9 +115,9 @@ app.post("/logingui", (req,res)=>{
             loggedin.push(myJSON)
             req.flash('message','Enter Details')
             const parseprof = req.body.selectedoption.split(' ')
-            userprof = parseprof[0]
+            ssn.userprof = parseprof[0]
             console.log(parseprof)
-            console.log(userprof)
+            console.log(ssn.userprof)
             res.redirect('/homepage')    
         }
     }
@@ -113,6 +130,7 @@ app.get('/createuserorprofile', (req,res) =>{
 
 app.get('/createadminaccount', (req,res) =>{
     res.render('AdminCreateAdminAccountGUI');
+    console.log(ssn.userprof)
 })
 
 app.post('/createadminaccount', (req,res) =>{
