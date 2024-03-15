@@ -675,14 +675,23 @@ app.post('/CreateWorkShift', (req, res) => {
     const myJSON2 = JSON.stringify(myJSON);
     var pythonProcess = spawn('python', ["./CreatewsController.py", myJSON2]); // Pass JSON data as argument
     pythonProcess.stdout.on('data', (data) => {
-        var bool = data.toString().trim();
-        console.log(bool);
-        if (bool == "Failed") {
-            req.flash('message', 'Unable to create workshift. Double check your values entered');
-        } else {
-            req.flash('message', 'Workshift Created');
+        try {
+            var bool = JSON.parse(data.toString().trim());
+            console.log(bool);
+            if (bool === "Failed") {
+                req.flash('message', 'Unable to create workshift. Double check your values entered');
+            } else {
+                req.flash('message', 'Workshift Created');
+            }
+            res.redirect('/CreateWorkShift');
+        } catch (error) {
+            console.error('Error parsing JSON data:', error);
+            res.status(500).send('Error parsing JSON data');
         }
-        res.redirect('/CreateWorkShift');
+    });
+    pythonProcess.stderr.on('data', (data) => {
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
     });
 });
 

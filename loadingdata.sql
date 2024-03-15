@@ -23,6 +23,10 @@ insert into userprofile values ('9','Manager', 'NIL');
 insert into userprofile values ('10','Manager', 'NIL'); 
 insert into userprofile values ('14','Employee', 'NIL'); 
 
+
+INSERT INTO workshift (Date, shift, start, end)
+VALUES ('2024-03-15', 'Morning', '08:00:00', '16:00:00');
+
 select distinct mainrole From userprofile;
 select * from useraccount;
 select * from userprofile;

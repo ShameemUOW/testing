@@ -2,13 +2,17 @@ import WorkShiftClass
 import sys
 import json
 
+try:
+    input2 = sys.argv[1]
+except IndexError:
+    print("Error: No command-line argument provided.")
+    sys.exit(1)
 
-input_data = sys.argv[1]
-x = json.loads(input_data)
-date = x["date"]
-shift = x["shift"]
-start = x["start"]
-end = x["end"]
+z = json.loads(input2)
+date = z["date"]
+shift = z["shift"]
+start = z["start"]
+end = z["end"]
 
 class CreatewsController:
     @staticmethod
