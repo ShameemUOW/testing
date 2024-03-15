@@ -26,5 +26,13 @@ class UserProfile:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+    def createUserProfile(self,employeeid,selectedoption,role):
+        try:
+            mycursor.execute("INSERT INTO  userprofile VALUES ('{}','{}', '{}')".format(employeeid,selectedoption,role))
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")
+
             
 

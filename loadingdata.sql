@@ -23,3 +23,4 @@ insert into userprofile values ('10','Cafe Manager', 'NIL');
 
 select distinct mainrole From userprofile;
 select * from useraccount;
+select * from userprofile;

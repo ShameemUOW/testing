@@ -250,6 +250,48 @@ app.post('/updatemanageraccount', (req,res) =>{
 })
 })
 
+app.get('/createuserprofile', (req,res) =>{
+    var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('AdminCreateUserProfileGUI',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/createuserprofile', (req,res) =>{
+    const myJSON = {
+        employeeid : req.body.employeeid,
+        profile : req.body.selectedoption,
+        role : req.body.role
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    var pythonProcess = spawn('python',["./CreateUserProfileController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message','Unable to create Profile. Double check your values entered')
+        res.redirect('/createuserprofile')
+    }
+    else
+    {
+        req.flash('message','User Profile Created')
+        res.redirect('/createuserprofile')
+    }
+})
+})
+
+
 
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))

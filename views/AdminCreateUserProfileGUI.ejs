@@ -1,10 +1,10 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/Admincreatetable.css">
+        <link rel="stylesheet" href="css/Managercreatetable.css">
     </head>
     <body>
-        <div id="adminpage">
+        <div id="managerpage">
             <h1>SER</h1>
         </div>
 
@@ -27,22 +27,22 @@
         <div id="backbutton">
             <button id="back" onclick="document.location='/createuseraccount'"><b>&laquo;back</b></button>
         </div>
-        <form action = "/createadminaccount" method = "POST">
+        <form action = "/createuserprofile" method = "POST">
             <div id="options">
                 <table class = "creating">
-                    <h1>Create Admin Account</h1><br>
+                    <h1>Create User Profile</h1><br>
                     <tr>
-                        <td><input id="username" class = "textbox" type="text" name="username" placeholder="Enter Username"></td>
-                        <td><input id="password" class = "textbox" type="text" name="password" placeholder="Enter password"></td>
-                        <td><input id="MaxHours" class = "textbox" type="text" name="MaxHours" placeholder="Enter Max Hours"></td>
+                        <td></td>
+                        <td><input id="employeeid" class = "textbox" type="text" name="employeeid" placeholder="Enter Employee ID"></td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <td><input id="name" class = "textbox" type="text" name="name" placeholder="Enter Full Name"></td>
-                        <td><input id="Address" class = "textbox" type="text" name="Address" placeholder="Enter Address"></td>
-                    </tr>
-                    <tr>
-                        <td><input id="email" class = "textbox" type="text" name="email" placeholder="Enter Email"></td>
-                        <td><input id="Number" class = "textbox" type="text" name="Number" placeholder="Enter Number"></td>
+                        <td><select class="profile-select" name = "selectedoption">
+                            <% myList.forEach(item => {%>
+                                <option value = "<%= item%>"><%= item%></option>
+                            <% }); %>
+                        </select></td>
+                        <td><input id="role" class = "textbox" type="text" name="role" placeholder="Enter Role"></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -50,6 +50,9 @@
                         <td></td>
                     </tr>
                 </table>
+                <% if(message.length>0) {%>
+                    <div><%= message%></div>
+                <%}%>
             </div>
         </form>
     </body>
