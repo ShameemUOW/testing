@@ -155,6 +155,42 @@ class UserAccount:
                 print("Failed")
         except mysql.connector.Error as error:
             print("Failed")
+    def AdminViewAdminAccount(self):
+        try:
+            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,maxhours from useraccount where placeholder = 'Admin';")
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                result = json.dumps(data)
+                print(result)
+        except mysql.connector.Error as error:
+            print ("Failed")
+    def AdminViewManagerAccount(self):
+        try:
+            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,maxhours from useraccount where placeholder = 'Manager';")
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                result = json.dumps(data)
+                print(result)
+        except mysql.connector.Error as error:
+            print ("Failed")
+    def AdminViewEmployeeAccount(self):
+        try:
+            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,maxhours from useraccount where placeholder = 'Employee';")
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                result = json.dumps(data)
+                print(result)
+        except mysql.connector.Error as error:
+            print ("Failed")
     def updateManagerAccount(self, fullname, email, password, mobile, username):
         try:
             mycursor.execute("UPDATE useraccount SET fullname = '{}', email = '{}', pass = '{}', mobile = '{}' WHERE username = '{}'".format(fullname,email,password,mobile,username))

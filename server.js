@@ -510,6 +510,106 @@ app.post('/admindeleteemployeeaccount', (req,res) =>{
 })
 })
 
+app.get('/admin_view', (req,res) =>{
+    res.render('AdminViewChoose')
+})
+
+app.get('/admin_view', (req,res) =>{
+    res.render('AdminViewChoose')
+})
+
+app.get('/adminviewaccountchoose', (req,res) =>{
+    res.render('AdminViewChooseAccount')
+})
+
+app.get('/adminviewuserprofile', (req,res) =>{
+    var pythonProcess = spawn('python',["./AdminViewUserProfileController.py"])
+    pythonProcess.stdout.on('data',(data)=>{
+    try{
+        var alldata = JSON.parse(data.toString())
+    }catch(error)
+    {
+        console.log(alldata)
+    }
+    if (data.toString().trim() == "No table left")
+    {
+        req.flash('message17','No Table Left')
+        res.render('AdminViewUserProfileGUI',{message: req.flash('message17')})
+    }
+    else
+    {
+        req.flash('message17','Tables found')
+        res.render('AdminViewUserProfileGUI',({"results": alldata, message: req.flash('message17')}))
+    }
+}) 
+})
+
+app.get('/adminviewadminaccount', (req,res) =>{
+    var pythonProcess = spawn('python',["./AdminViewAdminAccountsController.py"])
+    pythonProcess.stdout.on('data',(data)=>{
+    try{
+        var alldata = JSON.parse(data.toString())
+    }catch(error)
+    {
+        console.log(alldata)
+    }
+    if (data.toString().trim() == "No table left")
+    {
+        req.flash('message17','No Table Left')
+        res.render('AdminViewAdminAccountGUI',{message: req.flash('message17')})
+    }
+    else
+    {
+        req.flash('message17','Tables found')
+        res.render('AdminViewAdminAccountGUI',({"results": alldata, message: req.flash('message17')}))
+    }
+})
+})
+
+app.get('/adminviewmanageraccount', (req,res) =>{
+    var pythonProcess = spawn('python',["./AdminViewManagerAccountsController.py"])
+    pythonProcess.stdout.on('data',(data)=>{
+    try{
+        var alldata = JSON.parse(data.toString())
+    }catch(error)
+    {
+        console.log(alldata)
+    }
+    if (data.toString().trim() == "No table left")
+    {
+        req.flash('message17','No Table Left')
+        res.render('AdminViewManagerAccountGUI',{message: req.flash('message17')})
+    }
+    else
+    {
+        req.flash('message17','Tables found')
+        res.render('AdminViewManagerAccountGUI',({"results": alldata, message: req.flash('message17')}))
+    }
+})
+})
+
+app.get('/adminviewemployeeaccount', (req,res) =>{
+    var pythonProcess = spawn('python',["./AdminViewEmployeeAccountsController.py"])
+    pythonProcess.stdout.on('data',(data)=>{
+    try{
+        var alldata = JSON.parse(data.toString())
+    }catch(error)
+    {
+        console.log(alldata)
+    }
+    if (data.toString().trim() == "No table left")
+    {
+        req.flash('message17','No Table Left')
+        res.render('AdminViewEmployeeAccountGUI',{message: req.flash('message17')})
+    }
+    else
+    {
+        req.flash('message17','Tables found')
+        res.render('AdminViewEmployeeAccountGUI',({"results": alldata, message: req.flash('message17')}))
+    }
+})
+})
+
 
 //UpdateManagerAccount
 app.get('/updatemanageraccount', (req,res) =>{

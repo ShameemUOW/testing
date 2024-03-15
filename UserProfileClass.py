@@ -50,6 +50,18 @@ class UserProfile:
                 print("Success")
             except mysql.connector.Error as error:
                 print("Failed")
+    def AdminViewUserProfile(self):
+        try:
+            mycursor.execute("select employeeid, mainrole, job from userprofile;")
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                result = json.dumps(data)
+                print(result)
+        except mysql.connector.Error as error:
+            print ("Failed")
 
 
             

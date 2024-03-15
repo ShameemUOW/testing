@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/AdminViewProfileTable.css">
+    </head>
+    <body>
+        <div id="adminpage">
+            <h1>SER</h1>
+        </div>
+
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+            <a href="#" onclick="document.location='/logingui'">Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image"></button>
+        <script>
+            function openNav() {
+              document.getElementById("mySidepanel").style.width = "250px";
+            }
+            
+            function closeNav() {
+              document.getElementById("mySidepanel").style.width = "0";
+            }
+        </script>
+
+        <div id="backbutton">
+            <button id="back" onclick="document.location='/admin_view'"><b>&laquo;back</b></button>
+        </div>
+        <div id="options">
+            <h1>Viewing all Employee Accounts</h1><br>
+            <% if(message.length>0) {%>
+                <div><%= message%></div>
+            <%}%>
+            <% if(typeof results !== "undefined") {%>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>UserAccount ID</th>
+                            <th>Fullname</th>
+                            <th>Address</th>
+                            <th>Email</th>
+                            <th>Contact Number</th>
+                            <th>Username</th>
+                            <th>Max Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0; i<results.length;i++) { %>
+                        <tr>
+                            <td><%= results[i][0]%></td>
+                            <td><%= results[i][1]%></td>
+                            <td><%= results[i][2]%></td>
+                            <td><%= results[i][3]%></td>
+                            <td><%= results[i][4]%></td>
+                            <td><%= results[i][5]%></td>
+                            <td><%= results[i][6]%></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <%}%>
+        </div>
+    </body>
+</html>
