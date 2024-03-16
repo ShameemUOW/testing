@@ -34,4 +34,15 @@ CREATE TABLE workshift (
     end TIME NOT NULL
 );
 
+CREATE TABLE EmployeeShiftInformation (
+	EmployeeID int NOT NULL,
+    ShiftPref varchar(50) NOT NULL,
+    NoOfHrsWorked int NOT NULL,
+    PRIMARY KEY (EmployeeID),
+    CONSTRAINT FK_EmployeeID2 FOREIGN KEY (EmployeeID)
+    REFERENCES userAccount(EmployeeID)
+    on update cascade
+    on delete cascade
+);
+
 drop database FYP;

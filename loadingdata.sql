@@ -25,6 +25,10 @@ insert into userprofile values ('9','Manager', 'NIL');
 insert into userprofile values ('10','Manager', 'NIL'); 
 insert into userprofile values ('14','Employee', 'NIL'); 
 
+insert into employeeshiftinformation values ('2','Day','0');
+insert into employeeshiftinformation values ('6','Night','0');
+insert into employeeshiftinformation values ('7','Morning','0');
+insert into employeeshiftinformation values ('8','Afternoon','0');
 
 INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-03-15', 'Morning', '08:00:00', '16:00:00');
@@ -32,6 +36,8 @@ VALUES ('2024-03-15', 'Morning', '08:00:00', '16:00:00');
 select distinct mainrole From userprofile;
 select * from useraccount;
 select * from userprofile;
+select distinct shiftpref From employeeshiftinformation;
 
+select employeeid, fullname, shiftpref, mainrole,job from useraccount join employeeshiftinformation join userprofile where shiftPref = 'Day';
 
 select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('EmployeeID');
