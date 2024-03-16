@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/Employee.css">
+</head>
+<body>
+    <div id="employeepage">
+        <h1 onclick="document.location='/homepage'">SER</h1>
+    </div>
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
+        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+    </div>
+    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
+    <script>
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+        }
+    </script>
+    <div id="options">
+        <h1>What would you like to do?</h1><br>
+
+        <div class="container">
+       
+            <h2>Employee Functions</h2>
+            <table>
+                <td><button id="employee_createleavebutton" onclick="document.location='/employee_createleavebutton'"><img src="img/create.png" class="image"><h3>Apply For Leave</h3></button></td>
+                <td><button id="employee_updateleave" onclick="document.location='/employee_updateleave'"><img src="img/update.png" class="image"><h3>Update Info</h3></button></td>
+                <td><button id="employee_viewall" onclick="document.location='/employee_viewall'"><img src="img/view_all.png" class="image"><h3>View </h3></button></td>
+                <td><button id="employee_deleteLeave" onclick="document.location='/employee_deleteLeave'"><img src=img/delete.png class="image"><h3>Delete</h3></button></td>
+                <td><button id="employee_deleteLeave" onclick="document.location='/employee_clockinout'"><img src=img/view_all.png class="image"><h3>Clock-in/Clock-out</h3></button></td>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
