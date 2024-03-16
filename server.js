@@ -1002,5 +1002,61 @@ app.get('/manager_viewws', (req, res) => {
     });
 });
 
+
+
+app.get('/manager_deletews', (req, res) => {
+    var pythonProcess = spawn('python', ["./ManagerViewWorkshiftsController.py"]);
+    let alldata = "";
+    pythonProcess.stdout.on('data', (data) => {
+        alldata += data.toString();
+    });
+    pythonProcess.stdout.on('end', () => {
+        try {
+            const jsonData = JSON.parse(alldata.trim());
+            if (jsonData === "No table left") {
+                req.flash('message17', 'No Table Left');
+                res.render('DeleteWsGUI', { message: req.flash('message17') });
+            } else {
+                req.flash('message17', 'Tables found');
+                res.render('DeleteWsGUI', { results: jsonData, message: req.flash('message17') });
+            }
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            req.flash('message17', 'Error retrieving data');
+            res.render('DeleteWsGUI', { message: req.flash('message17') });
+        }
+    });
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    });
+});
+
+
+app.post('/manager_deletews', (req,res) =>{
+    const button = req.body.buttonid
+    const csvArray = button.split(',')
+    const jsonObj = {
+        id : csvArray[0]
+    }
+    const jsonObj2 = JSON.stringify(jsonObj)
+    console.log(jsonObj2)
+    var pythonProcess = spawn('python',["./DeletewsController.py",jsonObj2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var alldata = data.toString().trim()
+    console.log(alldata)
+    if (alldata == "Success")
+    {
+        req.flash('message4','Deleted Successfully')
+        res.redirect('/manager_deletews')
+        
+    }
+    else
+    {
+        req.flash('message4','Unsuccessful')
+        res.redirect('/manager_deletews') 
+    }
+})
+})
+
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))

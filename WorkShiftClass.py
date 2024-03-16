@@ -38,3 +38,11 @@ class WorkShift:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print ("Failed")
+
+    def ManagerDeleteWorkShifts(self, id):
+        try:
+            mycursor.execute("delete from workshift where id = '{}'".format(id))
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+           print("Failed {}".format(error))
