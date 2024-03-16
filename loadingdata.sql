@@ -38,6 +38,7 @@ select * from useraccount;
 select * from userprofile;
 select distinct shiftpref From employeeshiftinformation;
 
-select employeeid, fullname, shiftpref, mainrole,job from useraccount join employeeshiftinformation join userprofile where shiftPref = 'Day';
+select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile where shiftPref = 'Day';
+select employeeid, Fullname, Address,Email,mobile,maxhours,job from useraccount natural join userprofile where mainrole = 'Employee';
 
 select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('EmployeeID');

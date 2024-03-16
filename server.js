@@ -900,6 +900,28 @@ app.get('/manager_viewshiftpref', (req,res) =>{
 })
 })
 
+app.get('/managerviewemployeeaccounts', (req,res) =>{
+    var pythonProcess = spawn('python',["./ManagerViewEmployeeAccountsController.py"])
+    pythonProcess.stdout.on('data',(data)=>{
+    try{
+        var alldata = JSON.parse(data.toString())
+    }catch(error)
+    {
+        console.log(alldata)
+    }
+    if (data.toString().trim() == "No table left")
+    {
+        req.flash('message17','No Table Left')
+        res.render('ManagerViewEmployeeAccountsGUI.ejs',{message: req.flash('message17')})
+    }
+    else
+    {
+        req.flash('message17','Tables found')
+        res.render('ManagerViewEmployeeAccountsGUI.ejs',({"results": alldata, message: req.flash('message17')}))
+    }
+})
+})
+
 
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))

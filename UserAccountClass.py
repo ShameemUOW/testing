@@ -239,4 +239,17 @@ class UserAccount:
         data = mycursor.fetchall()
         result = json.dumps(data)
         print(result)
+    def ManagerViewEmployeeAccount(self):
+        try:
+            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,maxhours,job from useraccount natural join userprofile where mainrole = 'Employee';")
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                result = json.dumps(data)
+                print(result)
+        except mysql.connector.Error as error:
+            print ("Failed")
+
 
