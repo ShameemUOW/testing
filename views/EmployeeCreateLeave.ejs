@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/Admincreateuserorprofile.css">
+    </head>
+    <body>
+        <div id="adminpage">
+            <h1 onclick="document.location='/homepage'">SER</h1>
+        </div>
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+            <a href="#" onclick="document.location='/logout'" id = "logout">Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()" id ="settingsbtn"><img src="img/settings.png" class="image1"></button>
+        <script>
+            function openNav() {
+              document.getElementById("mySidepanel").style.width = "250px";
+            }
+            
+            function closeNav() {
+              document.getElementById("mySidepanel").style.width = "0";
+            }
+        </script>
+        <div id="options">
+            <h1>What would you like to do?</h1><br>
+
+            <div class="container2">
+                <table>
+                    <td><button id="admin_createbutton" onclick="document.location='/chooseaccount'"><img src="img/account.png" class="image"><h3>Account</h3></button></td>
+                    <td><button id="admin_createbutton" onclick="document.location='/createuserprofile'"><img src="img/profile.png" class="image"><h3>Profile</h3></button></td>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
