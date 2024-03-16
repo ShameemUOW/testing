@@ -82,11 +82,12 @@ body {
 #options {
     position: absolute;
     top: 30%;
-    left: 35%;
-    color: #ffb344;
+    left: 10%;
+    color: #ffb344; /* Keep the color property */
     font-family: arial;
     font-size: 20px;
-    width: 100%;
+    width: 70%; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the container horizontally */
 }
 
 .container {
