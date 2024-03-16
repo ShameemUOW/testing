@@ -191,9 +191,9 @@ class UserAccount:
                 print(result)
         except mysql.connector.Error as error:
             print ("Failed")
-    def updateManagerAccount(self, fullname, email, password, mobile, username):
+    def updateManagerAccount(self,employeeid,selectedoption,value):
         try:
-            mycursor.execute("UPDATE useraccount SET fullname = '{}', email = '{}', pass = '{}', mobile = '{}' WHERE username = '{}'".format(fullname,email,password,mobile,username))
+            mycursor.execute("UPDATE useraccount SET {} = '{}' where employeeid = {}".format(selectedoption,value,employeeid))
             mydb.commit()
             print("Success")
         except mysql.connector.Error as error:

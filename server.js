@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 app.use(session({
     secret:'oHn2mKV567n1m$%^',
     resave:false,
-    saveUninitialized:false
+    saveUninitialized:true
 }))
 app.use(flush())
 
@@ -33,11 +33,6 @@ app.get('/homepage', (req,res) =>{
     res.render(ssn.userprof + 'Page');
 })
 
-app.get('/manager_updateprofile', (req, res) => {
-    // Render the UpdateManagerAccount.ejs page
-    res.render('UpdateManagerAccount');
-    console.log(ssn.userprof)
-});
 
 app.get('/manager_createws', (req, res) => {
     // Render the UpdateManagerAccount.ejs page
@@ -84,6 +79,7 @@ app.get('/logingui', (req,res) =>{
 
 app.post("/logingui", (req,res)=>{
     ssn = req.session
+    ssn.emlpoyeeidentity = 0
     const myJSON = {
         username: req.body.Username,
         password: req.body.Password,
@@ -111,14 +107,15 @@ app.post("/logingui", (req,res)=>{
                 pythonProcess2.stdout.on('data',(data)=>{
                 var alldata2 = JSON.parse(data.toString())
                 myJSON["employeeid"] = alldata2[0][0]   
+                ssn.emlpoyeeidentity = myJSON["employeeid"]
+                console.log(ssn.emlpoyeeidentity)
+                const parseprof = req.body.selectedoption.split(' ')
+                ssn.userprof = parseprof[0]
+                res.redirect('/homepage')  
             })
             loggedin.push(myJSON)
             req.flash('message','Enter Details')
-            const parseprof = req.body.selectedoption.split(' ')
-            ssn.userprof = parseprof[0]
-            console.log(parseprof)
-            console.log(ssn.userprof)
-            res.redirect('/homepage')    
+            
         }
     }
 })
@@ -773,20 +770,30 @@ app.post('/adminsearchemployee', (req,res) =>{
 
 //UpdateManagerAccount
 app.get('/updatemanageraccount', (req,res) =>{
-    res.render('UpdateManagerAccount');
+    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('UpdateManagerAccount',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
 })
 
 app.post('/updatemanageraccount', (req,res) =>{
+    const emlpoyeeidentity = req.session.emlpoyeeidentity
     const myJSON = {
-        fullname : req.body.name,
-        email : req.body.email,
-        phonenumber : req.body.Number,
-        username : req.body.username,
-        password : req.body.password,
-        Maxhrs : req.body.MaxHours
+        employeeid : emlpoyeeidentity,
+        selectedoption : req.body.selectedoption,
+        value : req.body.value
     }
     const myJSON2 = JSON.stringify(myJSON)
-    console.log(myJSON)
     console.log(myJSON2)
     var pythonProcess = spawn('python',["./UpdateManagerAccountController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
@@ -794,12 +801,12 @@ app.post('/updatemanageraccount', (req,res) =>{
     console.log(bool)
     if (bool.trim() == "Failed")
     {
-        req.flash('message15','Unable to update account. Double check your values entered')
+        req.flash('message','Unable to update Employee Account. Double check your values entered')
         res.redirect('/UpdateManagerAccount')
     }
     else
     {
-        req.flash('message15','Update Account successful')
+        req.flash('message','Employee Account Updated')
         res.redirect('/UpdateManagerAccount')
     }
 })
