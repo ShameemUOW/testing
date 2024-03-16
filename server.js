@@ -974,5 +974,33 @@ app.post('/managerfilteremployeeaccounts', (req,res) =>{
 })
 });
 
+
+app.get('/manager_viewws', (req, res) => {
+    var pythonProcess = spawn('python', ["./ManagerViewWorkshiftsController.py"]);
+    let alldata = "";
+    pythonProcess.stdout.on('data', (data) => {
+        alldata += data.toString();
+    });
+    pythonProcess.stdout.on('end', () => {
+        try {
+            const jsonData = JSON.parse(alldata.trim());
+            if (jsonData === "No table left") {
+                req.flash('message17', 'No Table Left');
+                res.render('ManagerViewWorkshiftssGUI', { message: req.flash('message17') });
+            } else {
+                req.flash('message17', 'Tables found');
+                res.render('ManagerViewWorkshiftssGUI', { results: jsonData, message: req.flash('message17') });
+            }
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            req.flash('message17', 'Error retrieving data');
+            res.render('ManagerViewWorkshiftssGUI', { message: req.flash('message17') });
+        }
+    });
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    });
+});
+
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))

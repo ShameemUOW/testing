@@ -38,6 +38,8 @@ select * from useraccount;
 select * from userprofile;
 select distinct shiftpref From employeeshiftinformation;
 
+select * from workshift;
+
 select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile where shiftPref = 'Day';
 select employeeid, Fullname, Address,Email,mobile,maxhours,job from useraccount natural join userprofile where mainrole = 'Employee';
 
