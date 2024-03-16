@@ -38,5 +38,17 @@ class EmployeeShiftInformation:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+    def ViewShiftPreference(self):
+        try:
+            mycursor.execute("select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile;")
+            searchingdata = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                searchingresult = json.dumps(searchingdata)
+                print(searchingresult)
+        except mysql.connector.Error as error:
+            print ("Failed")
 
         
