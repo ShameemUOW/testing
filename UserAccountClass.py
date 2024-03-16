@@ -251,5 +251,22 @@ class UserAccount:
                 print(result)
         except mysql.connector.Error as error:
             print ("Failed")
+    def ManagerFiltergrabTableColumns(self):
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('PlaceHolder','Username','pass') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userprofile' and column_name not in ('EmployeeID','MainRole') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'employeeshiftinformation' and column_name not in ('EmployeeID');")
+        data = mycursor.fetchall()
+        result = json.dumps(data)
+        print(result)
+    def ManagerFilterEmployees(self, selectedoption,value):
+        try:
+            mycursor.execute("select EmployeeID,FullName,Address,Email,Mobile,MaxHours,Job,ShiftPref,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where {} = '{}';'".format(selectedoption,value))
+            searchingdata = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                searchingresult = json.dumps(searchingdata)
+                print(searchingresult)
+        except mysql.connector.Error as error:
+            print ("Failed")
 
 

@@ -833,7 +833,7 @@ app.post('/CreateWorkShift', (req, res) => {
     });
   });
 
-  app.get('/managerfilterpreference', (req,res) =>{
+app.get('/managerfilterpreference', (req,res) =>{
     var pythonProcess = spawn('python',["./grabShiftPreferenceController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
@@ -922,6 +922,50 @@ app.get('/managerviewemployeeaccounts', (req,res) =>{
 })
 })
 
+app.get('/managerfilteremployeeaccounts', (req,res) =>{
+    var pythonProcess = spawn('python',["./ManagerFiltergrabTableColumns.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('ManagerFilterEmployeeAccountGUI',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/managerfilteremployeeaccounts', (req,res) =>{
+    const jsonObj = {
+        selectedoption : req.body.selectedoption,
+        value : req.body.value
+    }
+    const jsonObj2 = JSON.stringify(jsonObj)
+    var pythonProcess = spawn('python',["./ManagerFilterEmployeeController.py",jsonObj2])
+    pythonProcess.stdout.on('data',(data)=>{
+    try{
+        var alldata = JSON.parse(data.toString())
+    }catch(error)
+    {
+        console.log(alldata)
+    }
+    
+    if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
+    {
+        console.log(data.toString())
+        req.flash('message23','Failed Search')
+        res.redirect('/managerfilteremployeeaccounts')   
+    }
+    else
+    {
+        res.render('ManagerFilterEmployeeAccountsTableGUI',{"results": alldata}) 
+    }
+})
+});
 
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))
