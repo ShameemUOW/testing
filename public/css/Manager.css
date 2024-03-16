@@ -71,7 +71,7 @@ body {
 
 #options {
     position: absolute;
-    top: 150px;
+    top: 170px;
     color: #ffb344;
     font-family: arial;
 }
@@ -93,3 +93,5 @@ body {
     max-width: 140px;
     max-height: 140px;
 }
+
+
