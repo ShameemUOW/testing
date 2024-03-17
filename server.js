@@ -1069,9 +1069,16 @@ app.get('/EmployeeCreateLeave', (req,res) =>{
 })
 
 app.post('/EmployeeCreateLeave', (req, res) => {
-    const { employeeId, fullname, date, leavetype } = req.body;
+    const employeeId = req.session.emlpoyeeidentity
+    // const myJSON = {
+    //     employeeId : emlpoyeeidentity,
+    //     value : req.body.value
+    // }
+    // const myJSON2 = JSON.stringify(myJSON)
+    const { fullname, date, leavetype } = req.body;
     const dataToSend = JSON.stringify({ employeeId, fullname, date, leavetype });
-    
+    console.log("Employee identity: " + employeeId)
+    console.log(dataToSend)
     // Spawn Python process and pass JSON data as argument
     const pythonProcess = spawn('python', ['./CreateEmployeeLeaveController.py', dataToSend]);
     
