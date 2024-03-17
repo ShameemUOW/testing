@@ -45,4 +45,12 @@ CREATE TABLE EmployeeShiftInformation (
     on delete cascade
 );
 
+CREATE TABLE EmployeeLeave (
+    LeaveID INT AUTO_INCREMENT PRIMARY KEY,
+    Fullname VARCHAR(50) NOT NULL,
+    Date DATE NOT NULL,
+    LeaveType VARCHAR(50) NOT NULL
+);
+
+
 drop database FYP;

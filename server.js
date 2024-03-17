@@ -39,6 +39,11 @@ app.get('/manager_createws', (req, res) => {
     res.render('CreateWorkShift');
 });
 
+app.get('/employee_createLeave', (req, res) => {
+    // Render the UpdateManagerAccount.ejs page
+    res.render('EmployeeCreateLeave');
+});
+
 app.get('/', (req, res) => {
     res.redirect('/logingui')
 })
@@ -1057,6 +1062,33 @@ app.post('/manager_deletews', (req,res) =>{
     }
 })
 })
+
+// Create Employee leave route
+app.get('/EmployeeCreateLeave', (req,res) =>{
+    res.render('EmployeeCreateLeave');
+})
+
+app.post('/EmployeeCreateLeave', (req, res) => {
+    const { fullname, date, leavetype } = req.body;
+    const dataToSend = JSON.stringify({ fullname, date, leavetype });
+    
+    // Spawn Python process and pass JSON data as argument
+    const pythonProcess = spawn('python', ['./CreateEmployeeLeaveController.py', dataToSend]);
+    
+    pythonProcess.stdout.on('data', (data) => {
+      const result = data.toString().trim();
+      if (result === 'Failed EmployeeLeaveClass') {
+        res.status(500).send('Unable to create leave.');
+      } else {
+        res.send('Leave Created');
+      }
+    });
+  
+    pythonProcess.stderr.on('data', (data) => {
+      console.error('Error from Python Script:', data.toString());
+      res.status(500).send('Error from python script');
+    });
+  });
 
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))
