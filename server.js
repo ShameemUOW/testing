@@ -1069,8 +1069,8 @@ app.get('/EmployeeCreateLeave', (req,res) =>{
 })
 
 app.post('/EmployeeCreateLeave', (req, res) => {
-    const { fullname, date, leavetype } = req.body;
-    const dataToSend = JSON.stringify({ fullname, date, leavetype });
+    const { employeeId, fullname, date, leavetype } = req.body;
+    const dataToSend = JSON.stringify({ employeeId, fullname, date, leavetype });
     
     // Spawn Python process and pass JSON data as argument
     const pythonProcess = spawn('python', ['./CreateEmployeeLeaveController.py', dataToSend]);
@@ -1080,7 +1080,8 @@ app.post('/EmployeeCreateLeave', (req, res) => {
       if (result === 'Failed EmployeeLeaveClass') {
         res.status(500).send('Unable to create leave.');
       } else {
-        res.send('Leave Created');
+        req.flash('message4','Leave created successfully')
+        res.redirect('/employee_createLeave')
       }
     });
   

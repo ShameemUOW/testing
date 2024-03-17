@@ -47,9 +47,13 @@ CREATE TABLE EmployeeShiftInformation (
 
 CREATE TABLE EmployeeLeave (
     LeaveID INT AUTO_INCREMENT PRIMARY KEY,
+    EmployeeID int NOT NULL,
     Fullname VARCHAR(50) NOT NULL,
     Date DATE NOT NULL,
     LeaveType VARCHAR(50) NOT NULL
+    REFERENCES userAccount(EmployeeID)
+    on update cascade
+    on delete cascade
 );
 
 

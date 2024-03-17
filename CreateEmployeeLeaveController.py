@@ -9,14 +9,15 @@ except IndexError:
     sys.exit(1)
 
 z = json.loads(input2)
+employeeId = z["employeeId"]
 fullname = z["fullname"]
 date = z["date"]
 leavetype = z["leavetype"]
 
 class CreateEmployeeLeaveController:
     @staticmethod
-    def create_employeeleave(fullname, date, leavetype):
+    def create_employeeleave(employeeId, fullname, date, leavetype):
         employeeleave = EmployeeLeaveClass.EmployeeLeave()
-        employeeleave.CreateEmployeeLeave(fullname, date, leavetype)
+        employeeleave.CreateEmployeeLeave(employeeId, fullname, date, leavetype)
 
-CreateEmployeeLeaveController.create_employeeleave(fullname, date, leavetype)
+CreateEmployeeLeaveController.create_employeeleave(employeeId, fullname, date, leavetype)

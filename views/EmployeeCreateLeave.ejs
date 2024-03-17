@@ -3,6 +3,33 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/CreateWorkShift.css">
+    <style>
+        /* Reset default margin and padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Center the form horizontally */
+        #options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Set the minimum height of the container to full viewport height */
+        }
+
+        .container {
+            width: 80%; /* Set the width of the form container */
+        }
+
+        /* Optional: Add styles to the form elements */
+        form fieldset {
+            /* Example styles */
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
     <div id="employeepage">
@@ -30,18 +57,23 @@
 
     </script>
     <div id="options">
-        <h1>Create Leave</h1><br>
-
         <div class="container">
+            <h1>Create Leave</h1>
             <form action="/EmployeeCreateLeave" method="POST">
                 <fieldset>
                     <legend>Enter Leave Details</legend>
+                    <label for="employeeId">Employee ID:</label><br>
+                    <input type="number" id="employeeId" name="employeeId"><br><br>
                     <label for="fullname">Full Name:</label><br>
                     <input type="text" id="fullname" name="fullname"><br><br>
                     <label for="date">Date:</label><br>
                     <input type="date" id="date" name="date"><br><br>
                     <label for="leavetype">Leave Type:</label><br>
-                    <input type="text" id="leavetype" name="leavetype"><br><br>
+                    <select id="leavetype" name="leavetype">
+                        <option value="sick">Sick Leave</option>
+                        <option value="vacation">Vacation Leave</option>
+                        <option value="maternity">Maternity Leave</option>
+                    </select><br><br>
                     <button type="submit" name="create">Create</button>
                     <button type="button" name="back" onclick="goBack()">Back</button>
                 </fieldset>
