@@ -1075,8 +1075,8 @@ app.post('/EmployeeCreateLeave', (req, res) => {
     //     value : req.body.value
     // }
     // const myJSON2 = JSON.stringify(myJSON)
-    const { fullname, date, leavetype } = req.body;
-    const dataToSend = JSON.stringify({ employeeId, fullname, date, leavetype });
+    const { date, leavetype } = req.body;
+    const dataToSend = JSON.stringify({ employeeId, date, leavetype });
     console.log("Employee identity: " + employeeId)
     console.log(dataToSend)
     // Spawn Python process and pass JSON data as argument

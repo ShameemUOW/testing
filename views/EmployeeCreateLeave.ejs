@@ -62,8 +62,6 @@
             <form action="/EmployeeCreateLeave" method="POST">
                 <fieldset>
                     <legend>Enter Leave Details</legend>
-                    <label for="fullname">Full Name:</label><br>
-                    <input type="text" id="fullname" name="fullname"><br><br>
                     <label for="date">Date:</label><br>
                     <input type="date" id="date" name="date"><br><br>
                     <label for="leavetype">Leave Type:</label><br>
@@ -71,6 +69,7 @@
                         <option value="sick">Sick Leave</option>
                         <option value="vacation">Vacation Leave</option>
                         <option value="maternity">Maternity Leave</option>
+                        <option value="maternity">Regular Leave</option>
                     </select><br><br>
                     <button type="submit" name="create">Create</button>
                     <button type="button" name="back" onclick="goBack()">Back</button>

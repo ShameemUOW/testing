@@ -37,6 +37,12 @@ select * from useraccount;
 select * from userprofile;
 select distinct shiftpref From employeeshiftinformation;
 
+select * from EmployeeLeave;
+
+INSERT INTO EmployeeLeave (employeeid, shift, start, end)
+VALUES ('2024-03-15', 'Morning', '08:00:00', '16:00:00');
+
+
 select * from workshift;
 
 select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile where shiftPref = 'Day';

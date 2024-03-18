@@ -48,7 +48,6 @@ CREATE TABLE EmployeeShiftInformation (
 CREATE TABLE EmployeeLeave (
     LeaveID INT AUTO_INCREMENT PRIMARY KEY,
     EmployeeID int NOT NULL,
-    Fullname VARCHAR(50) NOT NULL,
     Date DATE NOT NULL,
     LeaveType VARCHAR(50) NOT NULL,
     status VARCHAR(50) NOT NULL

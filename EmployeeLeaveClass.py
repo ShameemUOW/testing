@@ -15,9 +15,9 @@ mycursor.execute("use FYP;")
 class EmployeeLeave:
     def __init__(self):
         pass
-    def CreateEmployeeLeave(self, employeeId, fullname, date, leavetype):
+    def CreateEmployeeLeave(self, employeeId, date, leavetype):
         try:
-            mycursor.execute("INSERT INTO  employeeleave (employeeId, fullname, date, leavetype,status) VALUES ('{}','{}','{}', '{}','Pending')".format(employeeId, fullname, date, leavetype))
+            mycursor.execute("INSERT INTO  employeeleave (employeeId, date, leavetype,status) VALUES ('{}','{}', '{}','Pending')".format(employeeId, date, leavetype))
             mydb.commit()
             print("Success")
         except mysql.connector.Error as error:
