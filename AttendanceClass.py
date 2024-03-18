@@ -32,5 +32,27 @@ class Attendance:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print("Failed to fetch data:", error)
+    def grabAttendanceTableColumns(self):
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'Attendance' and column_name not in ('ClockIn','ClockOut')")
+        data = mycursor.fetchall()
+        result = json.dumps(data)
+        print(result)
+    def ManagerFilterAttendance(self, selectedoption,value):
+        try:
+            mycursor.execute("select * from Attendance where {} LIKE '%{}%';'".format(selectedoption,value))
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                result = []
+                for row in data:
+                    leaveDate = row[2].strftime('%Y-%m-%d') if row[2] is not None else None
+                    start_time = (datetime.min + row[3]).time().strftime('%H:%M:%S') if row[3] is not None else None
+                    end_time = (datetime.min + row[4]).time().strftime('%H:%M:%S') if row[4] is not None else None
+                    result.append((row[0], row[1], leaveDate, start_time, end_time, row[5]))
+                print(json.dumps(result))
+        except mysql.connector.Error as error:
+            print("Failed to fetch data:", error)
         
         
