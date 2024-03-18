@@ -66,3 +66,10 @@ class EmployeeLeave:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def ManagerRejectLeave(self,id):
+        try:
+            mycursor.execute("update employeeleave SET status = 'Rejected' where leaveid = '{}'".format(id))
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")
