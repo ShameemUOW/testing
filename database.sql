@@ -70,5 +70,15 @@ CREATE TABLE Attendance (
     on delete cascade
 );
 
+CREATE TABLE EmployeeShift (
+    EmployeeShiftID INT AUTO_INCREMENT PRIMARY KEY,
+    shiftID INT NOT NULL,
+    EmployeeID INT NOT NULL,
+    shiftDate DATE NOT NULL,
+    shiftType VARCHAR(255) NOT NULL,
+    FOREIGN KEY (shiftID) REFERENCES workshift(id),
+    FOREIGN KEY (EmployeeID) REFERENCES userAccount(EmployeeID)
+);
+
 
 drop database FYP;
