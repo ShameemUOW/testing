@@ -37,7 +37,6 @@ class EmployeeLeave:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print ("Failed")
-
     def EmployeeDeleteLeave(self, LeaveID):
         try:
             mycursor.execute("delete from employeeleave where LeaveID = '{}'".format(LeaveID))
@@ -45,3 +44,25 @@ class EmployeeLeave:
             print("Success")
         except mysql.connector.Error as error:
            print("Failed {}".format(error))
+    def ManagerViewPendingLeave(self):
+        try:
+            mycursor.execute("select leaveid, employeeid, date, leavetype from employeeleave where status = 'Pending';")
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No pending leave requests")
+            else:
+                result = []
+                for row in data:
+                    leaveDate = row[2].strftime('%Y-%m-%d') if row[2] is not None else None
+                    result.append((row[0], row[1], leaveDate, row[3]))
+                print(json.dumps(result))
+        except mysql.connector.Error as error:
+            print ("Failed")
+    def ManagerApproveLeave(self,id):
+        try:
+            mycursor.execute("update employeeleave SET status = 'Approved' where leaveid = '{}'".format(id))
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")

@@ -39,8 +39,8 @@ select distinct shiftpref From employeeshiftinformation;
 
 select * from EmployeeLeave;
 
-INSERT INTO EmployeeLeave (employeeid, shift, start, end)
-VALUES ('2024-03-15', 'Morning', '08:00:00', '16:00:00');
+INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
+VALUES ('3', '2024-03-15', 'sick', 'Pending');
 
 
 select * from workshift;

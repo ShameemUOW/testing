@@ -1063,6 +1063,60 @@ app.post('/manager_deletews', (req,res) =>{
 })
 })
 
+app.get('/managerapproveleave', (req, res) => {
+    var pythonProcess = spawn('python', ["./ManagerViewPendingLeaveController.py"]);
+    let alldata = "";
+    pythonProcess.stdout.on('data', (data) => {
+        alldata += data.toString();
+    });
+    pythonProcess.stdout.on('end', () => {
+        try {
+            const jsonData = JSON.parse(alldata.trim());
+            if (jsonData === "No table left") {
+                req.flash('message17', 'No Table Left');
+                res.render('managerapproveleave', { message: req.flash('message17') });
+            } else {
+                req.flash('message17', 'Tables found');
+                res.render('managerapproveleave', { results: jsonData, message: req.flash('message17') });
+            }
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            req.flash('message17', 'Error retrieving data');
+            res.render('managerapproveleave', { message: req.flash('message17') });
+        }
+    });
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    });
+});
+
+app.post('/managerapproveleave', (req,res) =>{
+    const button = req.body.buttonid
+    const csvArray = button.split(',')
+    const jsonObj = {
+        id : csvArray[0]
+    }
+    const jsonObj2 = JSON.stringify(jsonObj)
+    console.log(jsonObj2)
+    var pythonProcess = spawn('python',["./ManagerApproveLeaveController.py",jsonObj2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var alldata = data.toString().trim()
+    console.log(alldata)
+    if (alldata == "Success")
+    {
+        req.flash('message4','Approved Successfully')
+        res.redirect('/managerapproveleave')
+        
+    }
+    else
+    {
+        req.flash('message4','Unsuccessful')
+        res.redirect('/managerapproveleave') 
+    }
+})
+})
+
+
 // Create Employee leave route
 app.get('/EmployeeCreateLeave', (req,res) =>{
     res.render('EmployeeCreateLeave');
