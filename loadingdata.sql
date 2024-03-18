@@ -53,6 +53,8 @@ VALUES ('7', '2024-03-20', '08:00:00', '16:00:00','Late');
 
 update employeeleave SET status = 'Approved' where leavedid = '6';
 
+select * from attendance;
+
 select * from workshift;
 
 select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile where shiftPref = 'Day';

@@ -1238,6 +1238,32 @@ app.get('/manager_viewempleave', (req, res) => {
     });
 });
 
+app.get('/manager_viewattendance', (req, res) => {
+    var pythonProcess = spawn('python', ["./ManagerViewAttendanceController.py"]);
+    let alldata = "";
+    pythonProcess.stdout.on('data', (data) => {
+        alldata += data.toString();
+    });
+    pythonProcess.stdout.on('end', () => {
+        try {
+            const jsonData = JSON.parse(alldata.trim());
+            if (jsonData === "No table left") {
+                req.flash('message17', 'No Table Left');
+                res.render('ManagerViewAttendanceGUI', { message: req.flash('message17') });
+            } else {
+                req.flash('message17', 'Tables found');
+                res.render('ManagerViewAttendanceGUI', { results: jsonData, message: req.flash('message17') });
+            }
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            req.flash('message17', 'Error retrieving data');
+            res.render('ManagerViewAttendanceGUI', { message: req.flash('message17') });
+        }
+    });
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    });
+});
 
 // Create Employee leave route
 app.get('/EmployeeCreateLeave', (req,res) =>{
