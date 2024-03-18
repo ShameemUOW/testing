@@ -56,10 +56,6 @@ app.get('/logout', (req,res) => {
     res.redirect('/')
 })
 
-app.get('/manager_viewempleave', (req, res) => {
-    res.render('ManagerViewEmployeeLeave')
-})
-
 app.get('/logingui', (req,res) =>{
     ssn = req.session
     var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])
@@ -1168,6 +1164,35 @@ app.post('/managerrejectleave', (req,res) =>{
     }
 })
 })
+
+
+app.get('/manager_viewempleave', (req, res) => {
+    var pythonProcess = spawn('python', ["./ManagerViewLeaveController.py"]);
+    let alldata = "";
+    pythonProcess.stdout.on('data', (data) => {
+        alldata += data.toString();
+    });
+    pythonProcess.stdout.on('end', () => {
+        try {
+            const jsonData = JSON.parse(alldata.trim());
+            if (jsonData === "No table left") {
+                req.flash('message17', 'No Table Left');
+                res.render('ManagerViewLeavesGUI', { message: req.flash('message17') });
+            } else {
+                req.flash('message17', 'Tables found');
+                res.render('ManagerViewLeavesGUI', { results: jsonData, message: req.flash('message17') });
+            }
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            req.flash('message17', 'Error retrieving data');
+            res.render('ManagerViewLeavesGUI', { message: req.flash('message17') });
+        }
+    });
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    });
+});
+
 
 // Create Employee leave route
 app.get('/EmployeeCreateLeave', (req,res) =>{

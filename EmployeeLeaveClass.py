@@ -73,3 +73,18 @@ class EmployeeLeave:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def ManagerViewApprovedLeave(self):
+        try:
+            mycursor.execute("select leaveid, employeeid, date, leavetype from employeeleave where status = 'Approved';")
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No approved leave requests")
+            else:
+                result = []
+                for row in data:
+                    leaveDate = row[2].strftime('%Y-%m-%d') if row[2] is not None else None
+                    result.append((row[0], row[1], leaveDate, row[3]))
+                print(json.dumps(result))
+        except mysql.connector.Error as error:
+            print ("Failed")
