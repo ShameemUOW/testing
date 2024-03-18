@@ -50,7 +50,8 @@ CREATE TABLE EmployeeLeave (
     EmployeeID int NOT NULL,
     Fullname VARCHAR(50) NOT NULL,
     Date DATE NOT NULL,
-    LeaveType VARCHAR(50) NOT NULL
+    LeaveType VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL
     REFERENCES userAccount(EmployeeID)
     on update cascade
     on delete cascade

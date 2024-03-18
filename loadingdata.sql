@@ -23,7 +23,6 @@ insert into userprofile values ('7','Employee','Chef');
 insert into userprofile values ('8','Employee','Waiter');
 insert into userprofile values ('9','Manager', 'NIL'); 
 insert into userprofile values ('10','Manager', 'NIL'); 
-insert into userprofile values ('14','Employee', 'NIL'); 
 
 insert into employeeshiftinformation values ('2','Day','0');
 insert into employeeshiftinformation values ('6','Night','0');

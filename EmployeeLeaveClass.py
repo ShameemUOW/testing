@@ -17,7 +17,7 @@ class EmployeeLeave:
         pass
     def CreateEmployeeLeave(self, employeeId, fullname, date, leavetype):
         try:
-            mycursor.execute("INSERT INTO  employeeleave (employeeId, fullname, date, leavetype) VALUES ('{}','{}','{}', '{}')".format(employeeId, fullname, date, leavetype))
+            mycursor.execute("INSERT INTO  employeeleave (employeeId, fullname, date, leavetype,status) VALUES ('{}','{}','{}', '{}','Pending')".format(employeeId, fullname, date, leavetype))
             mydb.commit()
             print("Success")
         except mysql.connector.Error as error:
