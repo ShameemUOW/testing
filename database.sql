@@ -8,7 +8,7 @@ create TABLE userAccount(
     Email varchar(60) NOT NULL,
     Mobile bigint(8) NOT NULL,
     Username varchar(50) NOT NULL,
-    Pass varchar(50) NOT NULL,
+    Pass varchar(64) NOT NULL,
 	MaxHours int(4) NOT NULL,
     PlaceHolder varchar(50) NOT NULL,
     PRIMARY KEY (EmployeeID)

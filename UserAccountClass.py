@@ -1,5 +1,6 @@
 import mysql.connector
 import json
+from hashlib import sha256
 
 mydb = mysql.connector.connect(
     host ='localhost',
@@ -15,20 +16,20 @@ class UserAccount:
     def __init__(self):
         pass
     def Login(self,username,password,mainrole):
-        mycursor.execute("select Username, pass, mainrole from useraccount natural join userprofile where username = '{}' and pass = '{}' and mainrole = '{}'".format(username,password, mainrole))
+        mycursor.execute("select Username, pass, mainrole from useraccount natural join userprofile where username = '{}' and pass = sha2('{}', 0) and mainrole = '{}'".format(username,password, mainrole))
         data = mycursor.fetchall()
         numberofrow = mycursor.rowcount
         if(numberofrow==0):
             return False
         else:
             data2 = data[0]
-            if username == data2[0] and password == data2[1] and data2[2] == mainrole:
+            if username == data2[0] and sha256(password.encode('utf-8')).hexdigest() == data2[1] and data2[2] == mainrole:
                 return True
             else:
                 return False
     def getEmployeeID(self,username,password,mainrole):
         try:
-            mycursor.execute("select employeeid from useraccount natural join userprofile where username = '{}' and pass = '{}' and mainrole = '{}'".format(username,password, mainrole))
+            mycursor.execute("select employeeid from useraccount natural join userprofile where username = '{}' and pass = sha2('{}', 0) and mainrole = '{}'".format(username,password, mainrole))
             data = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -42,6 +43,7 @@ class UserAccount:
         try:
             mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Admin')".format(fullname, address, email, mobile, username,password,MaxHours))
             mydb.commit()
+            self.HashPlainPasswords()
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
@@ -49,6 +51,7 @@ class UserAccount:
         try:
             mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Employee')".format(fullname, address, email, mobile, username,password,MaxHours))
             mydb.commit()
+            self.HashPlainPasswords()
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
@@ -56,6 +59,7 @@ class UserAccount:
         try:
             mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Manager')".format(fullname, address, email, mobile, username,password,MaxHours))
             mydb.commit()
+            self.HashPlainPasswords()
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
@@ -68,6 +72,7 @@ class UserAccount:
                 try:
                     mycursor.execute("update useraccount SET {} = '{}' where employeeid = '{}'".format(selectedoption,value,employeeid))
                     mydb.commit()
+                    self.HashPlainPasswords()
                     print("Success")
                 except mysql.connector.Error as error:
                     print("Failed")
@@ -84,6 +89,7 @@ class UserAccount:
                 try:
                     mycursor.execute("update useraccount SET {} = '{}' where employeeid = '{}'".format(selectedoption,value,employeeid))
                     mydb.commit()
+                    self.HashPlainPasswords()
                     print("Success")
                 except mysql.connector.Error as error:
                     print("Failed")
@@ -100,6 +106,7 @@ class UserAccount:
                 try:
                     mycursor.execute("update useraccount SET {} = '{}' where employeeid = '{}'".format(selectedoption,value,employeeid))
                     mydb.commit()
+                    self.HashPlainPasswords()
                     print("Success")
                 except mysql.connector.Error as error:
                     print("Failed")
@@ -116,6 +123,7 @@ class UserAccount:
                 try:
                     mycursor.execute("delete from useraccount where employeeid = '{}'".format(employeeid))
                     mydb.commit()
+                    self.HashPlainPasswords()
                     print("Success")
                 except mysql.connector.Error as error:
                     print("Failed")
@@ -132,6 +140,7 @@ class UserAccount:
                 try:
                     mycursor.execute("delete from useraccount where employeeid = '{}'".format(employeeid))
                     mydb.commit()
+                    self.HashPlainPasswords()
                     print("Success")
                 except mysql.connector.Error as error:
                     print("Failed")
@@ -148,6 +157,7 @@ class UserAccount:
                 try:
                     mycursor.execute("delete from useraccount where employeeid = '{}'".format(employeeid))
                     mydb.commit()
+                    self.HashPlainPasswords()
                     print("Success")
                 except mysql.connector.Error as error:
                     print("Failed")
@@ -195,6 +205,7 @@ class UserAccount:
         try:
             mycursor.execute("UPDATE useraccount SET {} = '{}' where employeeid = {}".format(selectedoption,value,employeeid))
             mydb.commit()
+            self.HashPlainPasswords()
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
@@ -280,5 +291,20 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
-
+    def HashPlainPasswords(self):
+        try:
+            mycursor.execute("update useraccount set useraccount.Pass = sha2(useraccount.Pass,0) where useraccount.EmployeeID > 0 AND char_length(useraccount.Pass) < 64")
+            mydb.commit()
+            self.HashPlainPasswords()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")
+    def ResetPassword(self, newpassword, employeeid):
+        try:
+            mycursor.execute("update useraccount set useraccount.Pass = sha2('{}',0) where useraccount.EmployeeID = {}".format(newpassword, employeeid))
+            mydb.commit()
+            self.HashPlainPasswords()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")
 

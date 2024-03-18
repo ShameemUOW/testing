@@ -29,10 +29,39 @@ app.use('/img',express.static(__dirname +"public/img/"))
 app.use(express.json())
 const loggedin = []
 
+function getFiles() {
+    fs = require('fs')
+    files = fs.readdirSync('./views')
+    console.log(files)
+    if(files.includes('AdminCreateAdminAccountGUI.ejs')){
+        console.log('yes')
+    }
+}
+
+getFiles()
+
 app.get('/homepage', (req,res) =>{
     res.render(ssn.userprof + 'Page');
 })
 
+app.get('/resetpassword', (req,res) =>{
+    res.render('ResetPassword', {username : ssn.username});
+})
+
+app.post("/resetpass", (req,res)=>{
+    ssn = req.session
+    const myJSON = {
+        password: req.body.newpass,
+        employeeid: ssn.emlpoyeeidentity
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON2)
+    var pythonProcess = spawn('python',["./ResetPasswordController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    })
+    res.redirect('/homepage')
+})
 
 app.get('/manager_createws', (req, res) => {
     // Render the UpdateManagerAccount.ejs page
@@ -81,6 +110,7 @@ app.get('/logingui', (req,res) =>{
 app.post("/logingui", (req,res)=>{
     ssn = req.session
     ssn.emlpoyeeidentity = 0
+    ssn.username = req.body.Username
     const myJSON = {
         username: req.body.Username,
         password: req.body.Password,
@@ -110,8 +140,7 @@ app.post("/logingui", (req,res)=>{
                 myJSON["employeeid"] = alldata2[0][0]   
                 ssn.emlpoyeeidentity = myJSON["employeeid"]
                 console.log(ssn.emlpoyeeidentity)
-                const parseprof = req.body.selectedoption.split(' ')
-                ssn.userprof = parseprof[0]
+                ssn.userprof = req.body.selectedoption
                 res.redirect('/homepage')  
             })
             loggedin.push(myJSON)
