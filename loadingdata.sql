@@ -67,3 +67,5 @@ select column_name from information_schema.columns where table_schema = 'FYP' an
 select EmployeeID,FullName,Address,Email,Mobile,MaxHours,Job,ShiftPref,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where fullname = 'Tom';
 
 select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('EmployeeID');
+
+update useraccount set useraccount.Pass = sha2(useraccount.Pass,0) where useraccount.EmployeeID > 0 AND char_length(useraccount.Pass) < 64
