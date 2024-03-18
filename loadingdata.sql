@@ -41,7 +41,17 @@ select * from EmployeeLeave;
 
 INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
 VALUES ('3', '2024-03-15', 'sick', 'Pending');
+INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
+VALUES ('4', '2024-03-16', 'sick', 'Pending');
+INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
+VALUES ('5', '2024-03-17', 'sick', 'Pending');
+INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
+VALUES ('6', '2024-03-18', 'sick', 'Pending');
 
+INSERT INTO Attendance (employeeid, Date,clockin,clockout, attendance)
+VALUES ('7', '2024-03-20', '08:00:00', '16:00:00','Late');
+
+update employeeleave SET status = 'Approved' where leavedid = '6';
 
 select * from workshift;
 

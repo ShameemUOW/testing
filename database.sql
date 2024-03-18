@@ -50,7 +50,21 @@ CREATE TABLE EmployeeLeave (
     EmployeeID int NOT NULL,
     Date DATE NOT NULL,
     LeaveType VARCHAR(50) NOT NULL,
-    status VARCHAR(50) NOT NULL
+    status VARCHAR(50) NOT NULL,
+    CONSTRAINT FK_EmployeeID3 FOREIGN KEY (EmployeeID)
+    REFERENCES userAccount(EmployeeID)
+    on update cascade
+    on delete cascade
+);
+
+CREATE TABLE Attendance (
+    AttendanceID INT AUTO_INCREMENT PRIMARY KEY,
+    EmployeeID int NOT NULL,
+    Date DATE NOT NULL,
+    ClockIn TIME NOT NULL,
+    ClockOut TIME NOT NULL,
+    Attendance VARCHAR(50) NOT NULL,
+    CONSTRAINT FK_EmployeeID4 FOREIGN KEY (EmployeeID)
     REFERENCES userAccount(EmployeeID)
     on update cascade
     on delete cascade
