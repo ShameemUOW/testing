@@ -1374,6 +1374,46 @@ app.post('/managerfilterattendance', (req,res) =>{
 })
 });
 
+app.get('/managermanualassignemployees', (req,res) =>{
+    var pythonProcess = spawn('python',["./grabShiftPreferenceController.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('ManagerManualAssignEmployeesGUI',{myList, message4: req.flash('message4')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/managermanualassignemployees', (req, res) => {
+    const { employeeid, date, selectedoption } = req.body;
+    const dataToSend = JSON.stringify({ employeeid, date, selectedoption });
+    
+    // Spawn Python process and pass JSON data as argument
+    const pythonProcess = spawn('python', ['./ManagerManualAssignEmployeesController.py', dataToSend])
+    
+    pythonProcess.stdout.on('data', (data) => {
+      const result = data.toString().trim()
+      if (result === 'Failed') {
+        res.status(500).send('Unable to Assign workshift. Double check your values entered')
+      } else {
+        req.flash('message4','Assigned Successfully')
+        res.redirect('/managermanualassignemployees')
+      }
+    });
+  
+    pythonProcess.stderr.on('data', (data) => {
+      console.error('Error from Python Script:', data.toString())
+      res.status(500).send('Error from python script')
+    });
+  });
+
 
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))
