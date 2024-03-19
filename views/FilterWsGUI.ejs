@@ -5,7 +5,7 @@
     </head>
     <body>
         <div id="managerpage">
-            <h1 onclick="document.location='/homepage'">Manager</h1>
+            <h1 onclick="document.location='/homepage'">SER</h1>
         </div>
 
         <div id="mySidepanel" class="sidepanel">
@@ -30,14 +30,14 @@
         <form action = "/manager_filterws" method = "POST">
             <div id="options">
                 <table class = "creating">
-                    <h1>Filter Working Shifts</h1><br>
+                    <h1>Filter WorkShift</h1><br>
                     <tr>
                         <td><select class="profile-select" name = "selectedoption">
                             <% myList.forEach(item => {%>
                                 <option value = "<%= item%>"><%= item%></option>
                             <% }); %>
-                        </select>
-                        <td><input id="value" class = "textbox" type="text" name="value" placeholder="Filter data"></td>
+                        </select></td>
+                        <td><input id="value" class = "textbox" type="text" name="value" placeholder="Enter Value"></td>
                     </tr>
                     <tr>
                         <td></td>

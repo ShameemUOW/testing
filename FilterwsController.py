@@ -2,14 +2,14 @@ import WorkShiftClass
 import sys
 import json
 
-input_data = sys.argv[1]
-x = json.loads(input_data)
+input = sys.argv[1]
+x=json.loads(input)
 selectedoption = x["selectedoption"]
 value = x["value"]
 
 class ManagerFilterWorkShift:
-    def mFilterWorkShift(self, selectedoption, value):
-        mfilterws = WorkShiftClass.WorkShift()
-        mfilterws.ManagerFilterWorkShift(selectedoption, value)
+    def ManagerFilterWorkShiftController(selectedoption,value):
+        mfws = WorkShiftClass.WorkShift()
+        mfws.ManagerFilterWorkShift(selectedoption,value)
 
-mfilterws = ManagerFilterWorkShift.ManagerFilterWorkShift(selectedoption, value)
+mfws = ManagerFilterWorkShift.ManagerFilterWorkShiftController(selectedoption,value)

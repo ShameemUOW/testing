@@ -1485,19 +1485,18 @@ app.post('/employeeclockout', (req,res) =>{
 })
 
 
-
-app.get('/manager_filterws', (req, res) => {
-    var pythonProcess = spawn('python', ["./grabworkshiftsTableColumnsController.py"])
-    pythonProcess.stdout.on('data', (data) => {
-        try {
+app.get('/manager_filterws', (req,res) =>{
+    var pythonProcess = spawn('python',["./grabworkshiftsTableColumnsController.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
             var myList = JSON.parse(data.toString())
-            res.render('FilterWsGUI', { myList, message: req.flash('message') })
-        } catch (error) {
-            console.error('Error parsing JSON data:', error)
+            res.render('FilterWsGUI',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')
         }
     })
-    pythonProcess.stderr.on('data', (data) => {
+    pythonProcess.stderr.on('data',(data) =>{
         console.error('Error from Python Script:', data.toString())
         res.status(500).send('Error from python script')
     })
@@ -1522,7 +1521,7 @@ app.post('/manager_filterws', (req,res) =>{
     {
         console.log(data.toString())
         req.flash('message23','Failed Search')
-        res.redirect('/FilterWsGUI')   
+        res.redirect('/manager_filterws')   
     }
     else
     {

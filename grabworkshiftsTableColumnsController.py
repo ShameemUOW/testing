@@ -3,6 +3,6 @@ import WorkShiftClass
 class grabWorkShiftsTableColumnsController:
     def grabWorkShiftTableColumns():
         gwsd = WorkShiftClass.WorkShift()
-        gwsd.grabworkshiftdetail()
+        gwsd.grabWorkShiftTableColumn()
 
 gwsd = grabWorkShiftsTableColumnsController.grabWorkShiftTableColumns()
