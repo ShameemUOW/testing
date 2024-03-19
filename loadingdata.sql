@@ -36,10 +36,17 @@ VALUES ('2024-03-19', 'Afternoon', '14:00:00', '20:00:00');
 INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-03-19', 'Late Morning', '11:00:00', '20:00:00');
 
+INSERT INTO workshift (Date, shift, start, end)
+VALUES ('2024-03-19', 'Evening', '15:00:00', '20:00:00');
+
 Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
 VALUES ('2','2','2024-03-19','Afternoon');
 Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
 VALUES ('3','2','2024-03-19','Late Morning');
+Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
+VALUES ('3','4','2024-03-19','Evening');
+Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
+VALUES ('4','2','2024-03-19','Evening');
 
 
 INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
