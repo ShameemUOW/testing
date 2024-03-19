@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/Managercreatetable.css">
+    </head>
+    <body>
+        <div id="managerpage">
+            <h1 onclick="document.location='/homepage'">SER</h1>
+        </div>
+
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+            <a href="#" onclick="document.location='/logout'">Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image1"></button>
+        <script>
+            function openNav() {
+              document.getElementById("mySidepanel").style.width = "250px";
+            }
+            
+            function closeNav() {
+              document.getElementById("mySidepanel").style.width = "0";
+            }
+        </script>
+
+        <div id="backbutton">
+            <button id="back" onclick="document.location='/createuseraccount'"><b>&laquo;back</b></button>
+        </div>
+        <form action = "/employeeclockin" method = "POST">
+            <div id="options">
+                <table class = "creating">
+                    <h1>Clock-In</h1><br>
+                    <tr>
+                        <td></td>
+                        <td><p id="currentTime">Current Date: <%= currentDate %>, Current Time: <%= currentTime %></p></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button class = "rounded-button" id="button"><b>Clock-In</b></button></td>
+                        <td></td>
+                    </tr>
+                    <% if(message6.length>0) {%>
+                        <div><%= message6%></div>
+                    <%}%>
+                </table>
+            </div>
+        </form>
+        <script>
+            // Function to update the time periodically
+            function updateTime() {
+                // Get current date and time
+                var currentDate = new Date().toLocaleDateString();
+                var currentTime = new Date().toLocaleTimeString();
+                // Update the content of the paragraph element with the current date and time
+                document.getElementById('currentTime').innerText = "Current Date: " + currentDate + ", Current Time: " + currentTime;
+            }
+    
+            // Call updateTime initially to set the time
+            updateTime();
+    
+            // Call updateTime every second to update the time
+            setInterval(updateTime, 1000);
+        </script>
+    </body>
+</html>

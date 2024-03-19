@@ -1294,41 +1294,6 @@ app.get('/manager_viewattendance', (req, res) => {
     });
 });
 
-// Create Employee leave route
-app.get('/EmployeeCreateLeave', (req,res) =>{
-    res.render('EmployeeCreateLeave');
-})
-
-app.post('/EmployeeCreateLeave', (req, res) => {
-    const employeeId = req.session.emlpoyeeidentity
-    // const myJSON = {
-    //     employeeId : emlpoyeeidentity,
-    //     value : req.body.value
-    // }
-    // const myJSON2 = JSON.stringify(myJSON)
-    const { date, leavetype } = req.body;
-    const dataToSend = JSON.stringify({ employeeId, date, leavetype });
-    console.log("Employee identity: " + employeeId)
-    console.log(dataToSend)
-    // Spawn Python process and pass JSON data as argument
-    const pythonProcess = spawn('python', ['./CreateEmployeeLeaveController.py', dataToSend]);
-    
-    pythonProcess.stdout.on('data', (data) => {
-      const result = data.toString().trim();
-      if (result === 'Failed EmployeeLeaveClass') {
-        res.status(500).send('Unable to create leave.');
-      } else {
-        req.flash('message4','Leave created successfully')
-        res.redirect('/employee_createLeave')
-      }
-    });
-  
-    pythonProcess.stderr.on('data', (data) => {
-      console.error('Error from Python Script:', data.toString());
-      res.status(500).send('Error from python script');
-    });
-});
-
 app.get('/managerfilterattendance', (req,res) =>{
     var pythonProcess = spawn('python',["./grabAttendanceTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
@@ -1412,8 +1377,76 @@ app.post('/managermanualassignemployees', (req, res) => {
       console.error('Error from Python Script:', data.toString())
       res.status(500).send('Error from python script')
     });
-  });
+});
 
+// Create Employee leave route
+app.get('/EmployeeCreateLeave', (req,res) =>{
+    res.render('EmployeeCreateLeave');
+})
+
+app.post('/EmployeeCreateLeave', (req, res) => {
+    const employeeId = req.session.emlpoyeeidentity
+    // const myJSON = {
+    //     employeeId : emlpoyeeidentity,
+    //     value : req.body.value
+    // }
+    // const myJSON2 = JSON.stringify(myJSON)
+    const { date, leavetype } = req.body;
+    const dataToSend = JSON.stringify({ employeeId, date, leavetype });
+    console.log("Employee identity: " + employeeId)
+    console.log(dataToSend)
+    // Spawn Python process and pass JSON data as argument
+    const pythonProcess = spawn('python', ['./CreateEmployeeLeaveController.py', dataToSend]);
+    
+    pythonProcess.stdout.on('data', (data) => {
+      const result = data.toString().trim();
+      if (result === 'Failed EmployeeLeaveClass') {
+        res.status(500).send('Unable to create leave.')
+      } else {
+        req.flash('message4','Leave created successfully')
+        res.redirect('/employee_createLeave')
+      }
+    });
+  
+    pythonProcess.stderr.on('data', (data) => {
+      console.error('Error from Python Script:', data.toString())
+      res.status(500).send('Error from python script')
+    });
+});
+
+app.get('/employee_clockinout', (req,res) =>{
+    res.render('EmployeeClockinClockOutGUI')
+})
+
+app.get('/employeeclockin', (req,res) =>{
+    const currentDate = new Date().toLocaleDateString()
+    const currentTime = new Date().toLocaleTimeString()
+    console.log(currentTime)
+    res.render('EmployeeClockInGUI', { currentDate, currentTime, message5: req.flash('message6') })
+})
+
+app.post('/employeeclockin', (req,res) =>{
+    // Get current date and time
+    const clockInTime = new Date().toLocaleString();
+    // Send the current time as a response
+    req.flash('message6','Clocked In At: '+ clockInTime)
+    res.redirect(`employeeclockin`);
+})
+
+app.get('/employeeclockout', (req,res) =>{
+    const currentDate = new Date().toLocaleDateString()
+    const currentTime = new Date().toLocaleTimeString()
+    console.log(currentTime)
+    res.render('EmployeeClockOutGUI', { currentDate, currentTime, message5: req.flash('message5') })
+})
+
+app.post('/employeeclockout', (req,res) =>{
+    // Get current date and time
+    const clockoutTime = new Date().toLocaleString();
+    // Send the current time as a response
+    req.flash('message5','Clocked Out At: '+ clockoutTime)
+    res.redirect(`employeeclockout`);
+})
 
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))
