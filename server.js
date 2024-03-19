@@ -1374,35 +1374,6 @@ app.post('/managerfilterattendance', (req,res) =>{
 })
 });
 
-app.post('/managersearchemployeeaccounts', (req,res) =>{
-    const jsonObj = {
-        selectedoption : req.body.selectedoption,
-        value : req.body.value
-    }
-    const jsonObj2 = JSON.stringify(jsonObj)
-    var pythonProcess = spawn('python',["./ManagerSearchEmployeeController.py",jsonObj2])
-    pythonProcess.stdout.on('data',(data)=>{
-    try{
-        var alldata = JSON.parse(data.toString())
-    }catch(error)
-    {
-        console.log(alldata)
-    }
-    
-    if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
-    {
-        console.log(data.toString())
-        req.flash('message23','Failed Search')
-        res.redirect('/managersearchemployeeaccounts')   
-    }
-    else
-    {
-        res.render('ManagerSearchEmployeeAccountsTableGUI',{"results": alldata}) 
-    }
-})
-});
-
-
 
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))
