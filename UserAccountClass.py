@@ -165,6 +165,19 @@ class UserAccount:
                 print("Failed")
         except mysql.connector.Error as error:
             print("Failed")
+            
+    def EmployeeViewAccount(self, employeeid):
+        try:
+            mycursor.execute("SELECT employeeid, Fullname, Address, Email, mobile, Username, maxhours FROM useraccount WHERE employeeid = '{}'".format(employeeid))
+            data = mycursor.fetchone()
+            if data is None:
+                print("No data found for employee with ID:", employeeid)
+            else:
+                result = json.dumps(data)
+                print(result)
+        except mysql.connector.Error as error:
+            print("Failed to execute query:", error)
+
     def AdminViewAdminAccount(self):
         try:
             mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,maxhours from useraccount where placeholder = 'Admin';")
