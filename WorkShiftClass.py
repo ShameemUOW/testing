@@ -66,3 +66,11 @@ class WorkShift:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print ("Failed")
+
+    def updateWorkShift(self, id, selectedoption, value):
+        try:
+            mycursor.execute("update workshift set {} = '{}' where id = '{}'".format(selectedoption,value,id))
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")

@@ -843,10 +843,10 @@ app.post('/updatemanageraccount', (req,res) =>{
 })
 
 
-// CreateWorkShift route
-app.get('/CreateWorkShift', (req,res) =>{
+app.get('/manager_createws', (req, res) => {
+    // Render the UpdateManagerAccount.ejs page
     res.render('CreateWorkShift');
-})
+});
 
 app.post('/CreateWorkShift', (req, res) => {
     const { date, shift, start, end } = req.body;
@@ -1529,6 +1529,64 @@ app.post('/manager_filterws', (req,res) =>{
     }
 })
 });
+
+//Update workshift
+app.get('/manager_updatews', (req,res) =>{
+    var pythonProcess = spawn('python',["./grabworkshiftsTableColumnsController.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('UpdateWsGUI',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/manager_updatews', (req, res) => {
+    const { id, selectedoption, value } = req.body;
+    const myJSON = {
+        id: id,
+        selectedoption: selectedoption,
+        value: value
+    };
+    const myJSON2 = JSON.stringify(myJSON);
+    const pythonProcess = spawn('python', ["./UpdatewsController.py", myJSON2]);
+
+    pythonProcess.stdout.on('data', (data) => { 
+        const result = data.toString().trim();        
+        // Check the result and respond accordingly
+        if (result === "Failed") {
+            req.flash('message', 'Unable to update WorkShift. Double check your values entered');
+        } else {
+            req.flash('message', 'WorkShift Updated');
+        }      
+        // Redirect back to the same page
+        res.redirect('/manager_updatews');
+    });
+
+    // Handle errors from the Python process
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`Error from Python script: ${data}`);
+        req.flash('message', 'Error updating WorkShift');
+        res.redirect('/manager_updatews');
+    });
+});
+
+
+
+
+
+
+
+
+
+
 
 
 //Listening to port 3000
