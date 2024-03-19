@@ -51,4 +51,6 @@ class EmployeeShiftInformation:
         except mysql.connector.Error as error:
             print ("Failed")
 
+    
+
         

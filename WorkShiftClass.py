@@ -46,3 +46,24 @@ class WorkShift:
             print("Success")
         except mysql.connector.Error as error:
            print("Failed {}".format(error))
+
+
+    def ManagerFilterWorkShift(self, selectedoption,value):
+        try:
+            mycursor.execute("SELECT * FROM workshift WHERE {} LIKE '%{}%';'".format(selectedoption,value))
+            searchingdata = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                searchingresult = json.dumps(searchingdata)
+                print(searchingresult)
+        except mysql.connector.Error as error:
+            print ("Failed")
+    
+
+    def grabworkshiftdetail(self):
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'workshift'")
+        data = mycursor.fetchall()
+        result = json.dumps(data)
+        print(result)

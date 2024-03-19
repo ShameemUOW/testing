@@ -1484,5 +1484,53 @@ app.post('/employeeclockout', (req,res) =>{
     res.redirect(`employeeclockout`);
 })
 
+
+
+app.get('/manager_filterws', (req, res) => {
+    var pythonProcess = spawn('python', ["./grabworkshiftsTableColumnsController.py"])
+    pythonProcess.stdout.on('data', (data) => {
+        try {
+            var myList = JSON.parse(data.toString())
+            res.render('FilterWsGUI', { myList, message: req.flash('message') })
+        } catch (error) {
+            console.error('Error parsing JSON data:', error)
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data', (data) => {
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/manager_filterws', (req,res) =>{
+    const jsonObj = {
+        selectedoption : req.body.selectedoption,
+        value : req.body.value
+    }
+    const jsonObj2 = JSON.stringify(jsonObj)
+    var pythonProcess = spawn('python',["./FilterwsController.py",jsonObj2])
+    pythonProcess.stdout.on('data',(data)=>{
+    try{
+        var alldata = JSON.parse(data.toString())
+    }catch(error)
+    {
+        console.log(alldata)
+    }
+    
+    if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
+    {
+        console.log(data.toString())
+        req.flash('message23','Failed Search')
+        res.redirect('/FilterWsGUI')   
+    }
+    else
+    {
+        res.render('ManagerFilterWorkShiftTable',{"results": alldata}) 
+    }
+})
+});
+
+
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))
