@@ -1422,16 +1422,52 @@ app.get('/employeeclockin', (req,res) =>{
     const currentDate = new Date().toLocaleDateString()
     const currentTime = new Date().toLocaleTimeString()
     console.log(currentTime)
-    res.render('EmployeeClockInGUI', { currentDate, currentTime, message5: req.flash('message6') })
+    res.render('EmployeeClockInGUI', { currentDate, currentTime, message6: req.flash('message6') })
 })
 
-app.post('/employeeclockin', (req,res) =>{
+app.post('/employeeclockin', (req, res) => {
     // Get current date and time
-    const clockInTime = new Date().toLocaleString();
+    ssn = req.session
+    employeeid = req.session.emlpoyeeidentity
+    const currentDate = new Date().toLocaleDateString()
+    const currentTime = new Date().toLocaleTimeString()
+    const clockInTime = new Date().toLocaleString()
+    console.log(currentDate)
+    console.log(currentTime)
+    shiftid = req.body.shiftid
+    const dataToSend = JSON.stringify({ employeeid, currentDate, currentTime, shiftid });
+
     // Send the current time as a response
-    req.flash('message6','Clocked In At: '+ clockInTime)
-    res.redirect(`employeeclockin`);
-})
+    const pythonProcess = spawn('python', ['./EmployeeClockInController.py', dataToSend]);
+
+    let outputData = '';
+
+    pythonProcess.stdout.on('data', (data) => {
+        outputData += data.toString();
+    });
+
+    pythonProcess.on('close', (code) => {
+        req.flash('message6', null);
+        if (code === 0) {
+            console.log(outputData.trim())
+            if (outputData.trim() === '') {
+                req.flash('message6', 'Clocked In At: ' + clockInTime)
+                res.redirect(`employeeclockin`);
+            } else {
+                req.flash('message6', 'Check that you are assigned to the correct shift')
+                res.redirect(`employeeclockin`);
+            }
+        } else {
+            console.error('Python process exited with code:', code);
+            res.redirect(`employeeclockin?error=Error from python script`);
+        }
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+        console.error('Error from Python Script:', data.toString());
+        res.redirect(`employeeclockin?error=Error from python script`);
+    });
+});
 
 app.get('/employeeclockout', (req,res) =>{
     const currentDate = new Date().toLocaleDateString()

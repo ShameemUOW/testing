@@ -31,11 +31,24 @@ insert into employeeshiftinformation values ('8','Afternoon','0');
 
 INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-03-15', 'Morning', '08:00:00', '16:00:00');
+INSERT INTO workshift (Date, shift, start, end)
+VALUES ('2024-03-19', 'Afternoon', '14:00:00', '20:00:00');
+INSERT INTO workshift (Date, shift, start, end)
+VALUES ('2024-03-19', 'Late Morning', '11:00:00', '20:00:00');
+
+Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
+VALUES ('2','2','2024-03-19','Afternoon');
+Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
+VALUES ('3','2','2024-03-19','Late Morning');
 
 select distinct mainrole From userprofile;
 select * from useraccount;
+select * from workshift;
 select * from userprofile;
+select * from EmployeeShift;
 select distinct shiftpref From employeeshiftinformation;
+
+select * from Employeeshift;
 
 select * from EmployeeLeave;
 
@@ -49,7 +62,7 @@ INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
 VALUES ('6', '2024-03-18', 'sick', 'Pending');
 
 INSERT INTO Attendance (employeeid, Date,clockin,clockout, attendance)
-VALUES ('7', '2024-03-20', '08:00:00', '16:00:00','Late');
+VALUES ('7', '19/03/2024', '1:15:49 pm', '1:15:49 pm','Late');
 
 update employeeleave SET status = 'Approved' where leavedid = '6';
 

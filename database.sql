@@ -62,8 +62,8 @@ CREATE TABLE Attendance (
     EmployeeID int NOT NULL,
     Date DATE NOT NULL,
     ClockIn TIME NOT NULL,
-    ClockOut TIME NOT NULL,
-    Attendance VARCHAR(50) NOT NULL,
+    ClockOut TIME NULL,
+    Attendance VARCHAR(50) NULL,
     CONSTRAINT FK_EmployeeID4 FOREIGN KEY (EmployeeID)
     REFERENCES userAccount(EmployeeID)
     on update cascade
