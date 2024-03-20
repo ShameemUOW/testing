@@ -1,6 +1,6 @@
 import mysql.connector
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 
 mydb = mysql.connector.connect(
     host='localhost',
@@ -54,7 +54,7 @@ class Attendance:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print("Failed to fetch data:", error)
-    def EmployeeClockIn(self, employeeid,shiftid,datein,timein):
+    def EmployeeClockIn(self, employeeid, shiftid, datein, timein):
         try:
             # Parse date and time strings into datetime objects
             date_obj = datetime.strptime(datein, "%d/%m/%Y")
@@ -67,17 +67,19 @@ class Attendance:
                 raise ValueError("The provided shift ID does not exist for the employee.")
 
             # Retrieve the start time of the shift from the workshift table
-            mycursor.execute("SELECT start FROM workshift WHERE id = %s", (shiftid,))
-            shift_start_time = mycursor.fetchone()[0]
+            mycursor.execute("SELECT date, start FROM workshift WHERE id = %s", (shiftid,))
+            shift_date_obj, shift_start_time = mycursor.fetchone()
 
+            shift_date_obj = datetime.strptime(shift_date_obj, "%Y-%m-%d").date()
             # Convert shift_start_time to a time object
             shift_start_time = datetime.strptime(str(shift_start_time), "%H:%M:%S").time()
 
             # Combine date and time into a datetime object
             clock_in_datetime = datetime.combine(date_obj, time_obj.time())
+            currentdatetime = datetime.combine(shift_date_obj, shift_start_time)
 
             # Compare clock-in time with shift start time and insert into attendance table accordingly
-            if clock_in_datetime.time() > shift_start_time:
+            if clock_in_datetime > currentdatetime:
                 mycursor.execute("INSERT INTO attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'Late'))
             else:
                 mycursor.execute("INSERT INTO attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'On time'))
@@ -91,3 +93,19 @@ class Attendance:
         except ValueError as e:
             print("Error:", e)
             return "Failed Attendance Class"
+    def EmployeeClockOut(self, employeeid,timeout):
+        time_obj = datetime.strptime(timeout, "%I:%M:%S %p")
+        formatted_time = time_obj.strftime("%H:%M:%S")
+        try:
+            mycursor.execute("SELECT AttendanceID FROM Attendance WHERE EmployeeID = %s AND ClockOut IS NULL",(employeeid,))
+            unclocked_entry = mycursor.fetchone()
+            if unclocked_entry:
+                attendance_id = unclocked_entry[0]
+                mycursor.execute("UPDATE Attendance SET ClockOut = %s WHERE AttendanceID = %s",(formatted_time,attendance_id,))
+                mydb.commit()
+                print("Clock-out time updated successfully.")
+            else:
+                print("No unclocked entry found for the employee.")
+        except mysql.connector.Error as error:
+            print("Failed to update clock-out time:", error)
+

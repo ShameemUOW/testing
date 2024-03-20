@@ -1455,7 +1455,7 @@ app.post('/employeeclockin', (req, res) => {
                 req.flash('message6', 'Clocked In At: ' + clockInTime)
                 res.redirect(`employeeclockin`);
             } else {
-                req.flash('message6', 'Check that you are assigned to the correct shift')
+                req.flash('message6', 'Check that you are assigned to the correct shift or you have clock out of all shifts.')
                 res.redirect(`employeeclockin`);
             }
         } else {
@@ -1477,13 +1477,48 @@ app.get('/employeeclockout', (req,res) =>{
     res.render('EmployeeClockOutGUI', { currentDate, currentTime, message5: req.flash('message5') })
 })
 
-app.post('/employeeclockout', (req,res) =>{
+app.post('/employeeclockout', (req, res) => {
     // Get current date and time
-    const clockoutTime = new Date().toLocaleString();
+    ssn = req.session
+    employeeid = req.session.emlpoyeeidentity
+    const currentTime = new Date().toLocaleTimeString()
+    const clockInTime = new Date().toLocaleString()
+    console.log(currentTime)
+    shiftid = req.body.shiftid
+    const dataToSend = JSON.stringify({ employeeid, currentTime });
+
     // Send the current time as a response
-    req.flash('message5','Clocked Out At: '+ clockoutTime)
-    res.redirect(`employeeclockout`);
-})
+    const pythonProcess = spawn('python', ['./EmployeeClockOutController.py', dataToSend]);
+
+    let outputData = '';
+
+    pythonProcess.stdout.on('data', (data) => {
+        outputData += data.toString();
+    });
+
+    pythonProcess.on('close', (code) => {
+        req.flash('message5', null);
+        if (code === 0) {
+            console.log(outputData.trim())
+            if (outputData.trim() === '') {
+                req.flash('message5', 'Clocked Out At: ' + clockInTime)
+                res.redirect(`employeeclockout`);
+            } else {
+                req.flash('message5', 'Check That you have clocked in before.')
+                res.redirect(`employeeclockout`);
+            }
+        } else {
+            console.error('Python process exited with code:', code);
+            res.redirect(`employeeclockout?error=Error from python script`);
+        }
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+        console.error('Error from Python Script:', data.toString());
+        res.redirect(`employeeclockout?error=Error from python script`);
+    });
+});
+
 
 app.get('/employee_viewall', (req, res) => {
     const employeeId = req.session.emlpoyeeidentity;

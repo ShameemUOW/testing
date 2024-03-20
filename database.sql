@@ -79,6 +79,3 @@ CREATE TABLE EmployeeShift (
     FOREIGN KEY (shiftID) REFERENCES workshift(id),
     FOREIGN KEY (EmployeeID) REFERENCES userAccount(EmployeeID)
 );
-
-
-drop database FYP;
