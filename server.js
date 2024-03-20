@@ -1500,7 +1500,7 @@ app.post('/employeeclockout', (req, res) => {
         req.flash('message5', null);
         if (code === 0) {
             console.log(outputData.trim())
-            if (outputData.trim() === '') {
+            if (outputData.trim() === 'Clock-out time updated successfully.') {
                 req.flash('message5', 'Clocked Out At: ' + clockInTime)
                 res.redirect(`employeeclockout`);
             } else {

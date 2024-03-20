@@ -76,10 +76,15 @@ class Attendance:
 
             # Combine date and time into a datetime object
             clock_in_datetime = datetime.combine(date_obj, time_obj.time())
-            currentdatetime = datetime.combine(shift_date_obj, shift_start_time)
+            shiftstartdatetime = datetime.combine(shift_date_obj, shift_start_time)
+            time_difference = shiftstartdatetime - clock_in_datetime
+
+            # Check if the clock-in time is more than 2 hours before the shift start time
+            if time_difference.total_seconds() > 7200:  # 2 hours in seconds
+                raise ValueError("You cannot clock in more than 2 hours before the shift start time.")
 
             # Compare clock-in time with shift start time and insert into attendance table accordingly
-            if clock_in_datetime > currentdatetime:
+            if clock_in_datetime > shiftstartdatetime:
                 mycursor.execute("INSERT INTO attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'Late'))
             else:
                 mycursor.execute("INSERT INTO attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'On time'))

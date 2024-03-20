@@ -24,7 +24,7 @@ DELIMITER ;
 DELIMITER //
 
 CREATE TRIGGER before_employee_clock_out
-BEFORE INSERT ON Attendance
+BEFORE UPDATE ON Attendance
 FOR EACH ROW
 BEGIN
     DECLARE existing_attendance INT;
