@@ -31,6 +31,9 @@
             <div id="options">
                 <table class = "creating">
                     <h1>Update Admin Account</h1><br>
+                    <% if(message.length>0) {%>
+                        <div><%= message%></div>
+                    <%}%>
                     <tr>
                         <td></td>
                         <td><input id="employeeid" class = "textbox" type="text" name="employeeid" placeholder="Enter Admin ID"></td>
@@ -51,9 +54,6 @@
                     </tr>
                 </table>
             </div>
-            <% if(message.length>0) {%>
-                <div><%= message%></div>
-            <%}%>
         </form>
     </body>
 </html>

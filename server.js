@@ -121,6 +121,7 @@ app.post("/logingui", (req,res)=>{
     console.log(myJSON2)
     var pythonProcess = spawn('python',["./LoginController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message', null)
     var bool = data.toString()
     console.log(bool)
     if (bool == "False\r\n")
@@ -178,6 +179,7 @@ app.post('/createadminaccount', (req,res) =>{
     console.log(myJSON2)
     var pythonProcess = spawn('python',["./AdminCreateAdminAccountController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message15', null)
     var bool = data.toString()
     console.log(bool.trim())
     if (bool.trim() == "Failed")
@@ -194,7 +196,7 @@ app.post('/createadminaccount', (req,res) =>{
 })
 
 app.get('/createemployeeaccount', (req,res) =>{
-    res.render('AdminCreateEmployeeAccountGUI');
+    res.render('AdminCreateEmployeeAccountGUI',{message: req.flash('message16')});
 })
 
 app.post('/createemployeeaccount', (req,res) =>{
@@ -212,23 +214,24 @@ app.post('/createemployeeaccount', (req,res) =>{
     console.log(myJSON2)
     var pythonProcess = spawn('python',["./AdminCreateEmployeeAccountController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message16', null)
     var bool = data.toString()
     console.log(bool)
     if (bool.trim() == "Failed")
     {
-        req.flash('message15','Unable to create User. Double check your values entered')
+        req.flash('message16','Unable to create User. Double check your values entered')
         res.redirect('/createemployeeaccount')
     }
     else
     {
-        req.flash('message15','User Account Created')
+        req.flash('message16','User Account Created')
         res.redirect('/createemployeeaccount')
     }
 })
 })
 
 app.get('/createmanageraccount', (req,res) =>{
-    res.render('AdminCreateManagerAccountGUI');
+    res.render('AdminCreateManagerAccountGUI',{message: req.flash('message17')});
 })
 
 app.post('/createmanageraccount', (req,res) =>{
@@ -246,16 +249,17 @@ app.post('/createmanageraccount', (req,res) =>{
     console.log(myJSON2)
     var pythonProcess = spawn('python',["./AdminCreateManagerAccountController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
     var bool = data.toString()
     console.log(bool)
     if (bool.trim() == "Failed")
     {
-        req.flash('message15','Unable to create User. Double check your values entered')
+        req.flash('message17','Unable to create User. Double check your values entered')
         res.redirect('/createmanageraccount')
     }
     else
     {
-        req.flash('message15','User Account Created')
+        req.flash('message17','User Account Created')
         res.redirect('/createmanageraccount')
     }
 })
@@ -296,6 +300,7 @@ app.post('/createuserprofile', (req,res) =>{
     const myJSON2 = JSON.stringify(myJSON)
     var pythonProcess = spawn('python',["./CreateUserProfileController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message', null);
     var bool = data.toString()
     console.log(bool)
     if (bool.trim() == "Failed")
@@ -330,6 +335,7 @@ app.post('/updateuserprofile', (req,res) =>{
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
+    req.flash('message', null);
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to update Profile. Double check your values entered')
@@ -376,6 +382,7 @@ app.post('/adminupdateadminaccount', (req,res) =>{
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
+    req.flash('message', null);
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to update Admin Account. Double check your values entered')
@@ -418,6 +425,7 @@ app.post('/adminupdatemanageraccount', (req,res) =>{
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
+    req.flash('message', null);
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to update Manager Account. Double check your values entered')
@@ -460,6 +468,7 @@ app.post('/adminupdateemployeeaccount', (req,res) =>{
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
+    req.flash('message', null);
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to update Employee Account. Double check your values entered')
@@ -491,6 +500,7 @@ app.post('/admindeleteadminaccount', (req,res) =>{
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
+    req.flash('message', null);
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to delete Admin Account. Double check your values entered')
@@ -518,6 +528,7 @@ app.post('/admindeletemanageraccount', (req,res) =>{
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
+    req.flash('message', null);
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to delete Manager Account. Double check your values entered')
@@ -545,6 +556,7 @@ app.post('/admindeleteemployeeaccount', (req,res) =>{
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
+    req.flash('message', null);
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to delete Employee Account. Double check your values entered')
@@ -691,6 +703,7 @@ app.post('/adminsearchadmin', (req,res) =>{
     const jsonObj2 = JSON.stringify(jsonObj)
     var pythonProcess = spawn('python',["./AdminSearchAdminAccountsController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -701,7 +714,7 @@ app.post('/adminsearchadmin', (req,res) =>{
     if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
     {
         console.log(data.toString())
-        req.flash('message23','Failed Search')
+        req.flash('message','Failed Search')
         res.redirect('/adminsearchadmin')   
     }
     else
@@ -736,6 +749,7 @@ app.post('/adminsearchmanager', (req,res) =>{
     const jsonObj2 = JSON.stringify(jsonObj)
     var pythonProcess = spawn('python',["./AdminSearchManagerAccountsController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -746,7 +760,7 @@ app.post('/adminsearchmanager', (req,res) =>{
     if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
     {
         console.log(data.toString())
-        req.flash('message23','Failed Search')
+        req.flash('message','Failed Search')
         res.redirect('/adminsearchmanager')   
     }
     else
@@ -781,6 +795,7 @@ app.post('/adminsearchemployee', (req,res) =>{
     const jsonObj2 = JSON.stringify(jsonObj)
     var pythonProcess = spawn('python',["./AdminSearchEmployeeAccountsController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -832,6 +847,7 @@ app.post('/updatemanageraccount', (req,res) =>{
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
+    req.flash('message', null);
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to update Employee Account. Double check your values entered')
