@@ -31,6 +31,9 @@
             <div id="options">
                 <table class = "creating">
                     <h1>Create Admin Account</h1><br>
+                    <% if(message.length>0) {%>
+                        <div><%= message%></div>
+                    <%}%>
                     <tr>
                         <td><input id="username" class = "textbox" type="text" name="username" placeholder="Enter Username"></td>
                         <td><input id="password" class = "textbox" type="text" name="password" placeholder="Enter password"></td>

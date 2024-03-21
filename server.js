@@ -125,6 +125,7 @@ app.post("/logingui", (req,res)=>{
     console.log(bool)
     if (bool == "False\r\n")
     {
+        req.flash('message', null);
         req.flash('message','Invalid User')
         res.redirect('/logingui')
         
@@ -144,6 +145,7 @@ app.post("/logingui", (req,res)=>{
                 ssn.userprof = req.body.selectedoption
                 res.redirect('/homepage')  
             })
+            req.flash('message', null);
             loggedin.push(myJSON)
             req.flash('message','Enter Details')
             
@@ -157,7 +159,7 @@ app.get('/createuserorprofile', (req,res) =>{
 })
 
 app.get('/createadminaccount', (req,res) =>{
-    res.render('AdminCreateAdminAccountGUI');
+    res.render('AdminCreateAdminAccountGUI',{message: req.flash('message15')});
     console.log(ssn.userprof)
 })
 
@@ -177,7 +179,7 @@ app.post('/createadminaccount', (req,res) =>{
     var pythonProcess = spawn('python',["./AdminCreateAdminAccountController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
-    console.log(bool)
+    console.log(bool.trim())
     if (bool.trim() == "Failed")
     {
         req.flash('message15','Unable to create User. Double check your values entered')
