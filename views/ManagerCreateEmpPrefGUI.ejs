@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/EmployeeShiftPref.css">
+    <title>Work Schedule</title>
+    <style>
+        /* Add your CSS styles here */
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="adminpage">
+        <h1 onclick="document.location='/homepage'">Manager</h1>
+    </div>
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+        <a href="#" onclick="document.location='/logout'">Logout</a>
+        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+    </div>
+    <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image"></button>
+    <script>
+        function openNav() {
+          document.getElementById("mySidepanel").style.width = "250px";
+        }
+        
+        function closeNav() {
+          document.getElementById("mySidepanel").style.width = "0";
+        }
+    </script>
+
+    <div id="backbutton">
+        <button id="back" onclick="document.location='/admin_view'"><b>&laquo;back</b></button>
+    </div>
+    <h1>Select Your Work Schedule</h1>
+    <form id="scheduleForm" action="/managercreateemppref" method="post">
+        <% days.forEach(day => { %>
+            <label>
+                Select Shift for <%= day %>:
+                <input type="checkbox" class="dayCheckbox" name="schedule[<%= day %>][work]" value="<%= day %>">
+                <% myList.forEach(myList => { %>
+                    <input type="radio" class="shiftRadio" name="schedule[<%= day %>][shift]" value="<%= myList %>" disabled> <%= myList %>
+                <% }); %>
+            </label>
+        <% }); %>
+        <br>
+        <input id="employeeid" class = "textbox" type="text" name="employeeid" placeholder="Enter Employee ID">
+        <button class = "rounded-button" id="button"><b>Submit</b></button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.dayCheckbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const shiftRadios = this.parentElement.querySelectorAll('.shiftRadio');
+                    shiftRadios.forEach(radio => {
+                        radio.disabled = !this.checked;
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1654,9 +1654,68 @@ app.post('/manager_updatews', (req, res) => {
     });
 });
 
+app.get('/managercreateemppref', (req,res) =>{
+    var pythonProcess = spawn('python',["./grabShiftPreferenceController.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('ManagerCreateEmpPrefGUI',{myList ,days: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
 
+app.post('/managercreateemppref', (req, res) => {
+    const { employeeid } = req.body;
+    const schedule = {};
+    // Loop through each key in req.body and extract schedule data
+    for (const key in req.body) {
+        if (key.startsWith('schedule')) {
+            const matches = key.match(/schedule\[(.*?)\]\[(.*?)\]/);
+            if (matches !== null) { // Check if matches is not null
+                const day = matches[1];
+                const type = matches[2];
+    
+                if (!schedule[day]) {
+                    schedule[day] = {};
+                }
+    
+                schedule[day][type] = req.body[key];
+            } else {
+                console.error('Key ',{key},' does not match the expected pattern');
+            }
+        }
+    }
+    // Convert schedule and employeeid to JSON strings
+    const scheduleJSON = JSON.stringify(schedule);
+    const employeeidJSON = JSON.stringify(employeeid);
+    const pythonProcess = spawn('python', ["./ManagerCreateEmployeePreference.py", scheduleJSON,employeeidJSON]);
+    console.log(scheduleJSON)
+    pythonProcess.stdout.on('data', (data) => { 
+        const result = data.toString().trim();        
+        // Check the result and respond accordingly
+        if (result === "Failed") {
+            req.flash('message', 'Unable to Create Preference. Double check your values entered');
+        } else {
+            req.flash('message', 'Preference Created');
+        }      
+        // Redirect back to the same page
+        res.redirect('/managercreateemppref');
+    });
 
-
+    // Handle errors from the Python process
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`Error from Python script: ${data}`);
+        req.flash('message', 'Error updating WorkShift');
+        res.redirect('/managercreateemppref');
+    });
+});
 
 
 

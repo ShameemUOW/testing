@@ -24,10 +24,10 @@ insert into userprofile values ('8','Employee','Waiter');
 insert into userprofile values ('9','Manager', 'NIL'); 
 insert into userprofile values ('10','Manager', 'NIL'); 
 
-insert into employeeshiftinformation values ('2','Day','0');
-insert into employeeshiftinformation values ('6','Night','0');
-insert into employeeshiftinformation values ('7','Morning','0');
-insert into employeeshiftinformation values ('8','Afternoon','0');
+insert into employeeshiftinformation values ('2','Tuesday','Day','0');
+insert into employeeshiftinformation values ('6','Monday','Night','0');
+insert into employeeshiftinformation values ('7','Tuesday','Morning','0');
+insert into employeeshiftinformation values ('8','Wednesday','Afternoon','0');
 
 INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-03-15', 'Morning', '08:00:00', '16:00:00');

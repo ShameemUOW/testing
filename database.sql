@@ -36,9 +36,9 @@ CREATE TABLE workshift (
 
 CREATE TABLE EmployeeShiftInformation (
 	EmployeeID int NOT NULL,
+    Day varchar(50) NOT NULL,
     ShiftPref varchar(50) NOT NULL,
     NoOfHrsWorked int NOT NULL,
-    PRIMARY KEY (EmployeeID),
     CONSTRAINT FK_EmployeeID2 FOREIGN KEY (EmployeeID)
     REFERENCES userAccount(EmployeeID)
     on update cascade

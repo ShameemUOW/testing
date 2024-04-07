@@ -1,10 +1,9 @@
-
-
 select distinct mainrole From userprofile;
 select * from useraccount;
 select * from workshift;
 select * from userprofile;
 select * from EmployeeShift;
+select * from employeeshiftinformation;
 select distinct shiftpref From employeeshiftinformation;
 select * from Employeeshift;
 select * from EmployeeLeave;

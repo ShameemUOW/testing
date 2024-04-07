@@ -50,6 +50,14 @@ class EmployeeShiftInformation:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+    def ManagerCreateEmployeeShiftPreferece(self,schedule,employeeid):
+        try:
+            for day, shift in schedule.items():
+                mycursor.execute("INSERT INTO EmployeeShiftInformation (EmployeeID, Day, ShiftPref, NoOfHrsWorked) VALUES ('{}', '{}','{}', '0')".format(employeeid,day,shift['shift']))
+                mydb.commit()
+                print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")
 
     
 
