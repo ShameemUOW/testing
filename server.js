@@ -1717,7 +1717,9 @@ app.post('/managercreateemppref', (req, res) => {
     });
 });
 
-
+app.get('/managerautoassignemp', (req,res) =>{
+    res.render('ManagerAutoAssignEmployeesGUI')
+})
 
 
 
