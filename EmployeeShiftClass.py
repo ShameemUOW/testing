@@ -35,7 +35,7 @@ class EmployeeShift:
 
         except mysql.connector.Error as e:
             print("Error while connecting to MySQL", e)
-    def ManagerAutoAssignEmployees(self,start_date, end_date, num_employees_per_shift):
+    def ManagerAutoAssignEmployees(self, start_date, end_date, num_employees_per_shift):
         try:
             # Retrieve workshifts within the specified date range
             mycursor.execute("SELECT * FROM workshift WHERE Date BETWEEN '{}' AND '{}'".format(start_date, end_date))
@@ -66,42 +66,44 @@ class EmployeeShift:
                     JOIN workshift w ON esi.ShiftPref = w.shift
                     WHERE esi.Day = %s AND esi.ShiftPref = %s AND esi.EmployeeID NOT IN (
                         SELECT EmployeeID FROM EmployeeLeave WHERE Date = %s
-                    ) 
-                    AND esi.NoOfHrsWorked <= 44 
+                    )
+                    AND w.Date = %s 
+                    AND esi.NoofHrsWorked < 44
                     ORDER BY esi.NoOfHrsWorked ASC
                 """
-                mycursor.execute(query, (day_mapping[shift_day_of_week], shift_type, shift_date))
+                mycursor.execute(query, (day_mapping[shift_day_of_week], shift_type, shift_date,shift_date))
                 employees_available = mycursor.fetchall()
                 if len(employees_available) < int(num_employees_per_shift):
                     # If not enough employees available, add to unassigned shifts
-                    unassigned_shifts.append((shift_date,shift_type,(int(num_employees_per_shift) - len(employees_available))))
+                    unassigned_shifts.append((shift_date, shift_type, (int(num_employees_per_shift) - len(employees_available))))
                 else:
-                    # Arrange employees based on hours worked in ascending order
-                    employees_available.sort(key=lambda x: x[3])  # Assuming NoOfHrsWorked is at index 4
-                    if len(employees_available) >= 5:
-                        # Randomly select 2 employees from the first 5
-                        selected_employees = random.sample(employees_available[:5], int(num_employees_per_shift))
-                    else:
-                        # If fewer than 5 employees available, select 2 from all available employees
-                        selected_employees = random.sample(employees_available, int(num_employees_per_shift))
-                    for employee in selected_employees:
-                        # Extract hours and minutes from timedelta for start and end
-                        start_hours = shift_start.seconds // 3600
-                        start_minutes = (shift_start.seconds % 3600) // 60
+                    assigned_employee_ids = []  # List to keep track of assigned employee IDs
+                    while len(assigned_employee_ids) < int(num_employees_per_shift):
+                        # Remove already assigned employees from the available employees list
+                        filtered_employees = [employee for employee in employees_available if employee[0] not in assigned_employee_ids]
+                        if len(filtered_employees) > 0:
+                            # Select a random employee from the filtered list
+                            selected_employee = random.choice(filtered_employees)
+                            assigned_employee_ids.append(selected_employee[0])
+                            # Extract hours and minutes from timedelta for start and end
+                            start_hours = shift_start.seconds // 3600
+                            start_minutes = (shift_start.seconds % 3600) // 60
 
-                        end_hours = shift_end.seconds // 3600
-                        end_minutes = (shift_end.seconds % 3600) // 60
+                            end_hours = shift_end.seconds // 3600
+                            end_minutes = (shift_end.seconds % 3600) // 60
 
-                        # Format as 'HH:MM'
-                        shift_start_regular = '{:02}:{:02}'.format(start_hours, start_minutes)
-                        shift_end_regular = '{:02}:{:02}'.format(end_hours, end_minutes)
-                        assigned_employees.append((employee[0], employee[1], employee[2],shift_date,shift_type, shift_start_regular, shift_end_regular))
-                        # Insert assigned employee into EmployeeShift table
-                        insert_query = "INSERT INTO EmployeeShift (shiftID, EmployeeID, shiftDate, shiftType) VALUES (%s, %s, %s, %s)"
-                        mycursor.execute(insert_query, (shift_id, employee[0], shift_date, shift_type))
-                        # Update EmployeeShiftInformation table
-                        update_query = "UPDATE EmployeeShiftInformation SET NoOfHrsWorked = NoOfHrsWorked + %s WHERE EmployeeID = %s"
-                        mycursor.execute(update_query, (shift_duration, employee[0]))
+                            # Format as 'HH:MM'
+                            shift_start_regular = '{:02}:{:02}'.format(start_hours, start_minutes)
+                            shift_end_regular = '{:02}:{:02}'.format(end_hours, end_minutes)
+                            assigned_employees.append((selected_employee[0], selected_employee[1], selected_employee[2], shift_date, shift_type, shift_start_regular, shift_end_regular))
+                            # Insert assigned employee into EmployeeShift table
+                            insert_query = "INSERT INTO EmployeeShift (shiftID, EmployeeID, shiftDate, shiftType) VALUES (%s, %s, %s, %s)"
+                            mycursor.execute(insert_query, (shift_id, selected_employee[0], shift_date, shift_type))
+                            # Update EmployeeShiftInformation table
+                            update_query = "UPDATE EmployeeShiftInformation SET NoOfHrsWorked = NoOfHrsWorked + %s WHERE EmployeeID = %s"
+                            mycursor.execute(update_query, (shift_duration, selected_employee[0]))
+                        else:
+                            break
 
             mydb.commit()
             mycursor.close()
