@@ -128,6 +128,13 @@ insert into employeeshiftinformation values ('18','Thursday','Night','0');
 insert into employeeshiftinformation values ('18','Friday','Night','0');
 insert into employeeshiftinformation values ('18','Saturday','Night','0');
 insert into employeeshiftinformation values ('18','Sunday','Night','0');
+insert into employeeshiftinformation values ('19','Monday','Evening','0');
+insert into employeeshiftinformation values ('19','Tuesday','Evening','0');
+insert into employeeshiftinformation values ('19','Wednesday','Evening','0');
+insert into employeeshiftinformation values ('19','Thursday','Evening','0');
+insert into employeeshiftinformation values ('19','Friday','Evening','0');
+insert into employeeshiftinformation values ('19','Saturday','Evening','0');
+insert into employeeshiftinformation values ('19','Sunday','Evening','0');
 
 INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-03-15', 'Morning', '08:00:00', '16:00:00');
@@ -163,6 +170,8 @@ INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-03-27', 'Night', '09:30:00', '14:00:00');
 INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-03-28', 'Day', '09:30:00', '13:00:00');
+INSERT INTO workshift (Date, shift, start, end)
+VALUES ('2024-03-28', 'Evening', '09:30:00', '13:00:00');
 
 
 Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)

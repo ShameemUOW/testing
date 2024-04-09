@@ -32,7 +32,6 @@ const loggedin = []
 function getFiles() {
     fs = require('fs')
     files = fs.readdirSync('./views')
-    console.log(files)
     if(files.includes('AdminCreateAdminAccountGUI.ejs')){
         console.log('yes')
     }
@@ -1718,8 +1717,56 @@ app.post('/managercreateemppref', (req, res) => {
 });
 
 app.get('/managerautoassignemp', (req,res) =>{
-    res.render('ManagerAutoAssignEmployeesGUI')
+    res.render('ManagerAutoAssignEmployeesGUI', { message: req.flash('message23') })
 })
+
+app.post('/managerautoassignemp', (req, res) => {
+    // Prepare JSON object to send to Python script
+    const jsonObj = {
+        start: req.body.start,
+        end: req.body.end,
+        numberofemployees: req.body.number
+    }
+    // Convert JSON object to string
+    const jsonObjStr = JSON.stringify(jsonObj);
+    
+    // Spawn a Python process and pass the JSON string as argument
+    const pythonProcess = spawn('python', ['./ManagerAutoAssignEmployeesController.py', jsonObjStr]);
+
+    let assignedEmployees = [];
+    let unassignedShifts = [];
+
+    // Listen for stdout data from the Python process
+    pythonProcess.stdout.on('data', (data) => {
+        try {
+            // Parse the JSON data received from Python
+            alldata = JSON.parse(data.toString())
+            console.log(alldata)
+            // Split the data into assigned employees and unassigned shifts
+            assignedEmployees = alldata.assigned_employees;
+            unassignedShifts = alldata.unassigned_shifts;
+
+            // Render the page with the data received from Python
+            res.render('ManagerAutoAssignTableGUI', {
+                "assignedEmployees": assignedEmployees,
+                "unassignedShifts": unassignedShifts
+            });
+        } catch (error) {
+            console.error('Error parsing JSON data:', error);
+            // Redirect to a failure page if there's an error
+            req.flash('message23', 'Failed');
+            res.redirect('/managerautoassignemp');
+        }
+    });
+
+    // Listen for any errors from the Python process
+    pythonProcess.stderr.on('data', (data) => {
+        console.error('Error from Python script:', data.toString());
+        // Redirect to a failure page if there's an error
+        req.flash('message23', 'Failed');
+        res.redirect('/managerautoassignemp');
+    });
+});
 
 
 

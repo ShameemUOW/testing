@@ -3,7 +3,8 @@ select * from useraccount;
 select * from workshift;
 select * from userprofile;
 select * from EmployeeShift;
-select * from employeeshiftinformation;
+select * from EmployeeShiftinformation;
+select distinct employeeid, noofhrsworked from employeeshiftinformation;
 select distinct shiftpref From employeeshiftinformation;
 select * from Employeeshift;
 select * from EmployeeLeave;
@@ -18,3 +19,4 @@ select column_name from information_schema.columns where table_schema = 'FYP' an
 
 update employeeleave SET status = 'Approved' where leaveid = '6';
 UPDATE useraccount SET fullname = 'noahhh' where employeeid = 10;
+update employeeshiftinformation set NoOfHrsWorked = 0 where employeeid >0;

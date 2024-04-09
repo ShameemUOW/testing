@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/SearchTable.css">
+    </head>
+    <body>
+        <div id="ownerpage">
+            <h1 onclick="document.location='/homepage'">SER</h1>
+        </div>
+
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+            <a href="#" onclick="document.location='/logout'">Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+            <a href="#" onclick="document.location='/homepage'">Go back to Home Page</a>
+        </div>
+        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image"></button>
+        <script>
+            function openNav() {
+              document.getElementById("mySidepanel").style.width = "250px";
+            }
+            
+            function closeNav() {
+              document.getElementById("mySidepanel").style.width = "0";
+            }
+        </script>
+    
+        <div id="options">
+            <h1>viewing all Searched Employees</h1><br>
+            <% if(typeof assignedEmployees !== "undefined") {%>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Phone Number</th>
+                            <th>Shift Date</th>
+                            <th>Shift Type</th>
+                            <th>Shift Start</th>
+                            <th>Shift End</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0; i<assignedEmployees.length;i++) { %>
+                        <tr>
+                            <td><%= assignedEmployees[i][0]%></td>
+                            <td><%= assignedEmployees[i][1]%></td>
+                            <td><%= assignedEmployees[i][2]%></td>
+                            <td><%= assignedEmployees[i][3]%></td>
+                            <td><%= assignedEmployees[i][4]%></td>
+                            <td><%= assignedEmployees[i][5]%></td>
+                            <td><%= assignedEmployees[i][6]%></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <%}%>
+            <% if (typeof unassignedShifts !== "undefined") { %>
+                <h2>Unassigned Shifts</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Needed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var j = 0; j < unassignedShifts.length; j++) { %>
+                            <tr>
+                                <td><%= unassignedShifts[j][0] %></td>
+                                <td><%= unassignedShifts[j][1] %></td>
+                                <td><%= unassignedShifts[j][2] %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+    </body>
+</html>

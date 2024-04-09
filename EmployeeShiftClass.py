@@ -35,41 +35,67 @@ class EmployeeShift:
 
         except mysql.connector.Error as e:
             print("Error while connecting to MySQL", e)
-    def auto_assign_employees(start_date, end_date, num_employees):
+    def ManagerAutoAssignEmployees(self,start_date, end_date, num_employees_per_shift):
         try:
-
             # Retrieve workshifts within the specified date range
-            query = "SELECT * FROM workshift WHERE Date BETWEEN %s AND %s"
-            mycursor.execute(query, (start_date, end_date))
+            mycursor.execute("SELECT * FROM workshift WHERE Date BETWEEN '{}' AND '{}'".format(start_date, end_date))
             workshifts = mycursor.fetchall()
-
             unassigned_shifts = []
             assigned_employees = []
 
             for shift in workshifts:
                 shift_id, shift_date, shift_type, shift_start, shift_end = shift
-                shift_duration = (datetime.strptime(shift_end, '%H:%M:%S') - datetime.strptime(shift_start, '%H:%M:%S')).seconds / 3600
+                shift_date_obj = datetime.strptime(shift_date, '%Y-%m-%d').date()
+                shift_day_of_week = shift_date_obj.weekday()
+                day_mapping = {
+                    0: 'Monday',
+                    1: 'Tuesday',
+                    2: 'Wednesday',
+                    3: 'Thursday',
+                    4: 'Friday',
+                    5: 'Saturday',
+                    6: 'Sunday'
+                }
 
+                shift_duration = (shift_end - shift_start).total_seconds() / 3600
                 # Filter suitable employees for each shift
                 query = """
-                    SELECT * FROM EmployeeShiftInformation 
-                    WHERE Day = %s AND ShiftPref = %s AND EmployeeID NOT IN (
+                    SELECT ua.EmployeeID, ua.Fullname, ua.Mobile, w.start, w.end 
+                    FROM EmployeeShiftInformation esi
+                    JOIN userAccount ua ON esi.EmployeeID = ua.EmployeeID
+                    JOIN workshift w ON esi.ShiftPref = w.shift
+                    WHERE esi.Day = %s AND esi.ShiftPref = %s AND esi.EmployeeID NOT IN (
                         SELECT EmployeeID FROM EmployeeLeave WHERE Date = %s
-                    ) ORDER BY NoOfHrsWorked ASC
+                    ) 
+                    AND esi.NoOfHrsWorked <= 44 
+                    ORDER BY esi.NoOfHrsWorked ASC
                 """
-                mycursor.execute(query, (shift_date, shift_type, shift_date))
+                mycursor.execute(query, (day_mapping[shift_day_of_week], shift_type, shift_date))
                 employees_available = mycursor.fetchall()
-
-                if len(employees_available) < num_employees:
+                if len(employees_available) < int(num_employees_per_shift):
                     # If not enough employees available, add to unassigned shifts
-                    unassigned_shifts.append({'date': shift_date, 'type': shift_type, 'needed': num_employees - len(employees_available)})
+                    unassigned_shifts.append((shift_date,shift_type,(int(num_employees_per_shift) - len(employees_available))))
                 else:
-                    # Assign employees to the shift
-                    num_to_assign = min(len(employees_available), num_employees)
-                    selected_employees = random.sample(employees_available, num_to_assign)
+                    # Arrange employees based on hours worked in ascending order
+                    employees_available.sort(key=lambda x: x[3])  # Assuming NoOfHrsWorked is at index 4
+                    if len(employees_available) >= 5:
+                        # Randomly select 2 employees from the first 5
+                        selected_employees = random.sample(employees_available[:5], int(num_employees_per_shift))
+                    else:
+                        # If fewer than 5 employees available, select 2 from all available employees
+                        selected_employees = random.sample(employees_available, int(num_employees_per_shift))
                     for employee in selected_employees:
-                        assigned_employees.append(employee)
-                        employees_available.remove(employee)
+                        # Extract hours and minutes from timedelta for start and end
+                        start_hours = shift_start.seconds // 3600
+                        start_minutes = (shift_start.seconds % 3600) // 60
+
+                        end_hours = shift_end.seconds // 3600
+                        end_minutes = (shift_end.seconds % 3600) // 60
+
+                        # Format as 'HH:MM'
+                        shift_start_regular = '{:02}:{:02}'.format(start_hours, start_minutes)
+                        shift_end_regular = '{:02}:{:02}'.format(end_hours, end_minutes)
+                        assigned_employees.append((employee[0], employee[1], employee[2],shift_date,shift_type, shift_start_regular, shift_end_regular))
                         # Insert assigned employee into EmployeeShift table
                         insert_query = "INSERT INTO EmployeeShift (shiftID, EmployeeID, shiftDate, shiftType) VALUES (%s, %s, %s, %s)"
                         mycursor.execute(insert_query, (shift_id, employee[0], shift_date, shift_type))
@@ -78,9 +104,12 @@ class EmployeeShift:
                         mycursor.execute(update_query, (shift_duration, employee[0]))
 
             mydb.commit()
+            mycursor.close()
+            mydb.close()
 
             output = {'assigned_employees': assigned_employees, 'unassigned_shifts': unassigned_shifts}
-            print(json.dumps(output))
+            output_json = json.dumps(output)
+            print(output_json)
 
         except Exception as e:
-            print("Error while connecting to MySQL",str(e))
+            print(e)
