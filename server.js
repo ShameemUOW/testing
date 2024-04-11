@@ -1536,8 +1536,11 @@ app.post('/employeeclockout', (req, res) => {
     });
 });
 
+app.get('/employee_viewall', (req,res) =>{
+    res.render('EmployeeViewChoose')
+})
 
-app.get('/employee_viewall', (req, res) => {
+app.get('/employee_viewaccount', (req, res) => {
     const employeeId = req.session.emlpoyeeidentity;
     const dataToSend = JSON.stringify({ employeeId });
     var pythonProcess = spawn('python', ["./EmployeeViewAccountController.py", dataToSend]);
@@ -1768,7 +1771,27 @@ app.post('/managerautoassignemp', (req, res) => {
     });
 });
 
-
+app.get('/employee_viewpasthistory', (req, res) => {
+    const employeeId = req.session.emlpoyeeidentity;
+    const dataToSend = JSON.stringify({ employeeId });
+    var pythonProcess = spawn('python', ["./EmployeeViewPastWorkHistoryController.py", dataToSend]);
+    console.log(dataToSend);
+    pythonProcess.stdout.on('data', (data) => {
+        try {
+            var alldata = JSON.parse(data.toString());
+            console.log(alldata);
+        } catch (error) {
+            console.log(alldata);
+        }
+        if (data.toString().trim() == "No table left") {
+            req.flash('message17', 'No Table Left');
+            res.render('EmployeeViewPastWorkHistory', { message: req.flash('message17') });
+        } else {
+            req.flash('message17', 'Tables found');
+            res.render('EmployeeViewPastWorkHistory', { alldata: alldata, message: req.flash('message17') });
+        }
+    });
+});
 
 
 

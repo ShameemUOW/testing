@@ -113,4 +113,21 @@ class Attendance:
                 print("No unclocked entry found for the employee.")
         except mysql.connector.Error as error:
             print("Failed to update clock-out time:", error)
+    def EmployeeViewPastWorkHistory(self,employeeid):
+        try:
+            mycursor.execute("SELECT Date,ClockIn,ClockOut,Attendance FROM attendance where employeeid = '{}';".format(employeeid))
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if numberofrow == 0:
+                print("No table left")
+            else:
+                result = []
+                for row in data:
+                    date = row[0].strftime('%Y-%m-%d') if row[0] is not None else None
+                    clockin = (datetime.min + row[1]).time().strftime('%H:%M:%S') if row[1] is not None else None
+                    clockout = (datetime.min + row[2]).time().strftime('%H:%M:%S') if row[2] is not None else None
+                    result.append((date, clockin, clockout, row[3]))
+                print(json.dumps(result))
+        except mysql.connector.Error as error:
+            print("Failed to fetch data:", error)
 
