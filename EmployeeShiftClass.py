@@ -115,3 +115,27 @@ class EmployeeShift:
 
         except Exception as e:
             print(e)
+    def AdminViewFutureWorkshift(self,employeeid):
+        try:
+            today = datetime.now().date()
+            date_str = today.strftime('%Y-%m-%d')
+            mycursor.execute("SELECT * FROM EmployeeShift WHERE employeeid = %s AND shiftDate > %s", (employeeid, date_str))
+            shifts = mycursor.fetchall()
+
+            formatted_shifts = []
+            for shift in shifts:
+                formatted_shift = [shift[0],  shift[1],shift[2] , shift[3].strftime('%Y-%m-%d'), shift[4]]
+                formatted_shifts.append(formatted_shift)
+
+            shifts_json = json.dumps(formatted_shifts)
+            print(shifts_json)
+        except Exception as e:
+            error_message = {"error": str(e)}
+            print(json.dumps(error_message))
+    def AdminReassignWorkShift(self,employeeid,id):
+        try:
+            mycursor.execute("Update EmployeeShift set employeeid = %s where employeeshiftid = %s", (employeeid, id))
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")

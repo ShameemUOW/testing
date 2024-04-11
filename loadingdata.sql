@@ -43,6 +43,7 @@ insert into userprofile values ('17','Employee','Cashier');
 insert into userprofile values ('18','Employee','Chef');
 insert into userprofile values ('19','Employee','Waiter');
 insert into userprofile values ('20','Employee','Waiter');
+insert into userprofile values ('22','Employee','Waiter');
 
 insert into employeeshiftinformation values ('2','Monday','Day','0');
 insert into employeeshiftinformation values ('2','Tuesday','Day','0');
@@ -172,8 +173,15 @@ INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-03-28', 'Day', '09:30:00', '13:00:00');
 INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-03-28', 'Evening', '09:30:00', '13:00:00');
+INSERT INTO workshift (Date, shift, start, end)
+VALUES ('2024-05-15', 'Day', '09:30:00', '13:00:00');
+INSERT INTO workshift (Date, shift, start, end)
+VALUES ('2024-05-15', 'Night', '09:30:00', '13:00:00');
 
-
+Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
+VALUES ('23','22','2024-05-15','Day');
+Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
+VALUES ('24','22','2024-05-15','Night');
 Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
 VALUES ('2','2','2024-03-19','Afternoon');
 Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)

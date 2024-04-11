@@ -1,7 +1,7 @@
 import mysql.connector
 import json
 from hashlib import sha256
-import datetime
+from datetime import datetime
 
 mydb = mysql.connector.connect(
     host ='localhost',
@@ -149,21 +149,26 @@ class UserAccount:
             print("Failed")
     def DeleteEmployeeAccount(self,employeeid):
         try:
-            mycursor.execute("select mainrole from userprofile where employeeid = '{}'".format(employeeid))
-            data = mycursor.fetchone()
-            result = data[0]
-            if (result == 'Employee'):
-                try:
-                    mycursor.execute("delete from useraccount where employeeid = '{}'".format(employeeid))
-                    mydb.commit()
-                    print("Success")
-                except mysql.connector.Error as error:
-                    print("Failed")
+            today = datetime.now().date()
+            mycursor.execute("select * from EmployeeShift where employeeid = '{}' and shiftDate > '{}'".format(employeeid,today))
+            shifts = mycursor.fetchall()
+            if shifts:
+                print("Reassign")
             else:
-                print("Failed")
+                mycursor.execute("select mainrole from userprofile where employeeid = '{}'".format(employeeid))
+                data = mycursor.fetchone()
+                result = data[0]
+                if (result == 'Employee'):
+                    try:
+                        mycursor.execute("delete from useraccount where employeeid = '{}'".format(employeeid))
+                        mydb.commit()
+                        print("Success")
+                    except mysql.connector.Error as error:
+                        print("Failed")
+                else:
+                    print("Failed")
         except mysql.connector.Error as error:
             print("Failed")
-            
     def EmployeeViewAccount(self, employeeid):
         try:
             mycursor.execute("SELECT employeeid, Fullname, Address, Email, mobile, Username, maxhours FROM useraccount WHERE employeeid = '{}'".format(employeeid))

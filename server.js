@@ -556,7 +556,12 @@ app.post('/admindeleteemployeeaccount', (req,res) =>{
     var bool = data.toString()
     console.log(bool)
     req.flash('message', null);
-    if (bool.trim() == "Failed")
+    if(bool.trim() == "Reassign")
+    {
+        req.flash('message','Unable to delete Employee Account. Reassign Shifts to another employee first')
+        res.redirect('/admindeleteemployeeaccount')
+    }
+    else if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to delete Employee Account. Double check your values entered')
         res.redirect('/admindeleteemployeeaccount')
@@ -565,6 +570,78 @@ app.post('/admindeleteemployeeaccount', (req,res) =>{
     {
         req.flash('message','Employee Account Deleted')
         res.redirect('/admindeleteemployeeaccount')
+    }
+})
+})
+
+app.get('/admin_reassignshifts', (req,res) =>{
+    res.render('AdminReassignShiftsGUI')
+})
+
+app.post('/admin_reassignshifts', (req, res) => {
+    const employeeid = req.body.employeeid;
+    const myJSON = {
+        employeeid: req.body.employeeid
+    };
+    const myJSON2 = JSON.stringify(myJSON);
+    console.log(myJSON2);
+
+    const pythonProcess = spawn('python', ["./AdminViewFutureShiftsController.py", myJSON2]);
+
+    let allData = ""; // Variable to store all data from Python process
+
+    pythonProcess.stdout.on('data', (data) => {
+        allData += data.toString(); // Append data received from Python
+        console.log(allData)
+    });
+
+    pythonProcess.on('close', (code) => {
+        try {
+            const parsedData = JSON.parse(allData);
+            if (parsedData === "No table left") {
+                req.flash('message17', 'No Table Left');
+                res.render('AdminReassignWorkShiftsTableGUI', { message: req.flash('message17') });
+            } else {
+                req.flash('message17', 'Tables found');
+                res.render('AdminReassignWorkShiftsTableGUI', { results: parsedData, message: req.flash('message17') });
+            }
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            req.flash('message17', 'Error: Invalid data received');
+            res.render('AdminReassignWorkShiftsTableGUI', { message: req.flash('message17') });
+        }
+    });
+
+    pythonProcess.on('error', (err) => {
+        console.error('Failed to start Python process.', err);
+        req.flash('message17', 'Error: Failed to start Python process');
+        res.render('AdminReassignWorkShiftsTableGUI', { message: req.flash('message17') });
+    });
+});
+
+app.post('/admin_reassignshiftss', (req,res) =>{
+    const button = req.body.buttonid
+    const csvArray = button.split(',')
+    const jsonObj = {
+        id : csvArray[0],
+        employeeid: req.body.employeeid
+    }
+    const jsonObj2 = JSON.stringify(jsonObj)
+    console.log(jsonObj2)
+    var pythonProcess = spawn('python',["./AdminReassignShiftsController.py",jsonObj2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var alldata = data.toString().trim()
+    console.log(alldata)
+    if (alldata == "Success")
+    {
+        req.flash('message4','Reassigned Successfully')
+        res.redirect("/admin_reassignshifts")
+        
+    }
+    else
+    {
+        req.flash('message4','Unsuccessful')
+        res.redirect("/admin_reassignshifts")
     }
 })
 })
