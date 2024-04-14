@@ -1466,6 +1466,7 @@ app.post('/managermanualassignemployees', (req, res) => {
       if (result === 'Failed') {
         res.status(500).send('Unable to Assign workshift. Double check your values entered')
       } else {
+        console.log(result)
         req.flash('message4','Assigned Successfully')
         res.redirect('/managermanualassignemployees')
       }

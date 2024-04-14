@@ -61,4 +61,11 @@ class Notification:
         message = f"Your Leave on {date} is {status}"
 
         self.send_email(sender_email, sender_password, recipient_email, subject, message)
+    def send_email_for_ws(self,recipient_email, shifttype,date):
+        sender_email = "simfypesr@gmail.com"
+        sender_password = "dxfs lctf qgge hljc"
+        subject = "You have been selected for a shift"
+        message = f"Your new shift is on {date}, {shifttype}"
+
+        self.send_email(sender_email, sender_password, recipient_email, subject, message)
 
