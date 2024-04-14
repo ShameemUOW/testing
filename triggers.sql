@@ -134,3 +134,10 @@ END;
 //
 
 DELIMITER ;
+
+SELECT CONCAT('DROP TRIGGER IF EXISTS ', trigger_name, ';')
+FROM information_schema.triggers
+WHERE trigger_schema = 'FYP';
+DROP TRIGGER IF EXISTS InsertNotificationAfterEmployeeShift;
+DROP TRIGGER IF EXISTS UpdateNotificationAfterEmployeeShift;
+DROP TRIGGER IF EXISTS InsertNotificationAfterEmployeeLeave;

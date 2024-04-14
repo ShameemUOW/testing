@@ -18,6 +18,8 @@ select column_name from information_schema.columns where table_schema = 'FYP' an
 select EmployeeID,FullName,Address,Email,Mobile,MaxHours,Job,ShiftPref,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where fullname = 'Tom';
 select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('EmployeeID');
 
+update employeeleave set status = 'Pending' where leaveid >0;
+
 
 
 SELECT ua.EmployeeID, ua.Fullname, ua.Mobile, w.start, w.end 

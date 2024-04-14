@@ -1,6 +1,7 @@
 import mysql.connector
 import json
 from datetime import datetime, timedelta
+import NotificationClass
 
 mydb = mysql.connector.connect(
     host='localhost',
@@ -63,13 +64,27 @@ class EmployeeLeave:
         try:
             mycursor.execute("update employeeleave SET status = 'Approved' where leaveid = '{}'".format(id))
             mydb.commit()
+            mycursor.execute("SELECT date from employeeleave where leaveid = '{}'".format(id))
+            date = mycursor.fetchone()[0]
+            mycursor.execute("SELECT u.Email FROM EmployeeLeave el JOIN userAccount u ON el.EmployeeID = u.EmployeeID WHERE el.LeaveID = %s", (id,))
+            employee_email = mycursor.fetchone()[0]
+            status = 'Approved'
+            notification = NotificationClass.Notification()
+            notification.send_email_for_leave(employee_email, status, date)
             print("Success")
-        except mysql.connector.Error as error:
-            print("Failed")
+        except Exception as error:
+            print(error)
     def ManagerRejectLeave(self,id):
         try:
             mycursor.execute("update employeeleave SET status = 'Rejected' where leaveid = '{}'".format(id))
             mydb.commit()
+            mycursor.execute("SELECT date from employeeleave where leaveid = '{}'".format(id))
+            date = mycursor.fetchone()[0]
+            mycursor.execute("SELECT u.Email FROM EmployeeLeave el JOIN userAccount u ON el.EmployeeID = u.EmployeeID WHERE el.LeaveID = %s", (id,))
+            employee_email = mycursor.fetchone()[0]
+            status = 'Rejected'
+            notification = NotificationClass.Notification()
+            notification.send_email_for_leave(employee_email, status, date)
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
