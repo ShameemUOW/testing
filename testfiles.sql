@@ -37,3 +37,4 @@ SELECT * FROM workshift WHERE Date BETWEEN '2024-03-23' AND '2024-03-28';
 update employeeleave SET status = 'Approved' where leaveid = '6';
 UPDATE useraccount SET fullname = 'noahhh' where employeeid = 10;
 update employeeshiftinformation set NoOfHrsWorked = 0 where employeeid >0;
+select * from employeeshiftinformation;
