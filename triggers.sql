@@ -43,3 +43,94 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER InsertNotificationAfterEmployeeShift
+AFTER INSERT ON EmployeeShift
+FOR EACH ROW
+BEGIN
+    DECLARE shift_date DATE;
+    DECLARE shift_type VARCHAR(255);
+    DECLARE notif_message VARCHAR(255);
+
+    -- Retrieve the shift date and type for the newly inserted row
+    SELECT NEW.shiftDate, NEW.shiftType INTO shift_date, shift_type;
+
+    -- Prepare the notification message
+    SET notif_message = CONCAT('You have been assigned a shift on ', shift_date, ', ', shift_type);
+
+    -- Insert the notification into the Notification table
+    INSERT INTO Notification (EmployeeID, Notif)
+    VALUES (NEW.EmployeeID, notif_message);
+END;
+//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER UpdateNotificationAfterEmployeeShift
+AFTER UPDATE ON EmployeeShift
+FOR EACH ROW
+BEGIN
+    DECLARE shift_date DATE;
+    DECLARE shift_type VARCHAR(255);
+    DECLARE notif_message VARCHAR(255);
+
+    -- Check if EmployeeID has been updated
+    IF OLD.EmployeeID <> NEW.EmployeeID THEN
+        -- Retrieve the shift date and type for the updated row
+        SELECT NEW.shiftDate, NEW.shiftType INTO shift_date, shift_type;
+
+        -- Prepare the notification message
+        SET notif_message = CONCAT('You have been assigned a shift on ', shift_date, ', ', shift_type);
+
+        -- Insert the notification into the Notification table
+        INSERT INTO Notification (EmployeeID, Notif)
+        VALUES (NEW.EmployeeID, notif_message);
+    END IF;
+END;
+//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER InsertNotificationAfterEmployeeLeave
+AFTER UPDATE ON EmployeeLeave
+FOR EACH ROW
+BEGIN
+    DECLARE notif_message VARCHAR(255);
+
+    -- Determine the outcome of the leave
+    IF NEW.status = 'Approved' THEN
+        SET notif_message = CONCAT('Your leave on ', NEW.Date, ' has been approved.');
+    ELSEIF NEW.status = 'Rejected' THEN
+        SET notif_message = CONCAT('Your leave on ', NEW.Date, ' has been rejected.');
+    END IF;
+
+    -- Insert the notification into the Notification table
+    INSERT INTO Notification (EmployeeID, Notif)
+    VALUES (NEW.EmployeeID, notif_message);
+END;
+//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER InsertIntoApprovedEmployeeLeave
+AFTER UPDATE ON EmployeeLeave
+FOR EACH ROW
+BEGIN
+    -- Check if the leave status is 'Approved'
+    IF NEW.status = 'Approved' THEN
+        -- Insert the corresponding record into the ApprovedEmployeeLeave table
+        INSERT INTO ApprovedEmployeeLeave (EmployeeID, Date, LeaveType, status)
+        VALUES (NEW.EmployeeID, NEW.Date, NEW.LeaveType, NEW.status);
+    END IF;
+END;
+//
+
+DELIMITER ;

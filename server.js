@@ -171,6 +171,7 @@ app.post('/createadminaccount', (req,res) =>{
         phonenumber : req.body.Number,
         username : req.body.username,
         password : req.body.password,
+        chatid : req.body.chatid,
         Maxhrs : req.body.MaxHours
     }
     const myJSON2 = JSON.stringify(myJSON)
@@ -206,6 +207,7 @@ app.post('/createemployeeaccount', (req,res) =>{
         phonenumber : req.body.Number,
         username : req.body.username,
         password : req.body.password,
+        chatid : req.body.chatid,
         Maxhrs : req.body.MaxHours
     }
     const myJSON2 = JSON.stringify(myJSON)
@@ -241,6 +243,7 @@ app.post('/createmanageraccount', (req,res) =>{
         phonenumber : req.body.Number,
         username : req.body.username,
         password : req.body.password,
+        chatid : req.body.chatid,
         Maxhrs : req.body.MaxHours
     }
     const myJSON2 = JSON.stringify(myJSON)

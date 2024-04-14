@@ -40,25 +40,25 @@ class UserAccount:
                 print(result)
         except mysql.connector.Error as error:
             print ("Failed")
-    def createAdminAccount(self, fullname, address, email, mobile, username,password, MaxHours):
+    def createAdminAccount(self, fullname, address, email, mobile, username,password,Chatid,MaxHours):
         try:
-            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Admin')".format(fullname, address, email, mobile, username,password,MaxHours))
+            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,Chatid,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','{}','Admin')".format(fullname, address, email, mobile, username,password,MaxHours,Chatid))
             mydb.commit()
             print("Success")
             self.HashPlainPasswords()
         except mysql.connector.Error as error:
             print("Failed")
-    def createEmployeeAccount(self, fullname, address, email, mobile, username,password, MaxHours):
+    def createEmployeeAccount(self, fullname, address, email, mobile, username,password,Chatid, MaxHours):
         try:
-            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Employee')".format(fullname, address, email, mobile, username,password,MaxHours))
+            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,Chatid,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','{}','Employee')".format(fullname, address, email, mobile, username,password,MaxHours,Chatid))
             mydb.commit()
             print("Success")
             self.HashPlainPasswords()
         except mysql.connector.Error as error:
             print("Failed")
-    def createManagerAccount(self, fullname, address, email, mobile, username,password, MaxHours):
+    def createManagerAccount(self, fullname, address, email, mobile, username,password,Chatid, MaxHours):
         try:
-            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','Manager')".format(fullname, address, email, mobile, username,password,MaxHours))
+            mycursor.execute("INSERT INTO  useraccount (fullname, address, email, mobile, username,pass,MaxHours,Chatid,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','{}','Manager')".format(fullname, address, email, mobile, username,password,MaxHours,Chatid))
             mydb.commit()
             print("Success")
             self.HashPlainPasswords()
@@ -183,7 +183,7 @@ class UserAccount:
 
     def AdminViewAdminAccount(self):
         try:
-            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,maxhours from useraccount where placeholder = 'Admin';")
+            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,chatid,maxhours from useraccount where placeholder = 'Admin';")
             data = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -195,7 +195,7 @@ class UserAccount:
             print ("Failed")
     def AdminViewManagerAccount(self):
         try:
-            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,maxhours from useraccount where placeholder = 'Manager';")
+            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,chatid,maxhours from useraccount where placeholder = 'Manager';")
             data = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -207,7 +207,7 @@ class UserAccount:
             print ("Failed")
     def AdminViewEmployeeAccount(self):
         try:
-            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,maxhours from useraccount where placeholder = 'Employee';")
+            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,chatid,maxhours from useraccount where placeholder = 'Employee';")
             data = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -227,7 +227,7 @@ class UserAccount:
             print("Failed")
     def searchAdminAccount(self, selectedoption,value):
         try:
-            mycursor.execute("select Fullname,Address,Email,Mobile,Username,pass,MaxHours from useraccount where {} = '{}' and placeholder = 'Admin'".format(selectedoption,value))
+            mycursor.execute("select Fullname,Address,Email,Mobile,Username,pass,chatid,MaxHours from useraccount where {} = '{}' and placeholder = 'Admin'".format(selectedoption,value))
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -239,7 +239,7 @@ class UserAccount:
             print ("Failed")
     def searchManagerAccount(self, selectedoption,value):
         try:
-            mycursor.execute("select Fullname,Address,Email,Mobile,Username,pass,MaxHours from useraccount where {} = '{}' and placeholder = 'Manager'".format(selectedoption,value))
+            mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username,pass,chatid,MaxHours from useraccount where {} = '{}' and placeholder = 'Manager'".format(selectedoption,value))
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -251,7 +251,7 @@ class UserAccount:
             print ("Failed")
     def searchEmployeeAccount(self, selectedoption,value):
         try:
-            mycursor.execute("select Fullname,Address,Email,Mobile,Username,pass,MaxHours from useraccount where {} = '{}' and placeholder = 'Employee'".format(selectedoption,value))
+            mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username,pass,chatid,MaxHours from useraccount where {} = '{}' and placeholder = 'Employee'".format(selectedoption,value))
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -268,7 +268,7 @@ class UserAccount:
         print(result)
     def ManagerViewEmployeeAccount(self):
         try:
-            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,maxhours,job from useraccount natural join userprofile where mainrole = 'Employee';")
+            mycursor.execute("select employeeid, Fullname, Address,Email,mobile,chatid,maxhours,job from useraccount natural join userprofile where mainrole = 'Employee';")
             data = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -285,7 +285,7 @@ class UserAccount:
         print(result)
     def ManagerFilterEmployees(self, selectedoption,value):
         try:
-            mycursor.execute("select EmployeeID,FullName,Address,Email,Mobile,MaxHours,Job,ShiftPref,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where {} LIKE '%{}%';'".format(selectedoption,value))
+            mycursor.execute("select EmployeeID,FullName,Address,Email,Mobile,chatid,MaxHours,Job,ShiftPref,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where {} LIKE '%{}%';'".format(selectedoption,value))
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -297,7 +297,7 @@ class UserAccount:
             print ("Failed")
     def ManagerSearchEmployees(self, selectedoption,value):
         try:
-            mycursor.execute("select EmployeeID,FullName,Address,Email,Mobile,MaxHours,Job,ShiftPref,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where {} = '{}';'".format(selectedoption,value))
+            mycursor.execute("select EmployeeID,FullName,Address,Email,Mobile,chatid,MaxHours,Job,ShiftPref,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where {} = '{}';'".format(selectedoption,value))
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):

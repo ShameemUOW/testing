@@ -10,11 +10,12 @@ email = x["email"]
 phonenumber = x["phonenumber"]
 username = x["username"]
 password = x["password"]
+chatid = x["chatid"]
 max = x["Maxhrs"]
 
 class AdminCreateManagerAccountController:
-    def createmanageraccount(fullname,address,email,phonenumber,username,password,max):
+    def createmanageraccount(fullname,address,email,phonenumber,username,password,chatid,max):
         createmanager = UserAccountClass.UserAccount()
-        createmanager.createManagerAccount(fullname,address,email,phonenumber,username,password,max)
+        createmanager.createManagerAccount(fullname,address,email,phonenumber,username,password,chatid,max)
 
-createmanager = AdminCreateManagerAccountController.createmanageraccount(fullname,address,email,phonenumber,username,password,max)
+createmanager = AdminCreateManagerAccountController.createmanageraccount(fullname,address,email,phonenumber,username,password,chatid,max)

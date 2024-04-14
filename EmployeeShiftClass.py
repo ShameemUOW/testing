@@ -65,7 +65,7 @@ class EmployeeShift:
                     JOIN userAccount ua ON esi.EmployeeID = ua.EmployeeID
                     JOIN workshift w ON esi.ShiftPref = w.shift
                     WHERE esi.Day = %s AND esi.ShiftPref = %s AND esi.EmployeeID NOT IN (
-                        SELECT EmployeeID FROM EmployeeLeave WHERE Date = %s
+                        SELECT EmployeeID FROM ApprovedEmployeeLeave WHERE Date = %s
                     )
                     AND w.Date = %s 
                     AND esi.NoofHrsWorked < 44

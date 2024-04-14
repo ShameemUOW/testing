@@ -10,12 +10,13 @@ email = x["email"]
 phonenumber = x["phonenumber"]
 username = x["username"]
 password = x["password"]
+chatid = x["chatid"]
 max = x["Maxhrs"]
 
 
 class AdminCreateEmployeeAccountController:
-    def createemployeeaccount(fullname,address,email,phonenumber,username,password,max):
+    def createemployeeaccount(fullname,address,email,phonenumber,username,password,chatid,max):
         createemployee = UserAccountClass.UserAccount()
-        createemployee.createEmployeeAccount(fullname,address,email,phonenumber,username,password,max)
+        createemployee.createEmployeeAccount(fullname,address,email,phonenumber,username,password,chatid,max)
 
-createemployee = AdminCreateEmployeeAccountController.createemployeeaccount(fullname,address,email,phonenumber,username,password,max)
+createemployee = AdminCreateEmployeeAccountController.createemployeeaccount(fullname,address,email,phonenumber,username,password,chatid,max)

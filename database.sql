@@ -10,6 +10,7 @@ create TABLE userAccount(
     Username varchar(50) NOT NULL,
     Pass varchar(64) NOT NULL,
 	MaxHours int(4) NOT NULL,
+    Chatid varchar(60) NOT NULL,
     PlaceHolder varchar(50) NOT NULL,
     PRIMARY KEY (EmployeeID)
 );
@@ -78,4 +79,26 @@ CREATE TABLE EmployeeShift (
     shiftType VARCHAR(255) NOT NULL,
     FOREIGN KEY (shiftID) REFERENCES workshift(id),
     FOREIGN KEY (EmployeeID) REFERENCES userAccount(EmployeeID)
+    on update cascade
+    on delete cascade
+);
+
+CREATE TABLE Notification (
+    EmployeeID INT NOT NULL,
+    Notif VARCHAR(255) NOT NULL,
+    FOREIGN KEY (EmployeeID) REFERENCES userAccount(EmployeeID)
+    on update cascade
+    on delete cascade
+);
+
+CREATE TABLE ApprovedEmployeeLeave (
+    LeaveID INT AUTO_INCREMENT PRIMARY KEY,
+    EmployeeID int NOT NULL,
+    Date DATE NOT NULL,
+    LeaveType VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    CONSTRAINT FK_EmployeeID5 FOREIGN KEY (EmployeeID)
+    REFERENCES userAccount(EmployeeID)
+    on update cascade
+    on delete cascade
 );

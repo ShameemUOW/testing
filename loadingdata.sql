@@ -1,25 +1,25 @@
-insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Jake','America 2','jake@gmail.com','12341234','jake','jake22','40','Admin');
-insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Tom','America 3','Tom@gmail.com','45671234','Tom','Tom22','40','Employee');
-insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Son','America 4','Son@gmail.com','86751234','Son','son22','40','Manager');
-insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Daughter','America 5','Daughter@gmail.com','23451234','Daughter','Daughter22','40','Manager');
-insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Aiden','America 2','Aiden@gmail.com','12341234','aiden','aiden22','40','Manager');
-insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Mike','America 1','mike@gmail.com','32121234','mike','mike22','40','Manager');
-insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Harold','America 1','Harold@gmail.com','23121234','harold','harold22','40','Employee');
-insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('James','America 5','James@gmail.com','23121223','james','james22','40','Employee');
-insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Jack','America 6','Jack@gmail.com','23121212','jack','jack22','40','Employee');
-insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,PlaceHolder) values ('Noah','America 7','Noah@gmail.com','23121234','noah','noah22','40','Manager');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Noa','America 7','Noa@gmail.com','23121234','noa','noa22','40','Manager');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Noas','America 7','Noa@gmail.com','23121234','noas','noas22','40','Employee');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Noab','America 7','Noa@gmail.com','23121234','Noab','noas22','40','Employee');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Goas','America 7','Noa@gmail.com','23121234','Goas','noas22','40','Employee');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Fsaoas','America 7','Noa@gmail.com','23121234','Fsaoas','noas22','40','Employee');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Fasid','America 7','Noa@gmail.com','23121234','Fasid','noas22','40','Employee');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Osdf','America 7','Noa@gmail.com','23121234','Osdf','noas22','40','Employee');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Pasdfj','America 7','Noa@gmail.com','23121234','Pasdfj','noas22','40','Employee');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Skdsfm','America 7','Noa@gmail.com','23121234','Skdsfm','noas22','40','Employee');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Asdkfm','America 7','Noa@gmail.com','23121234','Asdkfm','noas22','40','Employee');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Dasdfk','America 7','Noa@gmail.com','23121234','Dasdfk','noas22','40','Employee');
-insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,PlaceHolder) values ('Dkmasfk','America 7','Noa@gmail.com','23121234','Dkmasfk','noas22','40','Employee');
+insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Chatid,PlaceHolder) values ('Jake','America 2','jake@gmail.com','12341234','jake','jake22','40','1354166283','Admin');
+insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Chatid,PlaceHolder) values ('Tom','America 3','Tom@gmail.com','45671234','Tom','Tom22','40','1354166283','Employee');
+insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Chatid,PlaceHolder) values ('Son','America 4','Son@gmail.com','86751234','Son','son22','40','1354166283','Manager');
+insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Chatid,PlaceHolder) values ('Daughter','America 5','Daughter@gmail.com','23451234','Daughter','Daughter22','40','1354166283','Manager');
+insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Chatid,PlaceHolder) values ('Aiden','America 2','Aiden@gmail.com','12341234','aiden','aiden22','40','1354166283','Manager');
+insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Chatid,PlaceHolder) values ('Mike','America 1','mike@gmail.com','32121234','mike','mike22','40','1354166283','Manager');
+insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Chatid,PlaceHolder) values ('Harold','America 1','Harold@gmail.com','23121234','harold','harold22','40','1354166283','Employee');
+insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Chatid,PlaceHolder) values ('James','America 5','James@gmail.com','23121223','james','james22','40','1354166283','Employee');
+insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Chatid,PlaceHolder) values ('Jack','America 6','Jack@gmail.com','23121212','jack','jack22','40','1354166283','Employee');
+insert into useraccount (Fullname,Address,Email,Mobile,Username,pass,MaxHours,Chatid,PlaceHolder) values ('Noah','America 7','Noah@gmail.com','23121234','noah','noah22','40','1354166283','Manager');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Noa','America 7','Noa@gmail.com','23121234','noa','noa22','40','1354166283','Manager');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Noas','America 7','Noa@gmail.com','23121234','noas','noas22','40','1354166283','Employee');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Noab','America 7','Noa@gmail.com','23121234','Noab','noas22','40','1354166283','Employee');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Goas','America 7','Noa@gmail.com','23121234','Goas','noas22','40','1354166283','Employee');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Fsaoas','America 7','Noa@gmail.com','23121234','Fsaoas','noas22','40','1354166283','Employee');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Fasid','America 7','Noa@gmail.com','23121234','Fasid','noas22','40','1354166283','Employee');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Osdf','America 7','Noa@gmail.com','23121234','Osdf','noas22','40','1354166283','Employee');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Pasdfj','America 7','Noa@gmail.com','23121234','Pasdfj','noas22','40','1354166283','Employee');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Skdsfm','America 7','Noa@gmail.com','23121234','Skdsfm','noas22','40','1354166283','Employee');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Asdkfm','America 7','Noa@gmail.com','23121234','Asdkfm','noas22','40','1354166283','Employee');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Dasdfk','America 7','Noa@gmail.com','23121234','Dasdfk','noas22','40','1354166283','Employee');
+insert into useraccount (fullname,address,email,mobile,username,pass,MaxHours,Chatid,PlaceHolder) values ('Dkmasfk','America 7','Noa@gmail.com','23121234','Dkmasfk','noas22','40','1354166283','Employee');
 
 
 
@@ -134,8 +134,6 @@ insert into employeeshiftinformation values ('19','Tuesday','Evening','0');
 insert into employeeshiftinformation values ('19','Wednesday','Evening','0');
 insert into employeeshiftinformation values ('19','Thursday','Evening','0');
 insert into employeeshiftinformation values ('19','Friday','Evening','0');
-insert into employeeshiftinformation values ('19','Saturday','Evening','0');
-insert into employeeshiftinformation values ('19','Sunday','Evening','0');
 
 INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-03-15', 'Morning', '08:00:00', '16:00:00');
@@ -179,10 +177,6 @@ INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-05-15', 'Night', '09:30:00', '13:00:00');
 
 Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
-VALUES ('23','22','2024-05-15','Day');
-Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
-VALUES ('24','22','2024-05-15','Night');
-Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
 VALUES ('2','2','2024-03-19','Afternoon');
 Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
 VALUES ('3','2','2024-03-19','Late Morning');
@@ -202,6 +196,7 @@ Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
 VALUES ('9','2','2024-03-23','Morning');
 Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
 VALUES ('10','2','2024-03-23','Morning');
+
 
 INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
 VALUES ('3', '2024-03-15', 'sick', 'Pending');
