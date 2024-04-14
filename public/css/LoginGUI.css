@@ -6,7 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('../img/background.jpg');
+    background-image: url('../img/background3.jpg');
     background-size: cover; /* Ensure the background image covers the entire viewport */
     background-position: center; /* Center the background image */
 }
