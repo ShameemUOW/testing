@@ -1,5 +1,6 @@
 body {
     background-color:#3c4463;
+    
 }
 
 #managerpage {
@@ -71,7 +72,7 @@ body {
 
 #options {
     position: absolute;
-    top: 170px;
+    top: 195px;
     color: #ffb344;
     font-family: arial;
 }
