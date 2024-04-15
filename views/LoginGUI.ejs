@@ -34,6 +34,18 @@
         <div><%= message%></div>
     <%}%>
 </form>
+<div class="clocking-in">
+    <h2 class="clockin">Clock In/Out Only</h2>
+        <table>
+            <tr>
+                <td><button id="employee_clockinqr" onclick="document.location='/employeeclockinQR'"><h3>Clock In With QR Code</h3></button></td>
+            </tr>
+            <tr>
+                <td><button id="employee_clockoutqr" onclick="document.location='/employee_viewaccount'"><h3>Clock Out with QR Code</h3></button></td>
+            </tr>
+        </table>
+    </select>
+</div>
 
 </body>
 </html>

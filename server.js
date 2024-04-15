@@ -1898,6 +1898,23 @@ app.get('/employee_viewnotification', (req, res) => {
     });
 });
 
+app.get('/employeeclockinQR', (req, res) => {
+    const currentDate = new Date().toLocaleDateString()
+    const currentTime = new Date().toLocaleTimeString()
+    res.render('ClockInQrCodeGUI',{ currentDate, currentTime});
+});
+
+app.post('/employeeclockinQR', (req, res) => {
+    // Get current date and time
+    const currentDate = new Date().toLocaleDateString()
+    const currentTime = new Date().toLocaleTimeString()
+    const clockInTime = new Date().toLocaleString()
+    console.log(currentDate)
+    console.log(currentTime)
+    const employeeId = req.body.employeeId
+    console.log(employeeId)
+    
+});
 
 
 
