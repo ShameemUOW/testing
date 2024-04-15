@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/AdminViewProfileTable.css">
+    </head>
+    <body>
+        <div id="adminpage">
+            <h1 onclick="document.location='/homepage'">Employee Page</h1>
+        </div>
+
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+            <a href="#" onclick="document.location='/logout'">Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image"></button>
+        <script>
+            function openNav() {
+              document.getElementById("mySidepanel").style.width = "250px";
+            }
+            
+            function closeNav() {
+              document.getElementById("mySidepanel").style.width = "0";
+            }
+        </script>
+
+        <div id="backbutton">
+            <button id="back" onclick="document.location='/admin_view'"><b>&laquo;back</b></button>
+        </div>
+        <div id="options">
+            <h1>Viewing all Notificaiton</h1><br>
+            <% if(message.length>0) {%>
+                <div><%= message%></div>
+            <%}%>
+            <% if(typeof alldata !== "undefined") {%>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Notifications</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0; i<alldata.length;i++) { %>
+                        <tr>
+                            <td><%= alldata[i][0]%></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <%}%>
+        </div>
+    </body>
+</html>

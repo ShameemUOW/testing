@@ -20,10 +20,10 @@ class Notification:
         pass
     def ViewNotifications(self, employeeid):
         try:
-            mycursor.execute("SELECT * FROM notification WHERE employeeid = '{}'".format(employeeid))
+            mycursor.execute("SELECT notif FROM notification WHERE employeeid = '{}'".format(employeeid))
             data = mycursor.fetchall()
             if data is None:
-                print("No data found for employee with ID:", employeeid)
+                print("Failed")
             else:
                 result = json.dumps(data)
                 print(result)

@@ -1874,6 +1874,30 @@ app.get('/employee_viewpasthistory', (req, res) => {
     });
 });
 
+app.get('/employee_viewnotification', (req, res) => {
+    const employeeid = req.session.emlpoyeeidentity;
+    const dataToSend = JSON.stringify({ employeeid });
+    var pythonProcess = spawn('python', ["./EmployeeViewNotificationController.py", dataToSend]);
+    console.log(dataToSend);
+    pythonProcess.stdout.on('data', (data) => {
+        try {
+            var alldata = JSON.parse(data.toString());
+            console.log(alldata);
+        } catch (error) {
+            console.log(alldata);
+        }
+        if (data.toString().trim() == "Failed") {
+            req.flash('message17', 'No Table Left');
+            res.render('EmployeeViewNotificationGUI', { message: req.flash('message17') });
+        } else {
+            req.flash('message17', 'Tables found');
+            res.render('EmployeeViewNotificationGUI', { alldata: alldata, message: req.flash('message17') });
+        }
+    });
+});
+
+
+
 
 
 
