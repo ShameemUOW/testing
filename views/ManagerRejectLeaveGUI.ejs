@@ -41,6 +41,7 @@
                                 <th>Employee ID</th>
                                 <th>Date</th>
                                 <th>Leave Type</th>
+                                <th>Reason</th>
                                 <th>Reject?</th>
                             </tr>
                         </thead>
@@ -51,6 +52,7 @@
                                 <td><%= results[i][1]%></td>
                                 <td><%= results[i][2]%></td>
                                 <td><%= results[i][3]%></td>
+                                <td><input type="text" name="reason<%= results[i][0]%>" placeholder="Reason for rejection"></td>
                                 <td><button id="delete" value = '<%= results[i]%>' name="buttonid">Reject?</button></td>
                             </tr>
                             <% } %>

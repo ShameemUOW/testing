@@ -1314,6 +1314,8 @@ app.get('/managerrejectleave', (req, res) => {
 app.post('/managerrejectleave', (req,res) =>{
     const button = req.body.buttonid
     const csvArray = button.split(',')
+    const reason = req.body[`reason${csvArray[0]}`];
+    console.log(reason)
     const jsonObj = {
         id : csvArray[0]
     }
