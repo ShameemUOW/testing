@@ -1535,8 +1535,7 @@ app.post('/employeeclockin', (req, res) => {
     const clockInTime = new Date().toLocaleString()
     console.log(currentDate)
     console.log(currentTime)
-    shiftid = req.body.shiftid
-    const dataToSend = JSON.stringify({ employeeid, currentDate, currentTime, shiftid });
+    const dataToSend = JSON.stringify({ employeeid, currentDate, currentTime });
 
     // Send the current time as a response
     const pythonProcess = spawn('python', ['./EmployeeClockInController.py', dataToSend]);
@@ -1584,7 +1583,6 @@ app.post('/employeeclockout', (req, res) => {
     const currentTime = new Date().toLocaleTimeString()
     const clockInTime = new Date().toLocaleString()
     console.log(currentTime)
-    shiftid = req.body.shiftid
     const dataToSend = JSON.stringify({ employeeid, currentTime });
 
     // Send the current time as a response
