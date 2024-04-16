@@ -4,7 +4,7 @@ import json
 
 input = sys.argv[1]
 x=json.loads(input)
-employeeid = x["employeeid"]
+employeeid = x["employeeId"]
 currentTime = x["currentTime"]
 
 

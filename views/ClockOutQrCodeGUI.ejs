@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QR Code Scanner</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+  </head>
+
+  <body>
+    <div id="managerpage">
+      <h1 onclick="document.location='/logout'">SER</h1>
+    </div>
+    <div id="container">
+      <h1>QR Code Scanner</h1>
+
+      <a id="btn-scan-qr">
+        <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg">
+      <a/>
+
+      <canvas hidden="" id="qr-canvas"></canvas>
+      <div id="qr-result" hidden="">
+        <b>Employee ID:</b> <span id="outputData" name = "spanvalue"></span>
+      </div>
+    </div>
+    <form action = "/employeeclockoutQR" method = "POST">
+      <input type="hidden" id="employeeId" name="employeeId">
+      <table class = "creating">
+        <tr>
+            <td></td>
+            <td><p id="currentTime">Current Date: <%= currentDate %>, Current Time: <%= currentTime %></p></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button class = "rounded-button" id="button"><b>Clock-Out</b></button></td>
+            <td></td>
+        </tr>
+      </table>
+  </form>
+
+    <script src="js/qrCodeScanner.js"></script>
+    <script>
+      var spanValue = document.getElementById('outputData').textContent;
+      document.getElementById('employeeId').value = spanValue;
+      // Function to update the time periodically
+      function updateTime() {
+          // Get current date and time
+          var currentDate = new Date().toLocaleDateString();
+          var currentTime = new Date().toLocaleTimeString();
+          // Update the content of the paragraph element with the current date and time
+          document.getElementById('currentTime').innerText = "Current Date: " + currentDate + ", Current Time: " + currentTime;
+      }
+
+      // Call updateTime initially to set the time
+      updateTime();
+
+      // Call updateTime every second to update the time
+      setInterval(updateTime, 1000);
+  </script>
+  </body>
+</html>

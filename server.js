@@ -1946,6 +1946,54 @@ app.post('/employeeclockinQR', (req, res) => {
 });
 
 
+app.get('/employeeclockoutQR', (req,res) =>{
+    const currentDate = new Date().toLocaleDateString()
+    const currentTime = new Date().toLocaleTimeString()
+    console.log(currentTime)
+    res.render('ClockOutQrCodeGUI', { currentDate, currentTime, message5: req.flash('message5') })
+})
+
+app.post('/employeeclockoutQR', (req, res) => {
+    // Get current date and time
+    const currentTime = new Date().toLocaleTimeString()
+    const clockInTime = new Date().toLocaleString()
+    console.log(currentTime)
+    const employeeId = req.body.employeeId
+    const dataToSend = JSON.stringify({ employeeId, currentTime });
+
+    // Send the current time as a response
+    const pythonProcess = spawn('python', ['./EmployeeClockOutController.py', dataToSend]);
+
+    let outputData = '';
+
+    pythonProcess.stdout.on('data', (data) => {
+        outputData += data.toString();
+    });
+
+    pythonProcess.on('close', (code) => {
+        req.flash('message5', null);
+        if (code === 0) {
+            console.log(outputData.trim())
+            if (outputData.trim() === 'Clock-out time updated successfully.') {
+                req.flash('message5', 'Clocked Out At: ' + clockInTime)
+                res.redirect(`employeeclockoutQR`);
+            } else {
+                req.flash('message5', 'Check That you have clocked in before.')
+                res.redirect(`employeeclockoutQR`);
+            }
+        } else {
+            console.error('Python process exited with code:', code);
+            res.redirect(`employeeclockoutQR?error=Error from python script`);
+        }
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+        console.error('Error from Python Script:', data.toString());
+        res.redirect(`employeeclockoutQR?error=Error from python script`);
+    });
+});
+
+
 
 
 
