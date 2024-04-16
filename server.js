@@ -1901,7 +1901,7 @@ app.get('/employee_viewnotification', (req, res) => {
 app.get('/employeeclockinQR', (req, res) => {
     const currentDate = new Date().toLocaleDateString()
     const currentTime = new Date().toLocaleTimeString()
-    res.render('ClockInQrCodeGUI',{ currentDate, currentTime});
+    res.render('ClockInQrCodeGUI',{ currentDate, currentTime, message6: req.flash('message6')});
 });
 
 app.post('/employeeclockinQR', (req, res) => {
@@ -1909,10 +1909,39 @@ app.post('/employeeclockinQR', (req, res) => {
     const currentDate = new Date().toLocaleDateString()
     const currentTime = new Date().toLocaleTimeString()
     const clockInTime = new Date().toLocaleString()
-    console.log(currentDate)
-    console.log(currentTime)
     const employeeId = req.body.employeeId
-    console.log(employeeId)
+    const dataToSend = JSON.stringify({ employeeId, currentDate, currentTime });
+
+    // Send the current time as a response
+    const pythonProcess = spawn('python', ['./EmployeeClockInController.py', dataToSend]);
+
+    let outputData = '';
+
+    pythonProcess.stdout.on('data', (data) => {
+        outputData += data.toString();
+    });
+
+    pythonProcess.on('close', (code) => {
+        req.flash('message6', null);
+        if (code === 0) {
+            console.log(outputData.trim())
+            if (outputData.trim() === '') {
+                req.flash('message6', 'Clocked In At: ' + clockInTime)
+                res.redirect(`employeeclockinQR`);
+            } else {
+                req.flash('message6', 'Check that you are assigned to the correct shift or you have clock out of all shifts.')
+                res.redirect(`employeeclockinQR`);
+            }
+        } else {
+            console.error('Python process exited with code:', code);
+            res.redirect(`employeeclockinQR?error=Error from python script`);
+        }
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+        console.error('Error from Python Script:', data.toString());
+        res.redirect(`employeeclockinQR?error=Error from python script`);
+    });
     
 });
 

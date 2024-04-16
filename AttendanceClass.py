@@ -54,20 +54,23 @@ class Attendance:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print("Failed to fetch data:", error)
-    def EmployeeClockIn(self, employeeid, shiftid, datein, timein):
+    def EmployeeClockIn(self, employeeid, datein, timein):
         try:
             # Parse date and time strings into datetime objects
             date_obj = datetime.strptime(datein, "%d/%m/%Y")
             time_obj = datetime.strptime(timein, "%I:%M:%S %p")
 
             # Check if the provided shift ID exists for the employee
-            mycursor.execute("SELECT * FROM EmployeeShift WHERE shiftID = %s AND EmployeeID = %s", (shiftid, employeeid))
+            mycursor.execute("SELECT * FROM EmployeeShift WHERE shiftDate = %s AND EmployeeID = %s", (date_obj.strftime("%Y-%m-%d"), employeeid))
             shift_record = mycursor.fetchone()
-            if not shift_record:
-                raise ValueError("The provided shift ID does not exist for the employee.")
+            if shift_record:
+                shiftID = shift_record[1]
+            elif not shift_record:
+                raise ValueError("The provided shift does not exist for the employee.")
+            
 
             # Retrieve the start time of the shift from the workshift table
-            mycursor.execute("SELECT date, start FROM workshift WHERE id = %s", (shiftid,))
+            mycursor.execute("SELECT date, start FROM workshift WHERE id = %s", (shiftID,))
             shift_date_obj, shift_start_time = mycursor.fetchone()
 
             shift_date_obj = datetime.strptime(shift_date_obj, "%Y-%m-%d").date()

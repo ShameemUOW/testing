@@ -175,7 +175,12 @@ INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-05-15', 'Day', '09:30:00', '13:00:00');
 INSERT INTO workshift (Date, shift, start, end)
 VALUES ('2024-05-15', 'Night', '09:30:00', '13:00:00');
+INSERT INTO workshift (Date, shift, start, end)
+VALUES ('2024-04-16', 'Day', '13:30:00', '13:00:00');
 
+
+Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
+VALUES ('21','2','2024-04-16','Day');
 Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
 VALUES ('2','2','2024-03-19','Afternoon');
 Insert Into EmployeeShift (shiftid,employeeid,shiftDate,shiftType)
