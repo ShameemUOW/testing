@@ -18,34 +18,30 @@
                 <div class="input-container">
                     <input type="password" name="Password" placeholder="Password">
                 </div>
-            </div>
-            <div class="profile-dropdown">
-                <h2 class="profile-header">Profile</h2>
-                <select class="profile-select" name="selectedoption">
-                    <% myList.forEach(item => {%>
-                        <option value="<%= item%>"><%= item%></option>
-                    <% }); %>
-                </select>
+                <div>
+                    <select class="profile-select" name="selectedoption">
+                        <% myList.forEach(item => {%>
+                            <option value="<%= item%>"><%= item%></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="input-container-login">
+                    <input type="submit" value="Login" class="login-button">
+                    <% if(message.length>0) {%>
+                        <div style="color: red;"><%= message%></div>
+                    <%}%>
+                </div>
+                <table>
+                    <tr>
+                        <td><button id="employee_clockinqr" onclick="document.location='/employeeclockinQR'"><h3>Clock In</h3></button></td>
+                        <td><button id="employee_clockoutqr" onclick="document.location='/employeeclockoutQR'"><h3>Clock Out</h3></button></td>
+                    </tr>
+                </table>
             </div>
         </div>
-        <input type="submit" value="Login" class="login-button">
     </div>
-    <% if(message.length>0) {%>
-        <div><%= message%></div>
-    <%}%>
 </form>
-<div class="clocking-in">
-    <h2 class="clockin">Clock In/Out Only</h2>
-        <table>
-            <tr>
-                <td><button id="employee_clockinqr" onclick="document.location='/employeeclockinQR'"><h3>Clock In With QR Code</h3></button></td>
-            </tr>
-            <tr>
-                <td><button id="employee_clockoutqr" onclick="document.location='/employeeclockoutQR'"><h3>Clock Out with QR Code</h3></button></td>
-            </tr>
-        </table>
-    </select>
-</div>
+
 
 </body>
 </html>

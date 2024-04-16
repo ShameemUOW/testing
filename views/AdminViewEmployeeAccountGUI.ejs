@@ -33,30 +33,30 @@
                 <div><%= message%></div>
             <%}%>
             <% if(typeof results !== "undefined") {%>
-                <table>
+                <table id="employeeTable" style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 16px; text-align: left;">
                     <thead>
                         <tr>
-                            <th>UserAccount ID</th>
-                            <th>Fullname</th>
-                            <th>Address</th>
-                            <th>Email</th>
-                            <th>Contact Number</th>
-                            <th>Username</th>
-                            <th>Chat ID</th>
-                            <th>Max Hours</th>
+                            <th style="padding: 12px 15px; border-bottom: 1px solid #ddd; background-color: #a42929;">UserAccount ID</th>
+                            <th style="padding: 12px 15px; border-bottom: 1px solid #ddd; background-color: #a42929;">Fullname</th>
+                            <th style="padding: 12px 15px; border-bottom: 1px solid #ddd; background-color: #a42929;">Address</th>
+                            <th style="padding: 12px 15px; border-bottom: 1px solid #ddd; background-color: #a42929;">Email</th>
+                            <th style="padding: 12px 15px; border-bottom: 1px solid #ddd; background-color: #a42929;">Contact Number</th>
+                            <th style="padding: 12px 15px; border-bottom: 1px solid #ddd; background-color: #a42929;">Username</th>
+                            <th style="padding: 12px 15px; border-bottom: 1px solid #ddd; background-color: #a42929;">Chat ID</th>
+                            <th style="padding: 12px 15px; border-bottom: 1px solid #ddd; background-color: #a42929;">Max Hours</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% for(var i=0; i<results.length;i++) { %>
-                        <tr>
-                            <td><%= results[i][0]%></td>
-                            <td><%= results[i][1]%></td>
-                            <td><%= results[i][2]%></td>
-                            <td><%= results[i][3]%></td>
-                            <td><%= results[i][4]%></td>
-                            <td><%= results[i][5]%></td>
-                            <td><%= results[i][6]%></td>
-                            <td><%= results[i][7]%></td>
+                        <% for(var i=0; i<results.length; i++) { %>
+                        <tr style="background-color: <%= i % 2 === 0 ? '#a42929' : '#000000' %>;">
+                            <td style="padding: 12px 15px; border-bottom: 1px solid #ddd;"><%= results[i][0] %></td>
+                            <td style="padding: 12px 15px; border-bottom: 1px solid #ddd;"><%= results[i][1] %></td>
+                            <td style="padding: 12px 15px; border-bottom: 1px solid #ddd;"><%= results[i][2] %></td>
+                            <td style="padding: 12px 15px; border-bottom: 1px solid #ddd;"><%= results[i][3] %></td>
+                            <td style="padding: 12px 15px; border-bottom: 1px solid #ddd;"><%= results[i][4] %></td>
+                            <td style="padding: 12px 15px; border-bottom: 1px solid #ddd;"><%= results[i][5] %></td>
+                            <td style="padding: 12px 15px; border-bottom: 1px solid #ddd;"><%= results[i][6] %></td>
+                            <td style="padding: 12px 15px; border-bottom: 1px solid #ddd;"><%= results[i][7] %></td>
                         </tr>
                         <% } %>
                     </tbody>
