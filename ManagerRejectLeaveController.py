@@ -5,10 +5,11 @@ import json
 input = sys.argv[1]
 x=json.loads(input)
 id = x["id"]
+reason = x["reason"]
 
 class ManagerRejectLeave:
-    def ManagerRejectLeaveController(id):
+    def ManagerRejectLeaveController(id,reason):
         mdws = EmployeeLeaveClass.EmployeeLeave()
-        mdws.ManagerRejectLeave(id)
+        mdws.ManagerRejectLeave(id,reason)
 
-mdws = ManagerRejectLeave.ManagerRejectLeaveController(id)
+mdws = ManagerRejectLeave.ManagerRejectLeaveController(id,reason)

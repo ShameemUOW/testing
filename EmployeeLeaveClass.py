@@ -74,9 +74,9 @@ class EmployeeLeave:
             print("Success")
         except Exception as error:
             print(error)
-    def ManagerRejectLeave(self,id):
+    def ManagerRejectLeave(self,id,reason):
         try:
-            mycursor.execute("update employeeleave SET status = 'Rejected' where leaveid = '{}'".format(id))
+            mycursor.execute("update employeeleave SET status = 'Rejected', reason = '{}' where leaveid = '{}'".format(reason,id))
             mydb.commit()
             mycursor.execute("SELECT date from employeeleave where leaveid = '{}'".format(id))
             date = mycursor.fetchone()[0]

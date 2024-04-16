@@ -1317,7 +1317,8 @@ app.post('/managerrejectleave', (req,res) =>{
     const reason = req.body[`reason${csvArray[0]}`];
     console.log(reason)
     const jsonObj = {
-        id : csvArray[0]
+        id : csvArray[0],
+        reason: reason
     }
     const jsonObj2 = JSON.stringify(jsonObj)
     console.log(jsonObj2)

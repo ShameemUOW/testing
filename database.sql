@@ -52,6 +52,7 @@ CREATE TABLE EmployeeLeave (
     Date DATE NOT NULL,
     LeaveType VARCHAR(50) NOT NULL,
     status VARCHAR(50) NOT NULL,
+    reason VARCHAR(50),
     CONSTRAINT FK_EmployeeID3 FOREIGN KEY (EmployeeID)
     REFERENCES userAccount(EmployeeID)
     on update cascade

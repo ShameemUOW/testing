@@ -46,7 +46,7 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE TRIGGER InsertNotificationAfterEmployeeShift
+CREATE TRIGGER InsertNotificationAfterEmployeeShift1
 AFTER INSERT ON EmployeeShift
 FOR EACH ROW
 BEGIN
@@ -97,7 +97,7 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE TRIGGER InsertNotificationAfterEmployeeLeave
+CREATE TRIGGER InsertNotificationAfterEmployeeLeave2
 AFTER UPDATE ON EmployeeLeave
 FOR EACH ROW
 BEGIN
