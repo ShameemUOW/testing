@@ -47,6 +47,10 @@ app.get('/resetpassword', (req,res) =>{
     res.render('ResetPassword', {username : ssn.username});
 })
 
+app.get('/createmanagerchoose', (req,res) =>{
+    res.render('ManagerCreateChooseGUI');
+})
+
 app.post("/resetpass", (req,res)=>{
     ssn = req.session
     const myJSON = {

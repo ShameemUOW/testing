@@ -82,9 +82,16 @@ body {
     left: 80px;
 }
 
+
 .container1 {
     position: absolute;
     left: 50%;
+}
+
+.container2 {
+    position: absolute;
+    left: 100%;
+    
 }
 
 
@@ -95,4 +102,86 @@ body {
     max-height: 140px;
 }
 
+#manager_createchoose {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+}
 
+#manager_viewchoose {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+}
+
+#manager_searchchoose {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+}
+
+#manager_updatechoose {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+}
+
+#manager_createwsbutton {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+}
+
+#manager_createemppref {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+}
