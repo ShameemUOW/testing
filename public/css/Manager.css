@@ -185,3 +185,297 @@ body {
     cursor: pointer;
     border-radius: 20%;
 }
+
+#manager_viewattendancebutton {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+}
+
+
+#manager_viewemployeeaccounts {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+}
+
+#manager_viewempleavebutton {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+}
+
+#manager_viewallbutton {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+}
+
+#manager_viewshiftprefbutton {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+}
+
+#manager_search {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+}
+
+#manager_filter {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+}
+
+#manager_searchemployeeaccounts {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+    width: 200px;
+}
+
+#manager_filterwsbutton {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+    width: 200px;
+}
+
+#manager_filterpreference {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+    width: 200px;
+}
+
+#manager_viewattendancebutton {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+    width: 200px;
+}
+
+#manager_filteremployeeaccounts {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+    width: 200px;
+}
+
+#manager_updatebutton {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+    width: 200px;
+}
+
+#manager_updatewsbutton {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+    width: 200px;
+}
+
+#manager_deletechoose {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+}
+
+#manager_rejectapprove {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+}
+
+#manager_deletewsbutton {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+    width: 200px;
+}
+
+#managermanualassignemployees {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+    width: 200px;
+}
+
+#managerautoassignemployees {
+    color: #3c4463;
+    background-color: #e2a349;
+    font-family: arial;
+    border: none;
+    padding: 40px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20%;
+    height: 300px;
+    width: 200px;
+}

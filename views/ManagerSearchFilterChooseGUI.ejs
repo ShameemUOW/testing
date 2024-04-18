@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/Manager.css">
+</head>
+<body>
+    <div id="managerpage">
+        <h1 onclick="document.location='/homepage'">Manager Homepage</h1>
+    </div>
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
+        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+    </div>
+    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
+    <script>
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+        }
+    </script>
+    <div id="options">
+
+        <h1>What would you like to Search/Filter?</h1><br>
+
+        <div class="container1">
+            <table>
+                <td><button id="manager_search" onclick="document.location='/manager_search'"><img src="img/search.png" class="image"><h3>Search</h3></button></td>
+                <td><button id="manager_filter" onclick="document.location='/manager_filter'"><img src="img/filter.png" class="image"><h3>Filter</h3></button></td>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

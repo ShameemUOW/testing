@@ -51,6 +51,34 @@ app.get('/createmanagerchoose', (req,res) =>{
     res.render('ManagerCreateChooseGUI');
 })
 
+app.get('/viewmanagerchoose', (req,res) =>{
+    res.render('ManagerViewChooseGUI');
+})
+
+app.get('/searchfiltermanagerchoose', (req,res) =>{
+    res.render('ManagerSearchFilterChooseGUI');
+})
+
+app.get('/manager_search', (req,res) =>{
+    res.render('ManagerSearchChooseGUI');
+})
+
+app.get('/manager_filter', (req,res) =>{
+    res.render('ManagerFilterChooseGUI');
+})
+
+app.get('/updatemanagerchoose', (req,res) =>{
+    res.render('ManagerUpdateChooseGUI');
+})
+
+app.get('/rejectapprovemanagerchoose', (req,res) =>{
+    res.render('ManagerDecisionChooseGUI');
+})
+
+app.get('/deletemanagerchoose', (req,res) =>{
+    res.render('ManagerDeleteChooseGUI');
+})
+
 app.post("/resetpass", (req,res)=>{
     ssn = req.session
     const myJSON = {
