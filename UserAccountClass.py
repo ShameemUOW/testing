@@ -225,6 +225,14 @@ class UserAccount:
             self.HashPlainPasswords()
         except mysql.connector.Error as error:
             print("Failed")
+    def updateEmployeeAccount(self,employeeid,selectedoption,value):
+        try:
+            mycursor.execute("UPDATE useraccount SET {} = '{}' where employeeid = {}".format(selectedoption,value,employeeid))
+            mydb.commit()
+            print("Success")
+            self.HashPlainPasswords()
+        except mysql.connector.Error as error:
+            print("Failed")
     def searchAdminAccount(self, selectedoption,value):
         try:
             mycursor.execute("select Fullname,Address,Email,Mobile,Username,pass,chatid,MaxHours from useraccount where {} = '{}' and placeholder = 'Admin'".format(selectedoption,value))

@@ -2024,6 +2024,50 @@ app.post('/employeeclockoutQR', (req, res) => {
     });
 });
 
+app.get('/updateemployeeaccount', (req,res) =>{
+    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('UpdateEmployeeAccount',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/updateemployeeaccount', (req,res) =>{
+    const emlpoyeeidentity = req.session.emlpoyeeidentity
+    const myJSON = {
+        employeeid : emlpoyeeidentity,
+        selectedoption : req.body.selectedoption,
+        value : req.body.value
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON2)
+    var pythonProcess = spawn('python',["./UpdateManagerAccountController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    req.flash('message', null);
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message','Unable to update Employee Account. Double check your values entered')
+        res.redirect('/updateemployeeaccount')
+    }
+    else
+    {
+        req.flash('message','Employee Account Updated')
+        res.redirect('/updateemployeeaccount')
+    }
+})
+})
+
 
 
 
