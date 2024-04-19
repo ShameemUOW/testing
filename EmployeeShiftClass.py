@@ -154,3 +154,18 @@ class EmployeeShift:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def ViewCalenderFormatWork(self):
+        try:
+            mycursor.execute("SELECT u.Fullname, es.shiftDate, es.shiftType FROM EmployeeShift es JOIN userAccount u ON es.EmployeeID = u.EmployeeID;")
+            shifts = mycursor.fetchall()
+
+            formatted_shifts = []
+            for shift in shifts:
+                formatted_shift = [shift[0],shift[1].strftime('%Y-%m-%d'),]
+                formatted_shifts.append(formatted_shift)
+
+            shifts_json = json.dumps(formatted_shifts)
+            print(shifts_json)
+        except Exception as e:
+            error_message = {"error": str(e)}
+            print(json.dumps(error_message))

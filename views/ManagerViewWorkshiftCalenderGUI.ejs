@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Shift Calendar</title>
+    <link href="/fullcalendar/main.css" rel="stylesheet">
+</head>
+<body>
+    <div id="calendar"></div>
+    <script src="/fullcalendar/main.js"></script>
+    <script src="/fullcalendar/locales-all.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'en', // Change this to your desired locale
+                events: '/api/shifts', // Endpoint to fetch events
+                eventRender: function(info) {
+                    // Customize event rendering
+                    info.el.querySelector('.fc-title').innerHTML =
+                        '<strong>Name:</strong> ' + info.event.extendedProps.name + '<br>' +
+                        '<strong>Shift Type:</strong> ' + info.event.extendedProps.shiftType;
+                }
+            });
+            calendar.render();
+        });
+    </script>
+</body>
+</html>

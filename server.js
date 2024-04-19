@@ -2272,6 +2272,35 @@ app.post('/employeedeleteleave', (req,res) =>{
 })
 })
 
+// Serve FullCalendar assets
+app.use('/fullcalendar', express.static(__dirname + '/node_modules/@fullcalendar'));
+
+// Endpoint to fetch shift data
+app.get('/api/shifts', (req, res) => {
+    var pythonProcess = spawn('python',["./ViewCalenderFormatWorkController.py"]);
+    pythonProcess.stdout.on('data', (data) => {
+        try {
+            const alldata = JSON.parse(data.toString());
+            const events = alldata.map(shift => ({
+                title: shift[0],
+                start: shift[1],
+                extendedProps: {
+                    name: shift[0],
+                    shiftType: shift[2]
+                }
+            }));
+            res.json(events);
+        } catch (error) {
+            console.error('Error parsing shift data:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+});
+
+app.get('/managerviewcalender', (req, res) => {
+    res.render('ManagerViewWorkshiftCalenderGUI');
+});
+
 
 
 
