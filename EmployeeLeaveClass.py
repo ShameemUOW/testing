@@ -45,6 +45,21 @@ class EmployeeLeave:
             print("Success")
         except mysql.connector.Error as error:
            print("Failed {}".format(error))
+    def EmployeeViewPendingLeave(self,employeeid):
+        try:
+            mycursor.execute("select leaveid, employeeid, date, leavetype from employeeleave where status = 'Pending' and employeeid = '{}';".format(employeeid))
+            data = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                result = []
+                for row in data:
+                    leaveDate = row[2].strftime('%Y-%m-%d') if row[2] is not None else None
+                    result.append((row[0], row[1], leaveDate, row[3]))
+                print(json.dumps(result))
+        except mysql.connector.Error as error:
+            print ("Failed")
     def ManagerViewPendingLeave(self):
         try:
             mycursor.execute("select leaveid, employeeid, date, leavetype from employeeleave where status = 'Pending';")

@@ -2068,6 +2068,65 @@ app.post('/updateemployeeaccount', (req,res) =>{
 })
 })
 
+app.get('/employeedeleteleave', (req, res) => {
+    const emlpoyeeidentity = req.session.emlpoyeeidentity
+    const myJSON = {
+        employeeid : emlpoyeeidentity
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON2)
+    var pythonProcess = spawn('python', ["./EmployeeViewPendingLeaveController.py",myJSON2]);
+    let alldata = "";
+    pythonProcess.stdout.on('data', (data) => {
+        alldata += data.toString();
+        console.log(alldata)
+    });
+    pythonProcess.stdout.on('end', () => {
+        try {
+            if (alldata.trim() === "No table left"){
+                req.flash('message17', 'No Table Left');
+                res.render('EmployeeDeleteLeaveGUI', { message: req.flash('message17') });
+            } else {
+                const jsonData = JSON.parse(alldata.trim());
+                req.flash('message17', 'Tables found');
+                res.render('EmployeeDeleteLeaveGUI', { results: jsonData, message: req.flash('message17') });
+            }
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            req.flash('message17', 'Error retrieving data');
+            res.render('EmployeeDeleteLeaveGUI', { message: req.flash('message17') });
+        }
+    });
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    });
+});
+
+app.post('/employeedeleteleave', (req,res) =>{
+    const button = req.body.buttonid
+    const csvArray = button.split(',')
+    const jsonObj = {
+        id : csvArray[0]
+    }
+    const jsonObj2 = JSON.stringify(jsonObj)
+    console.log(jsonObj2)
+    var pythonProcess = spawn('python',["./ManagerApproveLeaveController.py",jsonObj2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var alldata = data.toString().trim()
+    console.log(alldata)
+    if (alldata == "Success")
+    {
+        req.flash('message4','Deleted Successfully')
+        res.redirect('/employeedeleteleave')
+        
+    }
+    else
+    {
+        req.flash('message4','Unsuccessful')
+        res.redirect('/employeedeleteleave') 
+    }
+})
+})
 
 
 

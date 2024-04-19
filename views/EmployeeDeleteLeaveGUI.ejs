@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/AdminViewProfileTable.css">
+    </head>
+    <body>
+        <div id="adminpage">
+            <h1 onclick="document.location='/homepage'">Employee Page</h1>
+        </div>
+
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+            <a href="#" onclick="document.location='/logout'">Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image"></button>
+        <script>
+            function openNav() {
+              document.getElementById("mySidepanel").style.width = "250px";
+            }
+            
+            function closeNav() {
+              document.getElementById("mySidepanel").style.width = "0";
+            }
+        </script>
+
+        <div id="backbutton">
+            <button id="back" onclick="document.location='/admin_view'"><b>&laquo;back</b></button>
+        </div>
+        <form action="/employeedeleteleave" method="POST">
+            <div id="options">
+                <h1>Delete Leaves?</h1><br>
+                <% if(message.length>0) {%>
+                    <div><%= message%></div>
+                <%}%>
+                <% if(typeof results !== "undefined") {%>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Leave ID</th>
+                                <th>Employee ID</th>
+                                <th>Date</th>
+                                <th>Leave Type</th>
+                                <th>Delete?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(var i=0; i<results.length;i++) { %>
+                            <tr>
+                                <td><%= results[i][0]%></td>
+                                <td><%= results[i][1]%></td>
+                                <td><%= results[i][2]%></td>
+                                <td><%= results[i][3]%></td>
+                                <td><button id="delete" value = '<%= results[i]%>' name="buttonid">Delete?</button></td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                <%}%>
+            </div>
+        </form>
+    </body>
+</html>
