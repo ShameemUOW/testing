@@ -1,31 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Shift Calendar</title>
-    <link href="/fullcalendar/main.css" rel="stylesheet">
-</head>
-<body>
-    <div id="calendar"></div>
-    <script src="/fullcalendar/main.js"></script>
-    <script src="/fullcalendar/locales-all.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset='utf-8' />
+    <link rel="stylesheet" href="css/AdminViewProfileTable.css">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
+            var shiftsData = JSON.parse(decodeURIComponent('<%- encodeURIComponent(JSON.stringify(results)) %>'));
+            var events = shiftsData.map(function(shift) {
+                return {
+                    title: shift.person + ' - ' + shift.shiftType,
+                    start: shift.shiftDate
+                    // Add other properties if needed
+                };
+            });
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                locale: 'en', // Change this to your desired locale
-                events: '/api/shifts', // Endpoint to fetch events
-                eventRender: function(info) {
-                    // Customize event rendering
-                    info.el.querySelector('.fc-title').innerHTML =
-                        '<strong>Name:</strong> ' + info.event.extendedProps.name + '<br>' +
-                        '<strong>Shift Type:</strong> ' + info.event.extendedProps.shiftType;
-                }
+                initialDate: '2024-03-07',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: events // Use events array here
             });
+    
             calendar.render();
         });
     </script>
+    
+    
+</head>
+<body>
+    <div id="adminpage">
+        <h1 onclick="document.location='/homepage'">Manager Page</h1>
+    </div>
+
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+        <a href="#" onclick="document.location='/logout'">Logout</a>
+        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+    </div>
+    <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image"></button>
+    <div id="backbutton">
+        <button id="back" onclick="document.location='/admin_view'"><b>&laquo;back</b></button>
+    </div>
+    <div id='calendar'></div>
 </body>
 </html>

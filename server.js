@@ -2272,34 +2272,30 @@ app.post('/employeedeleteleave', (req,res) =>{
 })
 })
 
-// Serve FullCalendar assets
-app.use('/fullcalendar', express.static(__dirname + '/node_modules/@fullcalendar'));
-
-// Endpoint to fetch shift data
-app.get('/api/shifts', (req, res) => {
-    var pythonProcess = spawn('python',["./ViewCalenderFormatWorkController.py"]);
+app.get('/managerviewcalender', (req, res) => {
+    var pythonProcess = spawn('python', ["./ViewCalenderFormatWorkController.py"])
     pythonProcess.stdout.on('data', (data) => {
         try {
-            const alldata = JSON.parse(data.toString());
-            const events = alldata.map(shift => ({
-                title: shift[0],
-                start: shift[1],
-                extendedProps: {
-                    name: shift[0],
-                    shiftType: shift[2]
-                }
-            }));
-            res.json(events);
+            var shiftsData = JSON.parse(data.toString());
+            console.log("Shifts data:", shiftsData); // Check the shiftsData here
+            if (!Array.isArray(shiftsData)) {
+                shiftsData = []; // Ensure shiftsData is an array
+            }
         } catch (error) {
-            console.error('Error parsing shift data:', error);
-            res.status(500).json({ error: 'Internal server error' });
+            console.log("Error parsing JSON data:", error);
+            shiftsData = []; // Set empty array if parsing fails
+        }
+        if (shiftsData.length === 0) {
+            req.flash('message17', 'No Table Left');
+            res.render('ManagerViewWorkshiftCalenderGUI', { message: req.flash('message17') });
+        } else {
+            req.flash('message17', 'Tables found');
+            res.render('ManagerViewWorkshiftCalenderGUI', { results: shiftsData, message: req.flash('message17') });
         }
     });
 });
 
-app.get('/managerviewcalender', (req, res) => {
-    res.render('ManagerViewWorkshiftCalenderGUI');
-});
+
 
 
 

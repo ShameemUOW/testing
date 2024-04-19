@@ -161,9 +161,12 @@ class EmployeeShift:
 
             formatted_shifts = []
             for shift in shifts:
-                formatted_shift = [shift[0],shift[1].strftime('%Y-%m-%d'),]
+                formatted_shift = {
+                    "person": shift[0],
+                    "shiftDate": shift[1].strftime('%Y-%m-%d'),
+                    "shiftType": shift[2]
+                }
                 formatted_shifts.append(formatted_shift)
-
             shifts_json = json.dumps(formatted_shifts)
             print(shifts_json)
         except Exception as e:
