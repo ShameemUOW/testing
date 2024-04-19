@@ -79,6 +79,10 @@ app.get('/deletemanagerchoose', (req,res) =>{
     res.render('ManagerDeleteChooseGUI');
 })
 
+app.get('/adminfilterchoose', (req,res) =>{
+    res.render('AdminFilterAccountsGUI.ejs');
+})
+
 app.post("/resetpass", (req,res)=>{
     ssn = req.session
     const myJSON = {
@@ -835,6 +839,52 @@ app.post('/adminsearchadmin', (req,res) =>{
 })
 });
 
+app.get('/adminfilteradmin', (req,res) =>{
+    var pythonProcess = spawn('python',["./AdminFiltergrabTableColumns.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('AdminFilterAdminAccountGUI',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/adminfilteradmin', (req,res) =>{
+    const jsonObj = {
+        selectedoption : req.body.selectedoption,
+        value : req.body.value
+    }
+    const jsonObj2 = JSON.stringify(jsonObj)
+    var pythonProcess = spawn('python',["./AdminFilterAdminAccountsController.py",jsonObj2])
+    pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message', null);
+    try{
+        var alldata = JSON.parse(data.toString())
+    }catch(error)
+    {
+        console.log(alldata)
+    }
+    
+    if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
+    {
+        console.log(data.toString())
+        req.flash('message','Failed Search')
+        res.redirect('/adminfilteradmin')   
+    }
+    else
+    {
+        res.render('AdminFilterAdminTableGUI',{"results": alldata}) 
+    }
+})
+});
+
 app.get('/adminsearchmanager', (req,res) =>{
     var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
@@ -881,6 +931,53 @@ app.post('/adminsearchmanager', (req,res) =>{
 })
 });
 
+app.get('/adminfiltermanager', (req,res) =>{
+    var pythonProcess = spawn('python',["./AdminFiltergrabTableColumns.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('AdminFilterManagerAccountGUI',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/adminfiltermanager', (req,res) =>{
+    const jsonObj = {
+        selectedoption : req.body.selectedoption,
+        value : req.body.value
+    }
+    const jsonObj2 = JSON.stringify(jsonObj)
+    var pythonProcess = spawn('python',["./AdminFilterManagerAccountsController.py",jsonObj2])
+    pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message', null);
+    try{
+        var alldata = JSON.parse(data.toString())
+    }catch(error)
+    {
+        console.log(alldata)
+    }
+    
+    if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
+    {
+        console.log(data.toString())
+        req.flash('message','Failed Search')
+        res.redirect('/adminfiltermanager')   
+    }
+    else
+    {
+        res.render('AdminFilterManagerTableGUI',{"results": alldata}) 
+    }
+})
+});
+
+
 app.get('/adminsearchemployee', (req,res) =>{
     var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
@@ -926,6 +1023,53 @@ app.post('/adminsearchemployee', (req,res) =>{
     }
 })
 });
+
+app.get('/adminfilteremployee', (req,res) =>{
+    var pythonProcess = spawn('python',["./AdminFiltergrabTableColumns.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('AdminFilterEmployeeAccountGUI',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/adminfilteremployee', (req,res) =>{
+    const jsonObj = {
+        selectedoption : req.body.selectedoption,
+        value : req.body.value
+    }
+    const jsonObj2 = JSON.stringify(jsonObj)
+    var pythonProcess = spawn('python',["./AdminFilterManagerAccountsController.py",jsonObj2])
+    pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message', null);
+    try{
+        var alldata = JSON.parse(data.toString())
+    }catch(error)
+    {
+        console.log(alldata)
+    }
+    
+    if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
+    {
+        console.log(data.toString())
+        req.flash('message','Failed Search')
+        res.redirect('/adminfilteremployee')   
+    }
+    else
+    {
+        res.render('AdminFilterEmployeeTableGUI',{"results": alldata}) 
+    }
+})
+});
+
 
 //UpdateManagerAccount
 app.get('/updatemanageraccount', (req,res) =>{

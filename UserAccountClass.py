@@ -245,9 +245,33 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+    def filterAdminAccount(self, selectedoption,value):
+        try:
+            mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username from useraccount where {} LIKE '%{}%' and placeholder = 'Admin'".format(selectedoption,value))
+            searchingdata = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                searchingresult = json.dumps(searchingdata)
+                print(searchingresult)
+        except mysql.connector.Error as error:
+            print ("Failed")
     def searchManagerAccount(self, selectedoption,value):
         try:
             mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username,pass,chatid,MaxHours from useraccount where {} = '{}' and placeholder = 'Manager'".format(selectedoption,value))
+            searchingdata = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                searchingresult = json.dumps(searchingdata)
+                print(searchingresult)
+        except mysql.connector.Error as error:
+            print ("Failed")
+    def filterManagerAccount(self, selectedoption,value):
+        try:
+            mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username from useraccount where {} LIKE '%{}%' and placeholder = 'Manager'".format(selectedoption,value))
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -269,8 +293,25 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+    def filterEmployeeAccount(self, selectedoption,value):
+        try:
+            mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username from useraccount where {} LIKE '%{}%' and placeholder = 'Employee'".format(selectedoption,value))
+            searchingdata = mycursor.fetchall()
+            numberofrow = mycursor.rowcount
+            if(numberofrow==0):
+                print("No table left")
+            else:
+                searchingresult = json.dumps(searchingdata)
+                print(searchingresult)
+        except mysql.connector.Error as error:
+            print ("Failed")
     def grabUserAccountTableColumns(self):
         mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('EmployeeID')")
+        data = mycursor.fetchall()
+        result = json.dumps(data)
+        print(result)
+    def grabFilterUserAccountTableColumns(self):
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('pass','chatid','PlaceHolder','MaxHours')")
         data = mycursor.fetchall()
         result = json.dumps(data)
         print(result)

@@ -217,6 +217,10 @@ INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
 VALUES ('12', '2024-03-20', 'sick', 'Pending');
 INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
 VALUES ('17', '2024-03-21', 'sick', 'Pending');
+INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
+VALUES ('2', '2024-03-21', 'sick', 'Pending');
+INSERT INTO EmployeeLeave (employeeid, Date, LeaveType, status)
+VALUES ('2', '2024-03-22', 'sick', 'Pending');
 
 INSERT INTO Attendance (employeeid, Date,clockin,clockout, attendance)
 VALUES ('7', '2024-03-19', '13:11:32', '20:00:00','Late');
