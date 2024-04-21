@@ -12,7 +12,6 @@
 
         /* Center the form horizontally */
         #options {
-            display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh; /* Set the minimum height of the container to full viewport height */
@@ -32,7 +31,7 @@
     </style>
 </head>
 <body>
-    <div id="employeepage">
+    <div id="managerpage">
         <h1>Welcome to Employee Dashboard</h1>
     </div>
     <div id="mySidepanel" class="sidepanel">
@@ -59,7 +58,10 @@
     <div id="options">
         <div class="container">
             <h1>Create Leave</h1>
-            <form action="/EmployeeCreateLeave" method="POST">
+            <% if (message.length > 0) { %>
+                <div><%= message %></div>
+            <% } %>
+            <form action="/employee_createLeave" method="POST">
                 <fieldset>
                     <legend>Enter Leave Details</legend>
                     <label for="date">Date:</label><br>

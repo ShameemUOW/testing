@@ -34,6 +34,9 @@
 
         <div class="container">
             <form action="/updatemanageraccount" method="post">
+                <% if(message.length>0) {%>
+                    <div><%= message%></div>
+                <%}%>
                 <fieldset>
                     <label for="typeVariable">Type Variable:</label><br>
                     <input type="text" id="typeVariable" name="value"><br><br>

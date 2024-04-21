@@ -38,3 +38,5 @@ update employeeleave SET status = 'Approved' where leaveid = '6';
 UPDATE useraccount SET fullname = 'noahhh' where employeeid = 10;
 update employeeshiftinformation set NoOfHrsWorked = 0 where employeeid >0;
 select * from employeeshiftinformation;
+
+SELECT u.Fullname, es.shiftDate, es.shiftType FROM EmployeeShift es JOIN userAccount u ON es.EmployeeID = u.EmployeeID;

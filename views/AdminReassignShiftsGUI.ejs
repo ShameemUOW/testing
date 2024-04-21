@@ -31,6 +31,9 @@
             <div id="options">
                 <table class = "creating">
                     <h1>Reassign Employee Shifts</h1><br>
+                    <% if(message.length>0) {%>
+                        <div><%= message%></div>
+                    <%}%>
                     <tr>
                         <td></td>
                         <td><input id="employeeid" class = "textbox" type="text" name="employeeid" placeholder="Enter Employee ID"></td>

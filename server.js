@@ -98,17 +98,6 @@ app.post("/resetpass", (req,res)=>{
     res.redirect('/homepage')
 })
 
-app.get('/manager_createws', (req, res) => {
-    // Render the UpdateManagerAccount.ejs page
-    res.render('CreateWorkShift');
-});
-
-app.get('/employee_createLeave', (req, res) => {
-    // Render the EmployeeCreateLeave.ejs page
-    res.render('EmployeeCreateLeave');
-});
-
-
 app.get('/', (req, res) => {
     res.redirect('/logingui')
 })
@@ -180,11 +169,7 @@ app.post("/logingui", (req,res)=>{
                 console.log(ssn.emlpoyeeidentity)
                 ssn.userprof = req.body.selectedoption
                 res.redirect('/homepage')  
-            })
-            req.flash('message', null);
-            loggedin.push(myJSON)
-            req.flash('message','Enter Details')
-            
+            })   
         }
     }
 })
@@ -614,7 +599,7 @@ app.post('/admindeleteemployeeaccount', (req,res) =>{
 })
 
 app.get('/admin_reassignshifts', (req,res) =>{
-    res.render('AdminReassignShiftsGUI')
+    res.render('AdminReassignShiftsGUI',{ message: req.flash('message17') })
 })
 
 app.post('/admin_reassignshifts', (req, res) => {
@@ -635,6 +620,7 @@ app.post('/admin_reassignshifts', (req, res) => {
     });
 
     pythonProcess.on('close', (code) => {
+        req.flash('message17', null);
         try {
             const parsedData = JSON.parse(allData);
             if (parsedData === "No table left") {
@@ -669,6 +655,7 @@ app.post('/admin_reassignshiftss', (req,res) =>{
     console.log(jsonObj2)
     var pythonProcess = spawn('python',["./AdminReassignShiftsController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message4', null);
     var alldata = data.toString().trim()
     console.log(alldata)
     if (alldata == "Success")
@@ -700,6 +687,7 @@ app.get('/adminviewaccountchoose', (req,res) =>{
 app.get('/adminviewuserprofile', (req,res) =>{
     var pythonProcess = spawn('python',["./AdminViewUserProfileController.py"])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -722,6 +710,7 @@ app.get('/adminviewuserprofile', (req,res) =>{
 app.get('/adminviewadminaccount', (req,res) =>{
     var pythonProcess = spawn('python',["./AdminViewAdminAccountsController.py"])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -744,6 +733,7 @@ app.get('/adminviewadminaccount', (req,res) =>{
 app.get('/adminviewmanageraccount', (req,res) =>{
     var pythonProcess = spawn('python',["./AdminViewManagerAccountsController.py"])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -766,6 +756,7 @@ app.get('/adminviewmanageraccount', (req,res) =>{
 app.get('/adminviewemployeeaccount', (req,res) =>{
     var pythonProcess = spawn('python',["./AdminViewEmployeeAccountsController.py"])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -983,7 +974,7 @@ app.get('/adminsearchemployee', (req,res) =>{
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
-            res.render('AdminSearchEmployeeAccountGUI',{myList, message: req.flash('message')})
+            res.render('AdminSearchEmployeeAccountGUI',{myList, message: req.flash('message23')})
         }catch(error){
             console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')
@@ -1003,7 +994,7 @@ app.post('/adminsearchemployee', (req,res) =>{
     const jsonObj2 = JSON.stringify(jsonObj)
     var pythonProcess = spawn('python',["./AdminSearchEmployeeAccountsController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
-    req.flash('message', null);
+    req.flash('message23', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -1119,10 +1110,10 @@ app.post('/updatemanageraccount', (req,res) =>{
 
 app.get('/manager_createws', (req, res) => {
     // Render the UpdateManagerAccount.ejs page
-    res.render('CreateWorkShift');
+    res.render('CreateWorkShift',{message: req.flash('message99')});
 });
 
-app.post('/CreateWorkShift', (req, res) => {
+app.post('/manager_createws', (req, res) => {
     const { date, shift, start, end } = req.body;
     const dataToSend = JSON.stringify({ date, shift, start, end });
     
@@ -1130,12 +1121,15 @@ app.post('/CreateWorkShift', (req, res) => {
     const pythonProcess = spawn('python', ['./CreatewsController.py', dataToSend]);
     
     pythonProcess.stdout.on('data', (data) => {
-      const result = data.toString().trim();
-      if (result === 'Failed') {
-        res.status(500).send('Unable to create workshift. Double check your values entered');
-      } else {
-        res.send('Workshift Created');
-      }
+        req.flash('message99', null);
+        const result = data.toString().trim();
+        if (result === 'Failed') {
+            req.flash('message99','Failed to Create Workshift')
+            res.redirect('/manager_createws')
+        } else {
+            req.flash('message99','Workshift Created')
+            res.redirect('/manager_createws')
+        }
     });
   
     pythonProcess.stderr.on('data', (data) => {
@@ -1149,7 +1143,7 @@ app.get('/managerfilterpreference', (req,res) =>{
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
-            res.render('ManagerFilterPreferenceGUI',{myList, message: req.flash('message')})
+            res.render('ManagerFilterPreferenceGUI',{myList, message: req.flash('message23')})
         }catch(error){
             console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')
@@ -1169,6 +1163,7 @@ app.post('/managerfilterpreference', (req,res) =>{
     const jsonObj2 = JSON.stringify(jsonObj)
     var pythonProcess = spawn('python',["./ManagerFilterShiftPreferenceController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message23', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -1192,6 +1187,7 @@ app.post('/managerfilterpreference', (req,res) =>{
 app.get('/manager_viewshiftpref', (req,res) =>{
     var pythonProcess = spawn('python',["./ManagerViewShiftPreferenceController.py"])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -1214,6 +1210,7 @@ app.get('/manager_viewshiftpref', (req,res) =>{
 app.get('/managerviewemployeeaccounts', (req,res) =>{
     var pythonProcess = spawn('python',["./ManagerViewEmployeeAccountsController.py"])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -1238,7 +1235,7 @@ app.get('/managerfilteremployeeaccounts', (req,res) =>{
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
-            res.render('ManagerFilterEmployeeAccountGUI',{myList, message: req.flash('message')})
+            res.render('ManagerFilterEmployeeAccountGUI',{myList, message: req.flash('message23')})
         }catch(error){
             console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')
@@ -1258,6 +1255,7 @@ app.post('/managerfilteremployeeaccounts', (req,res) =>{
     const jsonObj2 = JSON.stringify(jsonObj)
     var pythonProcess = spawn('python',["./ManagerFilterEmployeeController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message23', null);    
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -1303,6 +1301,7 @@ app.post('/managersearchemployeeaccounts', (req,res) =>{
     const jsonObj2 = JSON.stringify(jsonObj)
     var pythonProcess = spawn('python',["./ManagerSearchEmployeeController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -1313,7 +1312,7 @@ app.post('/managersearchemployeeaccounts', (req,res) =>{
     if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
     {
         console.log(data.toString())
-        req.flash('message23','Failed Search')
+        req.flash('message','Failed Search')
         res.redirect('/managersearchemployeeaccounts')   
     }
     else
@@ -1331,6 +1330,7 @@ app.get('/manager_viewws', (req, res) => {
         alldata += data.toString();
     });
     pythonProcess.stdout.on('end', () => {
+        req.flash('message17', null);
         try {
             const jsonData = JSON.parse(alldata.trim());
             if (jsonData === "No table left") {
@@ -1391,17 +1391,18 @@ app.post('/manager_deletews', (req,res) =>{
     console.log(jsonObj2)
     var pythonProcess = spawn('python',["./DeletewsController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
     var alldata = data.toString().trim()
     console.log(alldata)
     if (alldata == "Success")
     {
-        req.flash('message4','Deleted Successfully')
+        req.flash('message17','Deleted Successfully')
         res.redirect('/manager_deletews')
         
     }
     else
     {
-        req.flash('message4','Unsuccessful')
+        req.flash('message17','Unsuccessful')
         res.redirect('/manager_deletews') 
     }
 })
@@ -1414,6 +1415,7 @@ app.get('/managerapproveleave', (req, res) => {
         alldata += data.toString();
     });
     pythonProcess.stdout.on('end', () => {
+        req.flash('message17', null);
         try {
             const jsonData = JSON.parse(alldata.trim());
             if (jsonData === "No table left") {
@@ -1444,17 +1446,18 @@ app.post('/managerapproveleave', (req,res) =>{
     console.log(jsonObj2)
     var pythonProcess = spawn('python',["./ManagerApproveLeaveController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
     var alldata = data.toString().trim()
     console.log(alldata)
     if (alldata == "Success")
     {
-        req.flash('message4','Approved Successfully')
+        req.flash('message17','Approved Successfully')
         res.redirect('/managerapproveleave')
         
     }
     else
     {
-        req.flash('message4','Unsuccessful')
+        req.flash('message17','Unsuccessful')
         res.redirect('/managerapproveleave') 
     }
 })
@@ -1467,6 +1470,7 @@ app.get('/managerrejectleave', (req, res) => {
         alldata += data.toString();
     });
     pythonProcess.stdout.on('end', () => {
+        req.flash('message17', null);
         try {
             const jsonData = JSON.parse(alldata.trim());
             if (jsonData === "No table left") {
@@ -1500,17 +1504,18 @@ app.post('/managerrejectleave', (req,res) =>{
     console.log(jsonObj2)
     var pythonProcess = spawn('python',["./ManagerRejectLeaveController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
     var alldata = data.toString().trim()
     console.log(alldata)
     if (alldata == "Success")
     {
-        req.flash('message4','Approved Successfully')
+        req.flash('message17','Approved Successfully')
         res.redirect('/managerrejectleave')
         
     }
     else
     {
-        req.flash('message4','Unsuccessful')
+        req.flash('message17','Unsuccessful')
         res.redirect('/managerrejectleave') 
     }
 })
@@ -1524,6 +1529,7 @@ app.get('/manager_viewempleave', (req, res) => {
         alldata += data.toString();
     });
     pythonProcess.stdout.on('end', () => {
+        req.flash('message17', null);
         try {
             const jsonData = JSON.parse(alldata.trim());
             if (jsonData === "No table left") {
@@ -1551,6 +1557,7 @@ app.get('/manager_viewattendance', (req, res) => {
         alldata += data.toString();
     });
     pythonProcess.stdout.on('end', () => {
+        req.flash('message17', null);
         try {
             const jsonData = JSON.parse(alldata.trim());
             if (jsonData === "No table left") {
@@ -1574,6 +1581,7 @@ app.get('/manager_viewattendance', (req, res) => {
 app.get('/managerfilterattendance', (req,res) =>{
     var pythonProcess = spawn('python',["./grabAttendanceTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
+        req.flash('message', null);
         try{
             var myList = JSON.parse(data.toString())
             res.render('ManagerFilterAttendanceGUI',{myList, message: req.flash('message')})
@@ -1596,6 +1604,7 @@ app.post('/managerfilterattendance', (req,res) =>{
     const jsonObj2 = JSON.stringify(jsonObj)
     var pythonProcess = spawn('python',["./ManagerFilterAttendnaceController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+        req.flash('message', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -1606,7 +1615,7 @@ app.post('/managerfilterattendance', (req,res) =>{
     if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
     {
         console.log(data.toString())
-        req.flash('message23','Failed Search')
+        req.flash('message','Failed Search')
         res.redirect('/managerfilterattendance')   
     }
     else
@@ -1619,6 +1628,7 @@ app.post('/managerfilterattendance', (req,res) =>{
 app.get('/managermanualassignemployees', (req,res) =>{
     var pythonProcess = spawn('python',["./grabShiftPreferenceController.py"])
     pythonProcess.stdout.on('data',(data) =>{
+        req.flash('message4', null);
         try{
             var myList = JSON.parse(data.toString())
             res.render('ManagerManualAssignEmployeesGUI',{myList, message4: req.flash('message4')})
@@ -1641,6 +1651,7 @@ app.post('/managermanualassignemployees', (req, res) => {
     const pythonProcess = spawn('python', ['./ManagerManualAssignEmployeesController.py', dataToSend])
     
     pythonProcess.stdout.on('data', (data) => {
+        req.flash('message4', null);
       const result = data.toString().trim()
       if (result === 'Failed') {
         res.status(500).send('Unable to Assign workshift. Double check your values entered')
@@ -1658,11 +1669,11 @@ app.post('/managermanualassignemployees', (req, res) => {
 });
 
 // Create Employee leave route
-app.get('/EmployeeCreateLeave', (req,res) =>{
-    res.render('EmployeeCreateLeave');
+app.get('/employee_createLeave', (req,res) =>{
+    res.render('EmployeeCreateLeave',{message: req.flash('message')});
 })
 
-app.post('/EmployeeCreateLeave', (req, res) => {
+app.post('/employee_createLeave', (req, res) => {
     const employeeId = req.session.emlpoyeeidentity
     // const myJSON = {
     //     employeeId : emlpoyeeidentity,
@@ -1677,11 +1688,13 @@ app.post('/EmployeeCreateLeave', (req, res) => {
     const pythonProcess = spawn('python', ['./CreateEmployeeLeaveController.py', dataToSend]);
     
     pythonProcess.stdout.on('data', (data) => {
+    req.flash('message', null);
       const result = data.toString().trim();
       if (result === 'Failed EmployeeLeaveClass') {
-        res.status(500).send('Unable to create leave.')
+        req.flash('message','Leave created successfully')
+        res.redirect('/employee_createLeave')
       } else {
-        req.flash('message4','Leave created successfully')
+        req.flash('message','Leave created successfully')
         res.redirect('/employee_createLeave')
       }
     });
@@ -1804,6 +1817,7 @@ app.get('/employee_viewaccount', (req, res) => {
     var pythonProcess = spawn('python', ["./EmployeeViewAccountController.py", dataToSend]);
     console.log(dataToSend);
     pythonProcess.stdout.on('data', (data) => {
+        req.flash('message17', null);
         try {
             var alldata = JSON.parse(data.toString());
             console.log(alldata);
@@ -1846,6 +1860,7 @@ app.post('/manager_filterws', (req,res) =>{
     const jsonObj2 = JSON.stringify(jsonObj)
     var pythonProcess = spawn('python',["./FilterwsController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
+        req.flash('message', null);
     try{
         var alldata = JSON.parse(data.toString())
     }catch(error)
@@ -1856,7 +1871,7 @@ app.post('/manager_filterws', (req,res) =>{
     if (data.toString().trim() == "No table left" || data.toString().trim() == "Failed")
     {
         console.log(data.toString())
-        req.flash('message23','Failed Search')
+        req.flash('message','Failed Search')
         res.redirect('/manager_filterws')   
     }
     else
@@ -1895,6 +1910,7 @@ app.post('/manager_updatews', (req, res) => {
     const pythonProcess = spawn('python', ["./UpdatewsController.py", myJSON2]);
 
     pythonProcess.stdout.on('data', (data) => { 
+        req.flash('message', null);
         const result = data.toString().trim();        
         // Check the result and respond accordingly
         if (result === "Failed") {
@@ -1919,7 +1935,7 @@ app.get('/managercreateemppref', (req,res) =>{
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
-            res.render('ManagerCreateEmpPrefGUI',{myList ,days: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']})
+            res.render('ManagerCreateEmpPrefGUI',{myList ,days: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],message:req.flash('message')})
         }catch(error){
             console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')
@@ -1958,6 +1974,7 @@ app.post('/managercreateemppref', (req, res) => {
     const pythonProcess = spawn('python', ["./ManagerCreateEmployeePreference.py", scheduleJSON,employeeidJSON]);
     console.log(scheduleJSON)
     pythonProcess.stdout.on('data', (data) => { 
+        req.flash('message', null);
         const result = data.toString().trim();        
         // Check the result and respond accordingly
         if (result === "Failed") {
@@ -1999,6 +2016,7 @@ app.post('/managerautoassignemp', (req, res) => {
 
     // Listen for stdout data from the Python process
     pythonProcess.stdout.on('data', (data) => {
+        req.flash('message23', null);
         try {
             // Parse the JSON data received from Python
             alldata = JSON.parse(data.toString())
@@ -2035,6 +2053,7 @@ app.get('/employee_viewpasthistory', (req, res) => {
     var pythonProcess = spawn('python', ["./EmployeeViewPastWorkHistoryController.py", dataToSend]);
     console.log(dataToSend);
     pythonProcess.stdout.on('data', (data) => {
+        req.flash('message17', null);
         try {
             var alldata = JSON.parse(data.toString());
             console.log(alldata);
@@ -2057,6 +2076,7 @@ app.get('/employee_viewnotification', (req, res) => {
     var pythonProcess = spawn('python', ["./EmployeeViewNotificationController.py", dataToSend]);
     console.log(dataToSend);
     pythonProcess.stdout.on('data', (data) => {
+        req.flash('message17', null);
         try {
             var alldata = JSON.parse(data.toString());
             console.log(alldata);
@@ -2226,6 +2246,7 @@ app.get('/employeedeleteleave', (req, res) => {
         console.log(alldata)
     });
     pythonProcess.stdout.on('end', () => {
+        req.flash('message17', null);
         try {
             if (alldata.trim() === "No table left"){
                 req.flash('message17', 'No Table Left');
@@ -2260,13 +2281,13 @@ app.post('/employeedeleteleave', (req,res) =>{
     console.log(alldata)
     if (alldata == "Success")
     {
-        req.flash('message4','Deleted Successfully')
+        req.flash('message17','Deleted Successfully')
         res.redirect('/employeedeleteleave')
         
     }
     else
     {
-        req.flash('message4','Unsuccessful')
+        req.flash('message17','Unsuccessful')
         res.redirect('/employeedeleteleave') 
     }
 })
@@ -2275,6 +2296,7 @@ app.post('/employeedeleteleave', (req,res) =>{
 app.get('/managerviewcalender', (req, res) => {
     var pythonProcess = spawn('python', ["./ViewCalenderFormatWorkController.py"])
     pythonProcess.stdout.on('data', (data) => {
+        req.flash('message17', null);
         try {
             var shiftsData = JSON.parse(data.toString());
             console.log("Shifts data:", shiftsData); // Check the shiftsData here

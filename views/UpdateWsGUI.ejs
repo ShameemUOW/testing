@@ -34,6 +34,9 @@
 
         <div class="container">
             <form action="/manager_updatews" method="post">
+                <% if(message.length>0) {%>
+                    <div><%= message%></div>
+                <%}%>
                 <fieldset>
                     <label for="id">Work Shift ID:</label><br>
                     <input type="text" id="id" name="id"><br><br>

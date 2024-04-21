@@ -30,6 +30,9 @@
         <form action = "/managerautoassignemp" method = "POST">
             <div id="options">
                 <table class = "creating">
+                    <% if(message.length>0) {%>
+                        <div><%= message%></div>
+                    <%}%>
                     <h1>Auto-Assign Employees</h1><br>
                     <tr>
                         <td><input id="start" class = "textbox" type="text" name="start" placeholder="Enter Start Date"></td>

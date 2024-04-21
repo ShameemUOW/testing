@@ -25,11 +25,11 @@
       </div>
     </div>
     <form action = "/employeeclockinQR" method = "POST">
-      <% if(message6.length>0) {%>
-        <div><%= message6%></div>
-      <%}%>
       <input type="hidden" id="employeeId" name="employeeId">
       <table class = "creating">
+        <% if(message6.length>0) {%>
+          <div><%= message6%></div>
+        <%}%>
         <tr>
             <td></td>
             <td style="color: white;"><p id="currentTime">Current Date: <%= currentDate %>, Current Time: <%= currentTime %></p></td>

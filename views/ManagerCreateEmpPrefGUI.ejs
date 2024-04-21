@@ -38,6 +38,9 @@
     </div>
     <h1>Select Your Work Schedule</h1>
     <form id="scheduleForm" action="/managercreateemppref" method="post">
+        <% if(message.length>0) {%>
+            <div><%= message%></div>
+        <%}%>
         <% days.forEach(day => { %>
             <label>
                 Select Shift for <%= day %>:
