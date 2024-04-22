@@ -6,7 +6,6 @@ COPY package*.json ./
 
 RUN npm install
 
-Copy the rest of the application files
 COPY . .
 
 RUN apt-get update && apt-get install -y python3 python3-pip
