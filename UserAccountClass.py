@@ -6,10 +6,10 @@ from datetime import datetime
 mydb = mysql.connector.connect(
     host ='bdpspl67hpsxmkiiukdu-mysql.services.clever-cloud.com',
     user ='u5fgsonwyoke5bff',
-    password='nHsZUdEJQ30A',
-    database='bdpspl67hpsxmkiiukdu'
+    password='nHsZUdEJQ30AYtYXN6nF',
+    database='bdpspl67hpsxmkiiukdu',
+    port = '3306'
 )
-
 mycursor = mydb.cursor()
 
 class userAccount:
