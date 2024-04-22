@@ -420,7 +420,7 @@ app.post('/adminupdateadminaccount', (req,res) =>{
 })
 
 app.get('/adminupdatemanageraccount', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -463,7 +463,7 @@ app.post('/adminupdatemanageraccount', (req,res) =>{
 })
 
 app.get('/adminupdateemployeeaccount', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -785,7 +785,7 @@ app.get('/admin_searchaccounts', (req,res) =>{
 })
 
 app.get('/adminsearchadmin', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -877,7 +877,7 @@ app.post('/adminfilteradmin', (req,res) =>{
 });
 
 app.get('/adminsearchmanager', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -970,7 +970,7 @@ app.post('/adminfiltermanager', (req,res) =>{
 
 
 app.get('/adminsearchemployee', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -1064,7 +1064,7 @@ app.post('/adminfilteremployee', (req,res) =>{
 
 //UpdateManagerAccount
 app.get('/updatemanageraccount', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -2189,7 +2189,7 @@ app.post('/employeeclockoutQR', (req, res) => {
 });
 
 app.get('/updateemployeeaccount', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
