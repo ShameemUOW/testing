@@ -305,12 +305,12 @@ class userAccount:
         except mysql.connector.Error as error:
             print ("Failed")
     def grabuserAccountTableColumns(self):
-        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userAccount' and column_name not in ('EmployeeID')")
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'userAccount' and column_name not in ('EmployeeID')")
         data = mycursor.fetchall()
         result = json.dumps(data)
         print(result)
     def grabFilteruserAccountTableColumns(self):
-        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userAccount' and column_name not in ('pass','chatid','PlaceHolder','MaxHours')")
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'userAccount' and column_name not in ('pass','chatid','PlaceHolder','MaxHours')")
         data = mycursor.fetchall()
         result = json.dumps(data)
         print(result)
@@ -327,7 +327,7 @@ class userAccount:
         except mysql.connector.Error as error:
             print ("Failed")
     def ManagerFiltergrabTableColumns(self):
-        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userAccount' and column_name not in ('PlaceHolder','Username','pass') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userProfile' and column_name not in ('EmployeeID','MainRole') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'EmployeeShiftInformation' and column_name not in ('EmployeeID');")
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'userAccount' and column_name not in ('PlaceHolder','Username','pass') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userProfile' and column_name not in ('EmployeeID','MainRole') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'EmployeeShiftInformation' and column_name not in ('EmployeeID');")
         data = mycursor.fetchall()
         result = json.dumps(data)
         print(result)
