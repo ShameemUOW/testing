@@ -1,4 +1,4 @@
-import UserAccountClass
+import userAccountClass
 import sys
 import json
 
@@ -11,7 +11,7 @@ mainrole = y["mainrole"]
 
 class LoginController:
     def ValidateAccountDetails(username,password,mainrole):
-        useraccount = UserAccountClass.UserAccount()
-        print(useraccount.Login(username,password,mainrole))
+        userAccount = userAccountClass.userAccount()
+        print(userAccount.Login(username,password,mainrole))
 
 LogginUserIn = LoginController.ValidateAccountDetails(username,password,mainrole)

@@ -1,8 +1,8 @@
-import UserAccountClass
+import userAccountClass
 
-class grabUserAccountTableColumnsController:
-    def grabUserAccountTableColumnsController():
-        guatcc = UserAccountClass.UserAccount()
-        guatcc.grabUserAccountTableColumns()
+class grabuserAccountTableColumnsController:
+    def grabuserAccountTableColumnsController():
+        guatcc = userAccountClass.userAccount()
+        guatcc.grabuserAccountTableColumns()
 
-grabUATC = grabUserAccountTableColumnsController.grabUserAccountTableColumnsController()
+grabUATC = grabuserAccountTableColumnsController.grabuserAccountTableColumnsController()

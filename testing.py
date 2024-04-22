@@ -13,7 +13,7 @@ mycursor.execute("use cafe22;")
 
 def GetAll():
         try:
-            mycursor.execute("select w.date, a.cafeid, a.fullname, p.mainrole,p.job, a.mobile from useraccount a, userprofile p, workslots w where a.cafeid = p.cafeid and a.cafeid = w.cafeid;")
+            mycursor.execute("select w.date, a.cafeid, a.fullname, p.mainrole,p.job, a.mobile from userAccount a, userProfile p, workslots w where a.cafeid = p.cafeid and a.cafeid = w.cafeid;")
             data = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):

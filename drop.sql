@@ -1,5 +1,5 @@
 drop table EmployeeShift;
-drop table employeeshiftinformation;
+drop table EmployeeShiftInformation;
 drop table attendance;
 drop table notification;
 drop database FYP;

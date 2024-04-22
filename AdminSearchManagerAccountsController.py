@@ -1,4 +1,4 @@
-import UserAccountClass
+import userAccountClass
 import sys
 import json
 
@@ -9,7 +9,7 @@ value = x["value"]
 
 class AdminSearchManagerAccountController:
     def searchmanageraccount(selectedoption,value):
-        searchmanager = UserAccountClass.UserAccount()
+        searchmanager = userAccountClass.userAccount()
         searchmanager.searchManagerAccount(selectedoption,value)
 
 searchmanager = AdminSearchManagerAccountController.searchmanageraccount(selectedoption,value)

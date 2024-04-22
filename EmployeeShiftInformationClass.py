@@ -16,7 +16,7 @@ class EmployeeShiftInformation:
         pass
     def grabShiftTypes(self):
         try:
-            mycursor.execute("select distinct shiftpref From employeeshiftinformation;")
+            mycursor.execute("select distinct shiftpref From EmployeeShiftInformation;")
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -28,7 +28,7 @@ class EmployeeShiftInformation:
             print ("Failed")
     def FilterShiftPreference(self,selectedoption):
         try:
-            mycursor.execute("select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile where shiftPref = '{}';".format(selectedoption))
+            mycursor.execute("select employeeid, fullname, shiftpref, mainrole,job from userAccount natural join EmployeeShiftInformation natural join userProfile where shiftPref = '{}';".format(selectedoption))
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -40,7 +40,7 @@ class EmployeeShiftInformation:
             print ("Failed")
     def ViewShiftPreference(self):
         try:
-            mycursor.execute("select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile;")
+            mycursor.execute("select employeeid, fullname, shiftpref, mainrole,job from userAccount natural join EmployeeShiftInformation natural join userProfile;")
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):

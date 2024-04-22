@@ -1,8 +1,8 @@
-import UserAccountClass
+import userAccountClass
 
 class AdminFiltergrabTableColumns:
     def aFiltergrabTableColumns():
-        afgtc = UserAccountClass.UserAccount()
-        afgtc.grabFilterUserAccountTableColumns()
+        afgtc = userAccountClass.userAccount()
+        afgtc.grabFilteruserAccountTableColumns()
 
 afgtc = AdminFiltergrabTableColumns.aFiltergrabTableColumns()

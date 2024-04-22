@@ -1,8 +1,8 @@
-import UserAccountClass
+import userAccountClass
 
 class AdminViewManagerAccounts:
     def AdminViewManagerAccountsController():
-        adminviewmc = UserAccountClass.UserAccount()
+        adminviewmc = userAccountClass.userAccount()
         adminviewmc.AdminViewManagerAccount()
 
 avma = AdminViewManagerAccounts.AdminViewManagerAccountsController()

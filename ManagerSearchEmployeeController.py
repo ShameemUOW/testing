@@ -1,4 +1,4 @@
-import UserAccountClass
+import userAccountClass
 import sys
 import json
 
@@ -9,7 +9,7 @@ value = x["value"]
 
 class ManagerSearchEmployeeAccount:
     def ManagerSearchEmployeeAccountController(selectedoption,value):
-        mseac = UserAccountClass.UserAccount()
+        mseac = userAccountClass.userAccount()
         mseac.ManagerSearchEmployees(selectedoption,value)
 
 mfgtc = ManagerSearchEmployeeAccount.ManagerSearchEmployeeAccountController(selectedoption,value)

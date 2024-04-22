@@ -112,7 +112,7 @@ app.get('/logout', (req,res) => {
 
 app.get('/logingui', (req,res) =>{
     ssn = req.session
-    var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])
+    var pythonProcess = spawn('python',["./userProfileSelectorController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -297,12 +297,12 @@ app.get('/admin_update', (req,res) =>{
     res.render('AdminUpdateChoose');
 })
 
-app.get('/createuserprofile', (req,res) =>{
-    var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])
+app.get('/createuserProfile', (req,res) =>{
+    var pythonProcess = spawn('python',["./userProfileSelectorController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
-            res.render('AdminCreateUserProfileGUI',{myList, message: req.flash('message')})
+            res.render('AdminCreateuserProfileGUI',{myList, message: req.flash('message')})
         }catch(error){
             console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')
@@ -314,14 +314,14 @@ app.get('/createuserprofile', (req,res) =>{
     })
 })
 
-app.post('/createuserprofile', (req,res) =>{
+app.post('/createuserProfile', (req,res) =>{
     const myJSON = {
         employeeid : req.body.employeeid,
         profile : req.body.selectedoption,
         role : req.body.role
     }
     const myJSON2 = JSON.stringify(myJSON)
-    var pythonProcess = spawn('python',["./CreateUserProfileController.py",myJSON2])
+    var pythonProcess = spawn('python',["./CreateuserProfileController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
     req.flash('message', null);
     var bool = data.toString()
@@ -329,12 +329,12 @@ app.post('/createuserprofile', (req,res) =>{
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to create Profile. Double check your values entered')
-        res.redirect('/createuserprofile')
+        res.redirect('/createuserProfile')
     }
     else
     {
         req.flash('message','User Profile Created')
-        res.redirect('/createuserprofile')
+        res.redirect('/createuserProfile')
     }
 })
 })
@@ -343,18 +343,18 @@ app.get('/admin_update', (req,res) =>{
     res.render('AdminUpdateChoose');
 })
 
-app.get('/updateuserprofile', (req,res) =>{
-    res.render('AdminUpdateUserProfileGUI',{message: req.flash('message')})
+app.get('/updateuserProfile', (req,res) =>{
+    res.render('AdminUpdateuserProfileGUI',{message: req.flash('message')})
 })
 
-app.post('/updateuserprofile', (req,res) =>{
+app.post('/updateuserProfile', (req,res) =>{
     const myJSON = {
         employeeid : req.body.employeeid,
         selectedoption : req.body.selectedoption,
         role : req.body.role
     }
     const myJSON2 = JSON.stringify(myJSON)
-    var pythonProcess = spawn('python',["./UpdateUserProfileController.py",myJSON2])
+    var pythonProcess = spawn('python',["./UpdateuserProfileController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
@@ -362,12 +362,12 @@ app.post('/updateuserprofile', (req,res) =>{
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to update Profile. Double check your values entered')
-        res.redirect('/updateuserprofile')
+        res.redirect('/updateuserProfile')
     }
     else
     {
         req.flash('message','User Profile Updated')
-        res.redirect('/updateuserprofile')
+        res.redirect('/updateuserProfile')
     }
 })
 })
@@ -377,7 +377,7 @@ app.get('/adminupdateaccountchoose', (req,res) =>{
 })
 
 app.get('/adminupdateadminaccount', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -420,7 +420,7 @@ app.post('/adminupdateadminaccount', (req,res) =>{
 })
 
 app.get('/adminupdatemanageraccount', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -463,7 +463,7 @@ app.post('/adminupdatemanageraccount', (req,res) =>{
 })
 
 app.get('/adminupdateemployeeaccount', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -684,8 +684,8 @@ app.get('/adminviewaccountchoose', (req,res) =>{
     res.render('AdminViewChooseAccount')
 })
 
-app.get('/adminviewuserprofile', (req,res) =>{
-    var pythonProcess = spawn('python',["./AdminViewUserProfileController.py"])
+app.get('/adminviewuserProfile', (req,res) =>{
+    var pythonProcess = spawn('python',["./AdminViewuserProfileController.py"])
     pythonProcess.stdout.on('data',(data)=>{
     req.flash('message17', null);
     try{
@@ -697,12 +697,12 @@ app.get('/adminviewuserprofile', (req,res) =>{
     if (data.toString().trim() == "No table left")
     {
         req.flash('message17','No Table Left')
-        res.render('AdminViewUserProfileGUI',{message: req.flash('message17')})
+        res.render('AdminViewuserProfileGUI',{message: req.flash('message17')})
     }
     else
     {
         req.flash('message17','Tables found')
-        res.render('AdminViewUserProfileGUI',({"results": alldata, message: req.flash('message17')}))
+        res.render('AdminViewuserProfileGUI',({"results": alldata, message: req.flash('message17')}))
     }
 }) 
 })
@@ -785,7 +785,7 @@ app.get('/admin_searchaccounts', (req,res) =>{
 })
 
 app.get('/adminsearchadmin', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -877,7 +877,7 @@ app.post('/adminfilteradmin', (req,res) =>{
 });
 
 app.get('/adminsearchmanager', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -970,7 +970,7 @@ app.post('/adminfiltermanager', (req,res) =>{
 
 
 app.get('/adminsearchemployee', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -1064,7 +1064,7 @@ app.post('/adminfilteremployee', (req,res) =>{
 
 //UpdateManagerAccount
 app.get('/updatemanageraccount', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
@@ -2189,7 +2189,7 @@ app.post('/employeeclockoutQR', (req, res) => {
 });
 
 app.get('/updateemployeeaccount', (req,res) =>{
-    var pythonProcess = spawn('python',["./grabUserAccountTableColumnsController.py"])
+    var pythonProcess = spawn('python',["./grabuserAccountTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())

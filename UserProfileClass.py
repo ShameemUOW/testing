@@ -2,21 +2,20 @@ import mysql.connector
 import json
 
 mydb = mysql.connector.connect(
-    host ='localhost',
-    user ='root',
-    password='root',
-    auth_plugin='mysql_native_password'
+    host ='bdpspl67hpsxmkiiukdu-mysql.services.clever-cloud.com',
+    user ='u5fgsonwyoke5bff',
+    password='nHsZUdEJQ30A',
+    database='bdpspl67hpsxmkiiukdu'
 )
 
 mycursor = mydb.cursor()
-mycursor.execute("use FYP;")
 
-class UserProfile:
+class userProfile:
     def __init__(self):
         pass
-    def UserProfileSelect(self):
+    def userProfileSelect(self):
         try:
-            mycursor.execute("select distinct mainrole From userprofile;")
+            mycursor.execute("select distinct mainrole From userProfile;")
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -26,33 +25,33 @@ class UserProfile:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
-    def createUserProfile(self,employeeid,selectedoption,role):
+    def createuserProfile(self,employeeid,selectedoption,role):
         try:
-            mycursor.execute("INSERT INTO  userprofile VALUES ('{}','{}', '{}')".format(employeeid,selectedoption,role))
+            mycursor.execute("INSERT INTO  userProfile VALUES ('{}','{}', '{}')".format(employeeid,selectedoption,role))
             mydb.commit()
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
-    def updateUserProfile(self,employeeid,selectedoption,role):
+    def updateuserProfile(self,employeeid,selectedoption,role):
         if (selectedoption == "Profile"):
             try:
-                mycursor.execute("update userprofile SET mainrole = '{}' where employeeid = '{}'".format(role,employeeid))
+                mycursor.execute("update userProfile SET mainrole = '{}' where employeeid = '{}'".format(role,employeeid))
                 mydb.commit()
-                mycursor.execute("update useraccount SET placeholder = '{}' where employeeid = '{}'".format(role,employeeid))
+                mycursor.execute("update userAccount SET placeholder = '{}' where employeeid = '{}'".format(role,employeeid))
                 mydb.commit()
                 print("Success")
             except mysql.connector.Error as error:
                 print("Failed")
         elif (selectedoption == "Role"):
             try:
-                mycursor.execute("update userprofile SET job = '{}' where employeeid = '{}'".format(role,employeeid))
+                mycursor.execute("update userProfile SET job = '{}' where employeeid = '{}'".format(role,employeeid))
                 mydb.commit()
                 print("Success")
             except mysql.connector.Error as error:
                 print("Failed")
-    def AdminViewUserProfile(self):
+    def AdminViewuserProfile(self):
         try:
-            mycursor.execute("select employeeid, mainrole, job from userprofile;")
+            mycursor.execute("select employeeid, mainrole, job from userProfile;")
             data = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):

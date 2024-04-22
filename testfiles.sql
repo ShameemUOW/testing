@@ -1,22 +1,22 @@
-select distinct mainrole From userprofile;
-select * from useraccount;
+select distinct mainrole From userProfile;
+select * from userAccount;
 select * from workshift;
-select * from userprofile;
+select * from userProfile;
 select * from notification;
 select * from EmployeeShift;
-select * from EmployeeShiftinformation;
-select distinct employeeid, noofhrsworked from employeeshiftinformation;
-select distinct shiftpref From employeeshiftinformation;
+select * from EmployeeShiftInformation;
+select distinct employeeid, noofhrsworked from EmployeeShiftInformation;
+select distinct shiftpref From EmployeeShiftInformation;
 select * from Employeeshift;
 select * from EmployeeLeave;
 select * from ApprovedEmployeeLeave;
 select * from attendance;
 select * from workshift;
-select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile where shiftPref = 'Day';
-select employeeid, Fullname, Address,Email,mobile,maxhours,job from useraccount natural join userprofile where mainrole = 'Employee';
-select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('PlaceHolder','Username','pass') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userprofile' and column_name not in ('EmployeeID','MainRole') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'employeeshiftinformation' and column_name not in ('EmployeeID');
-select EmployeeID,FullName,Address,Email,Mobile,MaxHours,Job,ShiftPref,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where fullname = 'Tom';
-select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('EmployeeID');
+select employeeid, fullname, shiftpref, mainrole,job from userAccount natural join EmployeeShiftInformation natural join userProfile where shiftPref = 'Day';
+select employeeid, Fullname, Address,Email,mobile,maxhours,job from userAccount natural join userProfile where mainrole = 'Employee';
+select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userAccount' and column_name not in ('PlaceHolder','Username','pass') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userProfile' and column_name not in ('EmployeeID','MainRole') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'EmployeeShiftInformation' and column_name not in ('EmployeeID');
+select EmployeeID,FullName,Address,Email,Mobile,MaxHours,Job,ShiftPref,NoOfHrsWorked from userAccount natural join EmployeeShiftInformation natural join userProfile where fullname = 'Tom';
+select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userAccount' and column_name not in ('EmployeeID');
 
 update employeeleave set status = 'Pending' where leaveid >0;
 
@@ -35,8 +35,8 @@ SELECT ua.EmployeeID, ua.Fullname, ua.Mobile, w.start, w.end
 SELECT * FROM workshift WHERE Date BETWEEN '2024-03-23' AND '2024-03-28';
 
 update employeeleave SET status = 'Approved' where leaveid = '6';
-UPDATE useraccount SET fullname = 'noahhh' where employeeid = 10;
-update employeeshiftinformation set NoOfHrsWorked = 0 where employeeid >0;
-select * from employeeshiftinformation;
+UPDATE userAccount SET fullname = 'noahhh' where employeeid = 10;
+update EmployeeShiftInformation set NoOfHrsWorked = 0 where employeeid >0;
+select * from EmployeeShiftInformation;
 
 SELECT u.Fullname, es.shiftDate, es.shiftType FROM EmployeeShift es JOIN userAccount u ON es.EmployeeID = u.EmployeeID;

@@ -1,8 +1,8 @@
-import UserProfileClass
+import userProfileClass
 
-class UserProfileSelectorController:
-    def UserProfileSelctor():
-        selectprofile = UserProfileClass.UserProfile()
-        selectprofile.UserProfileSelect()
+class userProfileSelectorController:
+    def userProfileSelctor():
+        selectprofile = userProfileClass.userProfile()
+        selectprofile.userProfileSelect()
 
-selectprofile = UserProfileSelectorController.UserProfileSelctor()
+selectprofile = userProfileSelectorController.userProfileSelctor()
