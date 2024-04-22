@@ -1,4 +1,4 @@
-import userAccountClass
+import UserAccountClass
 import sys
 import json
 
@@ -13,7 +13,7 @@ employeeId = z["employeeId"]
 
 class EmployeeViewAccount:
     def EmployeeViewAccountController():
-        employeeviewac = userAccountClass.userAccount()
+        employeeviewac = UserAccountClass.userAccount()
         employeeviewac.EmployeeViewAccount(employeeId)
 
 avup = EmployeeViewAccount.EmployeeViewAccountController()

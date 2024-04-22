@@ -1,4 +1,4 @@
-import userAccountClass
+import UserAccountClass
 import sys
 import json
 
@@ -16,7 +16,7 @@ max = x["Maxhrs"]
 
 class AdminCreateAdminAccountController:
     def createadminaccount(fullname,address,email,phonenumber,username,password,chatid,max):
-        createadmin = userAccountClass.userAccount()
+        createadmin = UserAccountClass.userAccount()
         createadmin.createAdminAccount(fullname,address,email,phonenumber,username,password,chatid,max)
 
 createadmin = AdminCreateAdminAccountController.createadminaccount(fullname,address,email,phonenumber,username,password,chatid,max)

@@ -1,4 +1,4 @@
-import userAccountClass
+import UserAccountClass
 import sys
 import json
 
@@ -10,7 +10,7 @@ value = x["value"]
 
 class AdminFilterManagerAccountController:
     def filtermanageraccount(selectedoption,value):
-        filtermanager = userAccountClass.userAccount()
+        filtermanager = UserAccountClass.userAccount()
         filtermanager.filterManagerAccount(selectedoption,value)
 
 filtermanager = AdminFilterManagerAccountController.filtermanageraccount(selectedoption,value)

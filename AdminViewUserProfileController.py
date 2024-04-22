@@ -1,9 +1,9 @@
-import userProfileClass
+import UserProfileClass
 
 
 class AdminViewuserProfile:
     def AdminViewuserProfileController():
-        adminviewup = userProfileClass.userProfile()
+        adminviewup = UserProfileClass.userProfile()
         adminviewup.AdminViewuserProfile()
 
 avup = AdminViewuserProfile.AdminViewuserProfileController()

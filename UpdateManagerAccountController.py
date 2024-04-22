@@ -1,4 +1,4 @@
-import userAccountClass
+import UserAccountClass
 import sys
 import json
 
@@ -12,7 +12,7 @@ value = x["value"]
 
 class UpdateManagerAccountController:
     def updateManagerAccount(employeeid,selectedoption,value):
-        update = userAccountClass.userAccount()
+        update = UserAccountClass.userAccount()
         update.updateManagerAccount(employeeid,selectedoption,value)
 
 uma = UpdateManagerAccountController.updateManagerAccount(employeeid,selectedoption,value)

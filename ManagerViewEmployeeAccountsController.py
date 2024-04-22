@@ -1,8 +1,8 @@
-import userAccountClass
+import UserAccountClass
 
 class ManagerViewEmployeeAccounts:
     def ManagerViewEmployeeAccountsController():
-        managervea = userAccountClass.userAccount()
+        managervea = UserAccountClass.userAccount()
         managervea.ManagerViewEmployeeAccount()
 
 mvea = ManagerViewEmployeeAccounts.ManagerViewEmployeeAccountsController()

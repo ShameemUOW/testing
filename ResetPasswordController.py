@@ -1,4 +1,4 @@
-import userAccountClass
+import UserAccountClass
 import sys
 import json
 
@@ -10,7 +10,7 @@ employeeid = y["employeeid"]
 
 class ResetPasswordController:
     def ResetPassword(password,employeeid):
-        userAccount = userAccountClass.userAccount()
+        userAccount = UserAccountClass.userAccount()
         print(userAccount.ResetPassword(password,employeeid))
 
 LogginUserIn = ResetPasswordController.ResetPassword(password,employeeid)

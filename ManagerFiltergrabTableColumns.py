@@ -1,8 +1,8 @@
-import userAccountClass
+import UserAccountClass
 
 class ManagerFiltergrabTableColumns:
     def mFiltergrabTableColumns():
-        mfgtc = userAccountClass.userAccount()
+        mfgtc = UserAccountClass.userAccount()
         mfgtc.ManagerFiltergrabTableColumns()
 
 mfgtc = ManagerFiltergrabTableColumns.mFiltergrabTableColumns()

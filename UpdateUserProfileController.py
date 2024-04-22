@@ -1,4 +1,4 @@
-import userProfileClass
+import UserProfileClass
 import sys
 import json
 
@@ -10,7 +10,7 @@ role = x["role"]
 
 class UpdateuserProfileController:
     def updateuserProfile(employeeid,selectedoption,role):
-        updateprofile = userProfileClass.userProfile()
+        updateprofile = UserProfileClass.userProfile()
         updateprofile.updateuserProfile(employeeid,selectedoption,role)
 
 createuaccount = UpdateuserProfileController.updateuserProfile(employeeid,selectedoption,role)

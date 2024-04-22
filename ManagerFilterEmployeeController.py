@@ -1,4 +1,4 @@
-import userAccountClass
+import UserAccountClass
 import sys
 import json
 
@@ -9,7 +9,7 @@ value = x["value"]
 
 class ManagerFilterEmployeeAccount:
     def mFiltergrabEmployeeAccounts(selectedoption,value):
-        mfgtc = userAccountClass.userAccount()
+        mfgtc = UserAccountClass.userAccount()
         mfgtc.ManagerFilterEmployees(selectedoption,value)
 
 mfgtc = ManagerFilterEmployeeAccount.mFiltergrabEmployeeAccounts(selectedoption,value)

@@ -1,4 +1,4 @@
-import userAccountClass
+import UserAccountClass
 import sys
 import json
 
@@ -11,7 +11,7 @@ mainrole = y["mainrole"]
 
 class GetEmployeeIDController:
     def getemployeeid(username,password,mainrole):
-        userAccount = userAccountClass.userAccount()
+        userAccount = UserAccountClass.userAccount()
         userAccount.getEmployeeID(username,password,mainrole)
 
 gettingemployeeid = GetEmployeeIDController.getemployeeid(username,password,mainrole)

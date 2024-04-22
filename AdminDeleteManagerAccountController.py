@@ -1,4 +1,4 @@
-import userAccountClass
+import UserAccountClass
 import sys
 import json
 
@@ -8,7 +8,7 @@ employeeid = x["employeeid"]
 
 class AdminDeleteManagerAccountController:
     def deleteManageraccount(employeeid):
-        deletemanager = userAccountClass.userAccount()
+        deletemanager = UserAccountClass.userAccount()
         deletemanager.DeleteManagerAccount(employeeid)
 
 deletemanager = AdminDeleteManagerAccountController.deleteManageraccount(employeeid)
