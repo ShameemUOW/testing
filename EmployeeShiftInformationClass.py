@@ -58,6 +58,13 @@ class EmployeeShiftInformation:
                 print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def ManagerUpdateHoursWorkedZero(self):
+        try:
+            mycursor.execute("Update EmployeeShiftInformation set NoOfHrsWorked = 0 where employeeid > 0;")
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")
 
     
 

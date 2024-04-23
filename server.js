@@ -2317,6 +2317,29 @@ app.get('/managerviewcalender', (req, res) => {
     });
 });
 
+app.get('/managerupdateshifthrs', (req, res) => {
+    res.render('ManagerUpdateEmployeeNoOfHrsWorkedGUI', { message: req.flash('message17') });
+});
+
+app.post('/managerupdateshifthrs', (req, res) => {
+    var pythonProcess = spawn('python', ["./ManagerUpdateEmployeeHoursController.py"])
+    pythonProcess.stdout.on('data',(data)=>{
+    req.flash('message17', null);
+    var alldata = data.toString().trim()
+    console.log(alldata)
+    if (alldata == "Success")
+    {
+        req.flash('message17','Reset Successfully')
+        res.redirect('/managerupdateshifthrs')
+    }
+    else
+    {
+        req.flash('message17','Unsuccessful')
+        res.redirect('/managerupdateshifthrs') 
+    }
+})
+});
+
 
 
 

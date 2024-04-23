@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/Manager.css">
+    <link rel="stylesheet" href="css/ResetButton.css">
 </head>
 <body>
     <div id="managerpage">
-        <h1 onclick="document.location='/homepage'">Manager Homepage</h1>
+        <h1 onclick="document.location='/homepage'">Manager Page</h1>
     </div>
     <div id="mySidepanel" class="sidepanel">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
@@ -22,17 +22,24 @@
         function closeNav() {
             document.getElementById("mySidepanel").style.width = "0";
         }
+
+        function goBack() {
+            // Add functionality to go back
+            window.history.back();
+        }
+
     </script>
     <div id="options">
+        <h1>Set Employee Hours Worked to Zero</h1><br>
+        <h1>Warning! Clicking this button will reset all the hours worked by all employees to ZERO</h1><br>
 
-        <h1>What would you like to Update?</h1><br>
-
-        <div class="container1">
-            <table>        
-                <td><button id="manager_updatebutton" onclick="document.location='/updatemanageraccount'"><img src="img/profile.png" class="image"><h3>My profile</h3></button></td>
-                <td><button id="manager_updatewsbutton" onclick="document.location='/manager_updatews'"><img src="img/shift.png" class="image"><h3>WorkShift</h3></button></td>
-                <td><button id="manager_updatewsbutton" onclick="document.location='/managerupdateshifthrs'"><img src="img/shift.png" class="image"><h3>Reset Hours Worked for Employees</h3></button></td>
-            </table>
+        <div class="container">
+            <form action="/managerupdateshifthrs" method="post">
+                <% if(message.length>0) {%>
+                    <div><%= message%></div>
+                <%}%>
+                <div class ="center"><button type="submit" name="update">Reset</button></div>
+            </form>
         </div>
     </div>
 </body>

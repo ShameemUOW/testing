@@ -1,5 +1,8 @@
-body {
+html, body {
     background-color:#3c4463;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #managerpage {
@@ -70,10 +73,12 @@ body {
 }
 
 #options {
-    position: absolute;
+    position: relative;
     top: 195px;
     color: #ffb344;
     font-family: arial;
+    align-items: center;
+    justify-content: center;
 }
 
 .container {
@@ -87,11 +92,6 @@ body {
 }
 
 
-fieldset {
-    border: none;
-    padding: 10px;
-}
-
 label {
     font-weight: bold;
 }
@@ -99,15 +99,6 @@ label {
 
 
 
-input[type="text"],
-select {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
 
 button[type="submit"],
 button[type="button"] {
