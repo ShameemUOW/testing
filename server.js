@@ -2340,7 +2340,33 @@ app.post('/managerupdateshifthrs', (req, res) => {
 })
 });
 
+app.get('/managerincharge', (req, res) => {
+    res.render('ManagerUpdateManagerInChargeGUI', { message: req.flash('message17') });
+});
 
+app.post('/managerincharge', (req,res) =>{
+    const jsonObj = {
+        employeeid : req.body.employeeid
+    }
+    const jsonObj2 = JSON.stringify(jsonObj)
+    console.log(jsonObj2)
+    var pythonProcess = spawn('python',["./UpdateManagerInChargeController.py",jsonObj2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var alldata = data.toString().trim()
+    console.log(alldata)
+    if (alldata == "Success")
+    {
+        req.flash('message17','Updated Successfully')
+        res.redirect('/managerincharge')
+        
+    }
+    else
+    {
+        req.flash('message17','Unsuccessful')
+        res.redirect('/managerincharge') 
+    }
+})
+})
 
 
 

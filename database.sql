@@ -103,3 +103,14 @@ CREATE TABLE ApprovedEmployeeLeave (
     on update cascade
     on delete cascade
 );
+
+CREATE TABLE ManagerInCharge (
+    EmployeeID INT NOT NULL,
+    Fullname VARCHAR(50) NOT NULL,
+    Email VARCHAR(60) NOT NULL,
+    CONSTRAINT fk_ManagerInCharge_EmployeeID
+        FOREIGN KEY (EmployeeID) 
+        REFERENCES userAccount(EmployeeID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);

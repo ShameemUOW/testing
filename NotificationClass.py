@@ -68,4 +68,11 @@ class Notification:
         message = f"Your new shift is on {date}, {shifttype}"
 
         self.send_email(sender_email, sender_password, recipient_email, subject, message)
+    def send_email_to_manager(self,recipient_email,date):
+        sender_email = "simfypesr@gmail.com"
+        sender_password = "dxfs lctf qgge hljc"
+        subject = "Emergency Leave Request"
+        message = f"You have received an Emergency Request Leave on {date}. Please Take a look if a shift swapping is needed"
+
+        self.send_email(sender_email, sender_password, recipient_email, subject, message)
 

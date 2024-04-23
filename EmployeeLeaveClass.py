@@ -20,6 +20,12 @@ class EmployeeLeave:
         try:
             mycursor.execute("INSERT INTO  employeeleave (employeeId, date, leavetype,status) VALUES ('{}','{}', '{}','Pending')".format(employeeId, date, leavetype))
             mydb.commit()
+            if (leavetype == "emergency"):
+                mycursor.execute("Select email from ManagerInCharge;")
+                data = mycursor.fetchone()
+                recipient_email = data[0]
+                notification = NotificationClass.Notification()
+                notification.send_email_to_manager(recipient_email,date)
             print("Success")
         except mysql.connector.Error as error:
             print("Failed EmployeeLeaveClass")

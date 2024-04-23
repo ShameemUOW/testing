@@ -225,4 +225,6 @@ VALUES ('2', '2024-03-22', 'sick', 'Pending');
 INSERT INTO Attendance (employeeid, Date,clockin,clockout, attendance)
 VALUES ('7', '2024-03-19', '13:11:32', '20:00:00','Late');
 
+insert into ManagerInCharge (EmployeeID,Fullname,Email) values ('10','Noah','Noah@gmail.com');
+
 update useraccount set useraccount.Pass = sha2(useraccount.Pass,0) where useraccount.EmployeeID > 0 AND char_length(useraccount.Pass) < 64

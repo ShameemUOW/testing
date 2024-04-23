@@ -372,4 +372,21 @@ class UserAccount:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def SetManagerInCharge(self, employeeid):
+        try:
+            # Retrieve employee details
+            mycursor.execute("SELECT employeeid, fullname, email FROM useraccount WHERE employeeid = %s", (employeeid,))
+            employee_data = mycursor.fetchone()
+            if employee_data:
+                # Truncate the ManagerInCharge table
+                mycursor.execute("TRUNCATE TABLE ManagerInCharge")
+
+                # Insert employee details into ManagerInCharge table
+                mycursor.execute("INSERT INTO ManagerInCharge (EmployeeID, Fullname, Email) VALUES (%s, %s, %s)", employee_data)
+                mydb.commit()
+                print("Success")
+            else:
+                print("Employee not found")
+        except mysql.connector.Error as error:
+            print("Failed")
 
