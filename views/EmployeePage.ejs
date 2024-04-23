@@ -22,6 +22,11 @@
         function closeNav() {
             document.getElementById("mySidepanel").style.width = "0";
         }
+
+        function speak(text) {
+            var utterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utterance);
+        }
     </script>
     <div id="options">
         <h1>What would you like to do?</h1><br>
@@ -30,12 +35,22 @@
        
             <h2>Employee Functions</h2>
             <table>
-                <td><button id="employee_createleavebutton" onclick="document.location='/employee_createLeave'"><img src="img/leave.png" class="image"><h3>Apply For Leave</h3></button></td>
-                <td><button id="employee_updateleave" onclick="document.location='/updateemployeeaccount'"><img src="img/update.png" class="image"><h3>Update Info</h3></button></td>
-                <td><button id="employee_viewall" onclick="document.location='/employee_viewall'"><img src="img/view_all.png" class="image"><h3>View </h3></button></td>
-                <td><button id="employee_deleteLeave" onclick="document.location='/employeedeleteleave'"><img src=img/delete.png class="image"><h3>Delete Leave</h3></button></td>
-                <td><button id="employee_deleteLeave" onclick="document.location='/employee_clockinout'"><img src=img/clock.png class="image"><h3>Clock-in/Clock-out</h3></button></td>
-                <td><button id="employee_viewnotification" onclick="document.location='/employee_viewnotification'"><img src=img/notification.png class="image"><h3>View Notification</h3></button></td>
+                <tr>
+                    <td><button id="employee_createleavebutton" onclick="document.location='/employee_createLeave'"><img src="img/leave.png" class="image"><h3>Apply For Leave</h3></button></td>
+                    <td><button id="employee_updateleave" onclick="document.location='/updateemployeeaccount'"><img src="img/update.png" class="image"><h3>Update Info</h3></button></td>
+                    <td><button id="employee_viewall" onclick="document.location='/employee_viewall'"><img src="img/view_all.png" class="image"><h3>View </h3></button></td>
+                    <td><button id="employee_deleteLeave" onclick="document.location='/employeedeleteleave'"><img src=img/delete.png class="image"><h3>Delete Leave</h3></button></td>
+                    <td><button id="employee_deleteLeave" onclick="document.location='/employee_clockinout'"><img src=img/clock.png class="image"><h3>Clock-in/Clock-out</h3></button></td>
+                    <td><button id="employee_viewnotification" onclick="document.location='/employee_viewnotification'"><img src=img/notification.png class="image"><h3>View Notification</h3></button></td>
+                </tr>
+                <tr align="center">
+                    <td><button id = "tts" onclick="speak('Apply For Leave')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
+                    <td><button id = "tts" onclick="speak('Update Info')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
+                    <td><button id = "tts" onclick="speak('View')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
+                    <td><button id = "tts" onclick="speak('Delete Leave')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></button></td>
+                    <td><button id = "tts" onclick="speak('Clock-in or Clock-out')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
+                    <td><button id = "tts" onclick="speak('View Notifications')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
+                </tr>
             </table>
         </div>
     </div>
