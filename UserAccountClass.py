@@ -251,6 +251,7 @@ class userAccount:
             mycursor.execute("UPDATE userAccount SET {} = '{}' where employeeid = {}".format(selectedoption,value,employeeid))
             mydb.commit()
             print("Success")
+            self.HashPlainPasswords()
         except mysql.connector.Error as error:
             print("Failed")
         finally:
@@ -413,7 +414,6 @@ class userAccount:
         try:
             mycursor.execute("update userAccount set userAccount.Pass = sha2(userAccount.Pass,0) where userAccount.EmployeeID > 0 AND char_length(userAccount.Pass) < 64")
             mydb.commit()
-            self.HashPlainPasswords()
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
