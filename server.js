@@ -4,6 +4,7 @@ const bodyParser = require("body-parser")
 var session = require('express-session')
 var flush = require('connect-flash')
 const spawn = require("child_process").spawn
+const Holiday = require('date-holidays');
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -1113,8 +1114,21 @@ app.post('/updatemanageraccount', (req,res) =>{
 
 
 app.get('/manager_createws', (req, res) => {
-    // Render the UpdateManagerAccount.ejs page
-    res.render('CreateWorkShift',{message: req.flash('message99')});
+    const countrycode = "SG"
+    const holidays = new Holiday(countrycode);
+
+    // Get the current year
+    const currentYear = new Date().getFullYear();
+
+    // Get the current month
+    const currentMonth = new Date().getMonth() + 1; // Note: month is 0-indexed
+
+    // Fetch holidays for the current month
+    const currentMonthHolidays = holidays.getHolidays(currentYear, currentMonth)
+    .filter(holiday => holiday.start.getMonth() === currentMonth - 1);
+    console.log(currentMonthHolidays)
+        // Render the UpdateManagerAccount.ejs page
+    res.render('CreateWorkShift',{message: req.flash('message99'), holidays: currentMonthHolidays});
 });
 
 app.post('/manager_createws', (req, res) => {

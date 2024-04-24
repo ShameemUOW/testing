@@ -29,28 +29,38 @@
         }
 
     </script>
-    <div id="options">
+    <div id="options" class="flex-container">
+        <div class = "form-container">
         <h1>Create Working Shift</h1><br>
         <% if (message.length > 0) { %>
             <div><%= message %></div>
         <% } %>
-        <div class="container">
-            <form action="/manager_createws" method="POST">
-                <fieldset>
-                    <legend>Enter Shift Details</legend>
-                    <label for="date">Date:</label><br>
-                    <input type="date" id="date" name="date"><br><br>
-                    <label for="shift">Shift:</label><br>
-                    <input type="text" id="shift" name="shift"><br><br>
-                    <label for="start">Start Time:</label><br>
-                    <input type="time" id="start" name="start"><br><br>
-                    <label for="end">End Time:</label><br>
-                    <input type="time" id="end" name="end"><br><br>
-                    <button type="submit" name="create">Create</button>
-                    <button type="button" name="back" onclick="goBack()">Back</button>
-                </fieldset>
-            </form>
+            <div class="container">
+                <form action="/manager_createws" method="POST">
+                    <fieldset>
+                        <legend>Enter Shift Details</legend>
+                        <label for="date">Date:</label><br>
+                        <input type="date" id="date" name="date"><br><br>
+                        <label for="shift">Shift Type:</label><br>
+                        <input type="text" id="shift" name="shift"><br><br>
+                        <label for="start">Start Time:</label><br>
+                        <input type="time" id="start" name="start"><br><br>
+                        <label for="end">End Time:</label><br>
+                        <input type="time" id="end" name="end"><br><br>
+                        <button type="submit" name="create">Create</button>
+                        <button type="button" name="back" onclick="goBack()">Back</button>
+                    </fieldset>
+                </form>
+            </div>
         </div>
-    </div>
+            <div id="holidays" class="holidays-container">
+                <h2>Holidays this Month</h2>
+                <ul id="holidayList">
+                    <% holidays.forEach(holiday => { %>
+                        <li><%= holiday.name %> - <%= new Date(holiday.date).toLocaleDateString() %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
 </body>
 </html>
