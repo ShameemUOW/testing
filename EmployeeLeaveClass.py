@@ -83,6 +83,10 @@ class EmployeeLeave:
             print ("Failed")
     def ManagerApproveLeave(self,id):
         try:
+            mycursor.execute("SELECT leavetype from employeeleave where leaveid = '{}'".format(id))
+            leavetype = mycursor.fetchone()[0]
+            mycursor.execute("SELECT employeeid from employeeleave where leaveid = '{}'".format(id))
+            employeeid = mycursor.fetchone()[0]
             mycursor.execute("update employeeleave SET status = 'Approved' where leaveid = '{}'".format(id))
             mydb.commit()
             mycursor.execute("SELECT date from employeeleave where leaveid = '{}'".format(id))
@@ -92,11 +96,18 @@ class EmployeeLeave:
             status = 'Approved'
             notification = NotificationClass.Notification()
             notification.send_email_for_leave(employee_email, status, date)
+            notif_message = f"Your Leave on {date} is Approved"
+            mycursor.execute("INSERT into Notification (employeeid, notif) values ('{}','{}')".format(employeeid,notif_message))
+            mydb.commit()
+            mycursor.execute("INSERT into ApprovedEmployeeLeave (EmployeeID, Date, LeaveType, status) values ('{}','{}','{}','Approved')".format(employeeid,date,leavetype))
+            mydb.commit()
             print("Success")
         except Exception as error:
             print(error)
     def ManagerRejectLeave(self,id,reason):
         try:
+            mycursor.execute("SELECT employeeid from employeeleave where leaveid = '{}'".format(id))
+            employeeid = mycursor.fetchone()[0]
             mycursor.execute("update employeeleave SET status = 'Rejected', reason = '{}' where leaveid = '{}'".format(reason,id))
             mydb.commit()
             mycursor.execute("SELECT date from employeeleave where leaveid = '{}'".format(id))
@@ -106,6 +117,9 @@ class EmployeeLeave:
             status = 'Rejected'
             notification = NotificationClass.Notification()
             notification.send_email_for_leave(employee_email, status, date)
+            notif_message = f"Your Leave on {date} is Rejected because {reason}"
+            mycursor.execute("INSERT into Notification (employeeid, notif) values ('{}','{}')".format(employeeid,notif_message))
+            mydb.commit()
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
@@ -124,3 +138,24 @@ class EmployeeLeave:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print ("Failed")
+    def grableavecolumns(self):
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'EmployeeLeave' and column_name not in ('EmployeeID','LeaveID','reason','status')")
+        data = mycursor.fetchall()
+        result = json.dumps(data)
+        print(result)
+    def EmployeeUpdateLeave(self,leaveid,selectedoption,value):
+        try:
+            mycursor.execute("update employeeleave SET {} = '{}' where leaveid = '{}'".format(selectedoption,value,leaveid))
+            mydb.commit()
+            if (value == "Emergency Leave"):
+                mycursor.execute("select date from employeeleave where leaveid = '{}'".format(leaveid))
+                data = mycursor.fetchone()
+                leavedate = data[0]
+                mycursor.execute("Select email from ManagerInCharge;")
+                data = mycursor.fetchone()
+                recipient_email = data[0]
+                notification = NotificationClass.Notification()
+                notification.send_email_to_manager(recipient_email,leavedate)
+            print("Success")
+        except Exception as error:
+            print(error)

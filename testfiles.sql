@@ -5,6 +5,7 @@ select * from userprofile;
 select * from notification;
 select * from EmployeeShift;
 select * from EmployeeShiftinformation;
+update employeeshiftinformation set NoOfHrsWorked = 20 where employeeid = '2';
 select distinct employeeid, noofhrsworked from employeeshiftinformation;
 select distinct shiftpref From employeeshiftinformation;
 select * from Employeeshift;

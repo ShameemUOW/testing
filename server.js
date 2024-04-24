@@ -2441,6 +2441,49 @@ app.post('/employeeupdateshiftpref', (req, res) => {
     });
 });
 
+app.get('/employee_updateleave', (req,res) =>{
+    var pythonProcess = spawn('python',["./grabEmployeeLeaveColumnsController.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('EmployeeUpdateLeaveGUI',{myList, message: req.flash('message')})
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
+        }
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+})
+
+app.post('/employee_updateleave', (req,res) =>{
+    const myJSON = {
+        leaveid : req.body.leaveid,
+        selectedoption : req.body.selectedoption,
+        value : req.body.value
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON)
+    var pythonProcess = spawn('python',["./EmployeeUpdateLeaveController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    req.flash('message', null);
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message','Unable to update Leave. Double check your values entered')
+        res.redirect('/employee_updateleave')
+    }
+    else
+    {
+        req.flash('message','Leave Updated')
+        res.redirect('/employee_updateleave')
+    }
+})
+})
+
 
 
 

@@ -101,6 +101,12 @@ CREATE TRIGGER InsertNotificationAfterEmployeeLeave2
 AFTER UPDATE ON EmployeeLeave
 FOR EACH ROW
 BEGIN
+    -- Check if only status column is updated
+    IF OLD.status = NEW.status THEN
+        -- Exit the trigger without performing any action
+        LEAVE InsertNotificationAfterEmployeeLeave2;
+    END IF;
+
     DECLARE notif_message VARCHAR(255);
 
     -- Determine the outcome of the leave
@@ -141,3 +147,5 @@ WHERE trigger_schema = 'FYP';
 DROP TRIGGER IF EXISTS InsertNotificationAfterEmployeeShift;
 DROP TRIGGER IF EXISTS UpdateNotificationAfterEmployeeShift;
 DROP TRIGGER IF EXISTS InsertNotificationAfterEmployeeLeave;
+DROP TRIGGER IF EXISTS InsertNotificationAfterEmployeeLeave2;
+DROP TRIGGER IF EXISTS InsertIntoApprovedEmployeeLeave;

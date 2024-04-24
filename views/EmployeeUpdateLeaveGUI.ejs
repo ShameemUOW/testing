@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/UpdateManagerAccount.css">
+</head>
+<body>
+    <div id="managerpage">
+        <h1 onclick="document.location='/homepage'">Employee Page</h1>
+    </div>
+    <div id="mySidepanel" class="sidepanel">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
+        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+    </div>
+    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
+    <script>
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+        }
+
+        function goBack() {
+            // Add functionality to go back
+            window.history.back();
+        }
+
+    </script>
+    <div id="options">
+        <h1>Update My Employee Leave</h1><br>
+
+        <div class="container">
+            <form action="/employee_updateleave" method="post">
+                <% if(message.length>0) {%>
+                    <div><%= message%></div>
+                <%}%>
+                <fieldset>
+                    <label for="typeVariable">Type Leave ID:</label><br>
+                    <input type="text" id="typeVariable" name="leaveid"><br><br>
+                    <label for="category">Select Category to Update:</label><br>
+                    <select class="profile-select" name = "selectedoption">
+                        <% myList.forEach(item => {%>
+                            <option value = "<%= item%>"><%= item%></option>
+                        <% }); %>
+                    </select><br><br>
+                    <label for="data">Type New Information:</label><br>
+                    <input type="text" id="typeVariable" name="value"><br><br>
+                    <button type="submit" name="update">Update</button>
+                    <button type="button" name="back" onclick="goBack()">Back</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
