@@ -2498,7 +2498,52 @@ app.post('/employee_updateleave', (req,res) =>{
 })
 })
 
+app.get('/employeeviewshifts', (req, res) => {
+    const myJSON = {
+        employeeid: req.session.emlpoyeeidentity
+    };
+    const myJSON2 = JSON.stringify(myJSON);
+    console.log(myJSON2);
 
+    const pythonProcess = spawn('python', ["./EmployeeViewShiftsController.py", myJSON2]);
+
+    let allData = ""; // Variable to store all data from Python process
+
+    pythonProcess.stdout.on('data', (data) => {
+        allData += data.toString(); // Append data received from Python
+        console.log(allData)
+    });
+
+    pythonProcess.on('close', (code) => {
+        req.flash('message17', null);
+        try {
+            if (allData.trim() == "Failed"){
+                req.flash('message17', 'No Table Left');
+                res.render('EmployeeViewShiftsGUI', { message: req.flash('message17') });
+            }
+            else{
+                const parsedData = JSON.parse(allData);
+                if (parsedData === "No table left" || parsedData === "") {
+                    req.flash('message17', 'No Table Left');
+                    res.render('EmployeeViewShiftsGUI', { message: req.flash('message17') });
+                } else {
+                    req.flash('message17', 'Tables found');
+                    res.render('EmployeeViewShiftsGUI', { results: parsedData, message: req.flash('message17') });
+                }
+            }
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            req.flash('message17', 'Error: Invalid data received');
+            res.render('EmployeeViewShiftsGUI', { message: req.flash('message17') });
+        }
+    });
+
+    pythonProcess.on('error', (err) => {
+        console.error('Failed to start Python process.', err);
+        req.flash('message17', 'Error: Failed to start Python process');
+        res.render('EmployeeViewShiftsGUI', { message: req.flash('message17') });
+    });
+});
 
 
 
