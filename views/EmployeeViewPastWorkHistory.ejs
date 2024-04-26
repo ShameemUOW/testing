@@ -32,7 +32,7 @@
             <% if(message.length>0) {%>
                 <div><%= message%></div>
             <%}%>
-            <% if(typeof results !== "undefined") {%>
+            <% if(Array.isArray(alldata) && alldata.length > 0) { %>
                 <table>
                     <thead>
                         <tr>
@@ -43,12 +43,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% for(var i=0; i<results.length;i++) { %>
+                        <% for(var i=0; i<alldata.length;i++) { %>
                         <tr>
-                            <td><%= results[i][0]%></td>
-                            <td><%= results[i][1]%></td>
-                            <td><%= results[i][2]%></td>
-                            <td><%= results[i][3]%></td>
+                            <td><%= alldata[i][0]%></td>
+                            <td><%= alldata[i][1]%></td>
+                            <td><%= alldata[i][2]%></td>
+                            <td><%= alldata[i][3]%></td>
                         </tr>
                         <% } %>
                     </tbody>

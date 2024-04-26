@@ -16,19 +16,26 @@ class EmployeeShiftInformation:
         pass
     def grabShiftTypes(self):
         try:
-            mycursor.execute("select distinct shiftpref From employeeshiftinformation;")
-            searchingdata = mycursor.fetchall()
-            numberofrow = mycursor.rowcount
-            if(numberofrow==0):
-                print("No table left")
+            mycursor.execute("SELECT DISTINCT shiftpref FROM employeeshiftinformation;")
+            shift_pref_data = mycursor.fetchall()
+            shift_pref_count = mycursor.rowcount
+            
+            mycursor.execute("SELECT DISTINCT day FROM employeeshiftinformation;")
+            day_data = mycursor.fetchall()
+            day_count = mycursor.rowcount
+            
+            if shift_pref_count == 0 and day_count == 0:
+                print("No data found")
             else:
-                searchingresult = json.dumps(searchingdata)
-                print(searchingresult)
+                shift_pref_result = json.dumps(shift_pref_data)
+                day_result = json.dumps(day_data)
+                combined_result = {"shift_pref": shift_pref_result, "day": day_result}
+                print(json.dumps(combined_result))
         except mysql.connector.Error as error:
-            print ("Failed")
-    def FilterShiftPreference(self,selectedoption):
+            print("Failed")
+    def FilterShiftPreference(self,day,shiftpref):
         try:
-            mycursor.execute("select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile where shiftPref = '{}';".format(selectedoption))
+            mycursor.execute("select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile where day = '{}' and shiftPref = '{}';".format(day,shiftpref))
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):

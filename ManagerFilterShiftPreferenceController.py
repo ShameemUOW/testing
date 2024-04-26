@@ -4,11 +4,12 @@ import json
 
 input = sys.argv[1]
 x=json.loads(input)
-selectedoption = x["selectedoption"]
+day = x["day"]
+shiftpref = x["shiftpref"]
 
 class ManagerFilterShiftPreferenceController:
-    def managerfilterpreference(selectedoption):
+    def managerfilterpreference(day,shiftpref):
         mfilterpref = EmployeeShiftInformationClass.EmployeeShiftInformation()
-        mfilterpref.FilterShiftPreference(selectedoption)
+        mfilterpref.FilterShiftPreference(day,shiftpref)
 
-mfp = ManagerFilterShiftPreferenceController.managerfilterpreference(selectedoption)
+mfp = ManagerFilterShiftPreferenceController.managerfilterpreference(day,shiftpref)

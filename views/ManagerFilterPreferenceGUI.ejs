@@ -32,11 +32,16 @@
                 <table class = "creating">
                     <h1>Search Employee Shift Preference</h1><br>
                     <tr>
-                        <td><select class="profile-select" name = "selectedoption">
-                            <% myList.forEach(item => {%>
+                        <td><select class="profile-select" name = "selectedoption2">
+                            <% dayList.forEach(item => {%>
                                 <option value = "<%= item%>"><%= item%></option>
                             <% }); %>
-                        </select>
+                        </select></td>
+                        <td><select class="profile-select" name = "selectedoption">
+                            <% shiftPrefList.forEach(item => {%>
+                                <option value = "<%= item%>"><%= item%></option>
+                            <% }); %>
+                        </select></td>
                     </tr>
                     <tr>
                         <td></td>

@@ -1161,7 +1161,12 @@ app.get('/managerfilterpreference', (req,res) =>{
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
-            res.render('ManagerFilterPreferenceGUI',{myList, message: req.flash('message23')})
+            var shiftPrefList = JSON.parse(myList.shift_pref);
+            var dayList = JSON.parse(myList.day);
+            console.log(myList)
+            console.log(shiftPrefList)
+            console.log(dayList)
+            res.render('ManagerFilterPreferenceGUI',{shiftPrefList,dayList, message: req.flash('message23')})
         }catch(error){
             console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')
@@ -1175,9 +1180,10 @@ app.get('/managerfilterpreference', (req,res) =>{
 
 app.post('/managerfilterpreference', (req,res) =>{
     const jsonObj = {
-        selectedoption : req.body.selectedoption,
-        value : req.body.value
+        shiftpref : req.body.selectedoption,
+        day : req.body.selectedoption2,
     }
+    console.log(jsonObj)
     const jsonObj2 = JSON.stringify(jsonObj)
     var pythonProcess = spawn('python',["./ManagerFilterShiftPreferenceController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
