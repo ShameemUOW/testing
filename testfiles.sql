@@ -6,6 +6,8 @@ select * from notification;
 select * from EmployeeShift;
 select distinct day From employeeshiftinformation;
 select * from EmployeeShiftinformation;
+INSERT INTO EmployeeShiftInformation (EmployeeID, Day, ShiftPref, NoOfHrsWorked) VALUES ('2', 'Monday','Day', '20');
+delete from employeeshiftinformation where employeeid = 20; 
 update employeeshiftinformation set NoOfHrsWorked = 20 where employeeid = '2';
 select distinct employeeid, noofhrsworked from employeeshiftinformation;
 select distinct shiftpref From employeeshiftinformation;

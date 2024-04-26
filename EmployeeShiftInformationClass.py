@@ -62,19 +62,20 @@ class EmployeeShiftInformation:
             for day, shift in schedule.items():
                 mycursor.execute("INSERT INTO EmployeeShiftInformation (EmployeeID, Day, ShiftPref, NoOfHrsWorked) VALUES ('{}', '{}','{}', '0')".format(employeeid,day,shift['shift']))
                 mydb.commit()
-                print("Success")
+            print("Success")
         except mysql.connector.Error as error:
             print("Failed")
     def EmployeeUpdateShiftPreference(self,schedule,employeeid):
         try:
             mycursor.execute("select NoOfHrsWorked from EmployeeShiftInformation where EmployeeID = '{}'".format(employeeid))
-            hours = mycursor.fetchone()
-            mycursor.execute("delete from EmployeeShiftInformation where EmployeeID = '{}'".format(employeeid))
+            hours = mycursor.fetchall()
+            print(hours[0][0])
+            mycursor.execute("DELETE FROM EmployeeShiftInformation WHERE EmployeeID = %s", (employeeid,))
             mydb.commit()
             for day, shift in schedule.items():
-                mycursor.execute("INSERT INTO EmployeeShiftInformation (EmployeeID, Day, ShiftPref, NoOfHrsWorked) VALUES ('{}', '{}','{}', '{}')".format(employeeid,day,shift['shift'],hours[0]))
+                mycursor.execute("INSERT INTO EmployeeShiftInformation (EmployeeID, Day, ShiftPref, NoOfHrsWorked) VALUES ('{}', '{}','{}', '{}')".format(employeeid,day,shift['shift'],hours[0][0]))
                 mydb.commit()
-                print("Success")
+            print("Success")
         except mysql.connector.Error as error:
             print(error)
     def ManagerUpdateHoursWorkedZero(self):

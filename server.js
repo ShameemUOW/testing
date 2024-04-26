@@ -1655,7 +1655,13 @@ app.get('/managermanualassignemployees', (req,res) =>{
         req.flash('message4', null);
         try{
             var myList = JSON.parse(data.toString())
-            res.render('ManagerManualAssignEmployeesGUI',{myList, message4: req.flash('message4')})
+            var shiftPrefList = JSON.parse(myList.shift_pref);
+            var dayList = JSON.parse(myList.day);
+            console.log(myList)
+            console.log(shiftPrefList)
+            console.log(dayList)
+            var myList = JSON.parse(data.toString())
+            res.render('ManagerManualAssignEmployeesGUI',{shiftPrefList, message4: req.flash('message4')})
         }catch(error){
             console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')
@@ -1959,7 +1965,12 @@ app.get('/managercreateemppref', (req,res) =>{
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
-            res.render('ManagerCreateEmpPrefGUI',{myList ,days: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],message:req.flash('message')})
+            var shiftPrefList = JSON.parse(myList.shift_pref);
+            var dayList = JSON.parse(myList.day);
+            console.log(myList)
+            console.log(shiftPrefList)
+            console.log(dayList)
+            res.render('ManagerCreateEmpPrefGUI',{shiftPrefList ,days: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],message:req.flash('message')})
         }catch(error){
             console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')
@@ -2128,8 +2139,8 @@ app.post('/employeeclockinQR', (req, res) => {
     const currentDate = new Date().toLocaleDateString()
     const currentTime = new Date().toLocaleTimeString()
     const clockInTime = new Date().toLocaleString()
-    const employeeId = req.body.employeeId
-    const dataToSend = JSON.stringify({ employeeId, currentDate, currentTime });
+    const employeeid = req.body.employeeId
+    const dataToSend = JSON.stringify({ employeeid, currentDate, currentTime });
 
     // Send the current time as a response
     const pythonProcess = spawn('python', ['./EmployeeClockInController.py', dataToSend]);
@@ -2177,8 +2188,8 @@ app.post('/employeeclockoutQR', (req, res) => {
     const currentTime = new Date().toLocaleTimeString()
     const clockInTime = new Date().toLocaleString()
     console.log(currentTime)
-    const employeeId = req.body.employeeId
-    const dataToSend = JSON.stringify({ employeeId, currentTime });
+    const employeeid = req.body.employeeId
+    const dataToSend = JSON.stringify({ employeeid, currentTime });
 
     // Send the current time as a response
     const pythonProcess = spawn('python', ['./EmployeeClockOutController.py', dataToSend]);
@@ -2397,7 +2408,12 @@ app.get('/employeeupdateshiftpref', (req,res) =>{
     pythonProcess.stdout.on('data',(data) =>{
         try{
             var myList = JSON.parse(data.toString())
-            res.render('EmployeeUpdateShiftPrefGUI',{myList ,days: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],message:req.flash('message')})
+            var shiftPrefList = JSON.parse(myList.shift_pref);
+            var dayList = JSON.parse(myList.day);
+            console.log(myList)
+            console.log(shiftPrefList)
+            console.log(dayList)
+            res.render('EmployeeUpdateShiftPrefGUI',{shiftPrefList ,days: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],message:req.flash('message')})
         }catch(error){
             console.error('Error parsing JSON data:, error')
             res.status(500).send('Error parsing JSON data')

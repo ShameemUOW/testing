@@ -45,8 +45,8 @@
             <label>
                 Select Shift for <%= day %>:
                 <input type="checkbox" class="dayCheckbox" name="schedule[<%= day %>][work]" value="<%= day %>">
-                <% myList.forEach(myList => { %>
-                    <input type="radio" class="shiftRadio" name="schedule[<%= day %>][shift]" value="<%= myList %>" disabled> <%= myList %>
+                <% shiftPrefList.forEach(shiftPrefList => { %>
+                    <input type="radio" class="shiftRadio" name="schedule[<%= day %>][shift]" value="<%= shiftPrefList %>" disabled> <%= shiftPrefList %>
                 <% }); %>
             </label>
         <% }); %>
