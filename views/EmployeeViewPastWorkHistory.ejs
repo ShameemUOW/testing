@@ -32,7 +32,7 @@
             <% if(message.length>0) {%>
                 <div><%= message%></div>
             <%}%>
-            <% if(Array.isArray(alldata) && alldata.length > 0) { %>
+            <% if(typeof alldata !== "undefined") {%>
                 <table>
                     <thead>
                         <tr>
