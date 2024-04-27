@@ -3,14 +3,14 @@ import json
 from datetime import datetime
 
 mydb = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='root',
-    auth_plugin='mysql_native_password'
+    host ='bdpspl67hpsxmkiiukdu-mysql.services.clever-cloud.com',
+    user ='u5fgsonwyoke5bff',
+    password='nHsZUdEJQ30AYtYXN6nF',
+    database='bdpspl67hpsxmkiiukdu',
+    port = '3306'
 )
 
 mycursor = mydb.cursor()
-mycursor.execute("use FYP;")
 
 class Attendance:
     def __init__(self):
@@ -33,7 +33,7 @@ class Attendance:
         except mysql.connector.Error as error:
             print("Failed to fetch data:", error)
     def grabAttendanceTableColumns(self):
-        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'Attendance' and column_name not in ('ClockIn','ClockOut')")
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'Attendance' and column_name not in ('ClockIn','ClockOut')")
         data = mycursor.fetchall()
         result = json.dumps(data)
         print(result)
