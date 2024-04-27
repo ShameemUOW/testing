@@ -17,7 +17,7 @@ class Attendance:
         pass
     def ManagerViewAttendance(self):
         try:
-            mycursor.execute("SELECT * FROM attendance;")
+            mycursor.execute("SELECT * FROM Attendance;")
             data = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if numberofrow == 0:
