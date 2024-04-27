@@ -328,13 +328,13 @@ class UserAccount:
         except mysql.connector.Error as error:
             print ("Failed")
     def ManagerFiltergrabTableColumns(self):
-        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('PlaceHolder','Username','pass') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userprofile' and column_name not in ('EmployeeID','MainRole') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'employeeshiftinformation' and column_name not in ('EmployeeID');")
+        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'useraccount' and column_name not in ('PlaceHolder','Username','pass') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'userprofile' and column_name not in ('EmployeeID','MainRole') union select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'employeeshiftinformation' and column_name not in ('EmployeeID','ShiftPref');")
         data = mycursor.fetchall()
         result = json.dumps(data)
         print(result)
     def ManagerFilterEmployees(self, selectedoption,value):
         try:
-            mycursor.execute("select EmployeeID,FullName,Address,Email,Mobile,chatid,MaxHours,Job,ShiftPref,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where {} LIKE '%{}%';'".format(selectedoption,value))
+            mycursor.execute("SELECT DISTINCT EmployeeID, FullName, Address, Email, Mobile, chatid, MaxHours, Job, NoOfHrsWorked FROM useraccount NATURAL JOIN employeeshiftinformation NATURAL JOIN userprofile WHERE {} LIKE '%{}%';'".format(selectedoption,value))
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
@@ -346,7 +346,7 @@ class UserAccount:
             print ("Failed")
     def ManagerSearchEmployees(self, selectedoption,value):
         try:
-            mycursor.execute("select EmployeeID,FullName,Address,Email,Mobile,chatid,MaxHours,Job,ShiftPref,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where {} = '{}';'".format(selectedoption,value))
+            mycursor.execute("select DISTINCT EmployeeID,FullName,Address,Email,Mobile,chatid,MaxHours,Job,NoOfHrsWorked from useraccount natural join employeeshiftinformation natural join userprofile where {} = '{}';'".format(selectedoption,value))
             searchingdata = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):
