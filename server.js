@@ -1605,7 +1605,6 @@ app.get('/manager_viewattendance', (req, res) => {
 app.get('/managerfilterattendance', (req,res) =>{
     var pythonProcess = spawn('python',["./grabAttendanceTableColumnsController.py"])
     pythonProcess.stdout.on('data',(data) =>{
-        req.flash('message', null);
         try{
             var myList = JSON.parse(data.toString())
             res.render('ManagerFilterAttendanceGUI',{myList, message: req.flash('message')})

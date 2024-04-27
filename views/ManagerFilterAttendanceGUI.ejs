@@ -31,6 +31,9 @@
             <div id="options">
                 <table class = "creating">
                     <h1>Filter Attendance</h1><br>
+                    <% if(message.length>0) {%>
+                        <div><%= message%></div>
+                    <%}%>
                     <tr>
                         <td><select class="profile-select" name = "selectedoption">
                             <% myList.forEach(item => {%>

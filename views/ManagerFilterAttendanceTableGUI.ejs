@@ -27,6 +27,9 @@
     
         <div id="options">
             <h1>viewing all Filtered Attendance</h1><br>
+            <% if(message.length>0) {%>
+                <div><%= message%></div>
+            <%}%>
             <% if(typeof results !== "undefined") {%>
                 <table>
                     <thead>
