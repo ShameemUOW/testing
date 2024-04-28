@@ -5,23 +5,20 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-mydb = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='root',
-    auth_plugin='mysql_native_password'
-)
-
-mycursor = mydb.cursor()
-mycursor.execute("use FYP;")
-
 class Notification:
     def __init__(self):
-        pass
+        self.mydb = mysql.connector.connect(
+            host ='bdpspl67hpsxmkiiukdu-mysql.services.clever-cloud.com',
+            user ='u5fgsonwyoke5bff',
+            password='nHsZUdEJQ30AYtYXN6nF',
+            database='bdpspl67hpsxmkiiukdu',
+            port = '3306'
+        )
+        self.mycursor = self.mydb.cursor()
     def ViewNotifications(self, employeeid):
         try:
-            mycursor.execute("SELECT notif FROM notification WHERE employeeid = '{}'".format(employeeid))
-            data = mycursor.fetchall()
+            self.mycursor.execute("SELECT notif FROM notification WHERE employeeid = '{}'".format(employeeid))
+            data = self.mycursor.fetchall()
             if data is None:
                 print("Failed")
             else:
