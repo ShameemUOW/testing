@@ -6,34 +6,30 @@ import NotificationClass
 import threading
 from time import sleep
 
-
-mydb = mysql.connector.connect(
-    host ='localhost',
-    user ='root',
-    password='root',
-    auth_plugin='mysql_native_password'
-)
-
-mycursor = mydb.cursor()
-mycursor.execute("use FYP;")
-
 class EmployeeShift:
     def __init__(self):
-        pass
+        self.mydb = mysql.connector.connect(
+            host ='bdpspl67hpsxmkiiukdu-mysql.services.clever-cloud.com',
+            user ='u5fgsonwyoke5bff',
+            password='nHsZUdEJQ30AYtYXN6nF',
+            database='bdpspl67hpsxmkiiukdu',
+            port = '3306'
+        )
+        self.mycursor = self.mydb.cursor()
     def ManagerManualAssignEmployees(self, id, date,shifttype):
         try:
             # Check if the shift exists
-            mycursor.execute("SELECT id FROM workshift WHERE Date = %s AND shift = %s", (date, shifttype))
-            shift_record = mycursor.fetchone()
+            self.mycursor.execute("SELECT id FROM workshift WHERE Date = %s AND shift = %s", (date, shifttype))
+            shift_record = self.mycursor.fetchone()
 
             if shift_record:
                 shift_id = shift_record[0]
                 # Insert the employee shift
-                mycursor.execute("INSERT INTO EmployeeShift (shiftID, EmployeeID, shiftDate, shiftType) VALUES (%s, %s, %s, %s)",
+                self.mycursor.execute("INSERT INTO EmployeeShift (shiftID, EmployeeID, shiftDate, shiftType) VALUES (%s, %s, %s, %s)",
                                 (shift_id, id, date, shifttype))
-                mydb.commit()
-                mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (id,))
-                employee_email = mycursor.fetchone()[0]
+                self.mydb.commit()
+                self.mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (id,))
+                employee_email = self.mycursor.fetchone()[0]
                 email_thread = threading.Thread(target=self.send_email_for_ws, args=(employee_email, shifttype, date))
                 email_thread.start()
                 print("Employee shift assigned successfully.")
@@ -51,8 +47,8 @@ class EmployeeShift:
     def ManagerAutoAssignEmployees(self, start_date, end_date, num_employees_per_shift):
         try:
             # Retrieve workshifts within the specified date range
-            mycursor.execute("SELECT * FROM workshift WHERE Date BETWEEN '{}' AND '{}'".format(start_date, end_date))
-            workshifts = mycursor.fetchall()
+            self.mycursor.execute("SELECT * FROM workshift WHERE Date BETWEEN '{}' AND '{}'".format(start_date, end_date))
+            workshifts = self.mycursor.fetchall()
             unassigned_shifts = []
             assigned_employees = []
 
@@ -84,8 +80,8 @@ class EmployeeShift:
                     AND esi.NoofHrsWorked < 44
                     ORDER BY esi.NoOfHrsWorked ASC
                 """
-                mycursor.execute(query, (day_mapping[shift_day_of_week], shift_type, shift_date,shift_date))
-                employees_available = mycursor.fetchall()
+                self.mycursor.execute(query, (day_mapping[shift_day_of_week], shift_type, shift_date,shift_date))
+                employees_available = self.mycursor.fetchall()
                 if len(employees_available) < int(num_employees_per_shift):
                     # If not enough employees available, add to unassigned shifts
                     unassigned_shifts.append((shift_date, shift_type, (int(num_employees_per_shift) - len(employees_available))))
@@ -111,20 +107,20 @@ class EmployeeShift:
                             assigned_employees.append((selected_employee[0], selected_employee[1], selected_employee[2], shift_date, shift_type, shift_start_regular, shift_end_regular))
                             # Insert assigned employee into EmployeeShift table
                             insert_query = "INSERT INTO EmployeeShift (shiftID, EmployeeID, shiftDate, shiftType) VALUES (%s, %s, %s, %s)"
-                            mycursor.execute(insert_query, (shift_id, selected_employee[0], shift_date, shift_type))
+                            self.mycursor.execute(insert_query, (shift_id, selected_employee[0], shift_date, shift_type))
                             notification = NotificationClass.Notification()
-                            mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (selected_employee[0],))
-                            employee_email = mycursor.fetchone()[0]
+                            self.mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (selected_employee[0],))
+                            employee_email = self.mycursor.fetchone()[0]
                             notification.send_email_for_ws(employee_email, shift_type, shift_date)
                             # Update EmployeeShiftInformation table
                             update_query = "UPDATE EmployeeShiftInformation SET NoOfHrsWorked = NoOfHrsWorked + %s WHERE EmployeeID = %s"
-                            mycursor.execute(update_query, (shift_duration, selected_employee[0]))
+                            self.mycursor.execute(update_query, (shift_duration, selected_employee[0]))
                         else:
                             break
 
-            mydb.commit()
-            mycursor.close()
-            mydb.close()
+            self.mydb.commit()
+            self.mycursor.close()
+            self.mydb.close()
             output = {'assigned_employees': assigned_employees, 'unassigned_shifts': unassigned_shifts}
             output_json = json.dumps(output)
             print(output_json)
@@ -134,8 +130,8 @@ class EmployeeShift:
         try:
             today = datetime.now().date()
             date_str = today.strftime('%Y-%m-%d')
-            mycursor.execute("SELECT * FROM EmployeeShift WHERE employeeid = %s AND shiftDate > %s", (employeeid, date_str))
-            shifts = mycursor.fetchall()
+            self.mycursor.execute("SELECT * FROM EmployeeShift WHERE employeeid = %s AND shiftDate > %s", (employeeid, date_str))
+            shifts = self.mycursor.fetchall()
 
             formatted_shifts = []
             for shift in shifts:
@@ -149,15 +145,15 @@ class EmployeeShift:
             print(json.dumps(error_message))
     def AdminReassignWorkShift(self,employeeid,id):
         try:
-            mycursor.execute("Update EmployeeShift set employeeid = %s where employeeshiftid = %s", (employeeid, id))
-            mydb.commit()
+            self.mycursor.execute("Update EmployeeShift set employeeid = %s where employeeshiftid = %s", (employeeid, id))
+            self.mydb.commit()
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
     def ViewCalenderFormatWork(self):
         try:
-            mycursor.execute("SELECT u.Fullname, es.shiftDate, es.shiftType FROM EmployeeShift es JOIN userAccount u ON es.EmployeeID = u.EmployeeID;")
-            shifts = mycursor.fetchall()
+            self.mycursor.execute("SELECT u.Fullname, es.shiftDate, es.shiftType FROM EmployeeShift es JOIN userAccount u ON es.EmployeeID = u.EmployeeID;")
+            shifts = self.mycursor.fetchall()
 
             formatted_shifts = []
             for shift in shifts:
