@@ -2610,7 +2610,57 @@ app.get('/employeeviewshifts', (req, res) => {
     });
 });
 
+app.get('/createfeedback', (req,res) =>{
+    res.render('CreateFeedbackGUI',{ message: req.flash('message')})
+})
 
+app.get('/feedbackchoose', (req,res) =>{
+    res.render('FeedbackChooseGUI')
+})
+
+app.get('/viewfeedback', (req, res) => {
+    var pythonProcess = spawn('python', ["./ViewFeedbackController.py"]);
+    pythonProcess.stdout.on('data', (data) => {
+        req.flash('message17', null);
+        try {
+            var alldata = JSON.parse(data.toString());
+            console.log(alldata);
+        } catch (error) {
+            console.log(alldata);
+        }
+        if (data.toString().trim() == "Failed") {
+            req.flash('message17', 'No Table Left');
+            res.render('ViewFeedbackGUI', { message: req.flash('message17') });
+        } else {
+            req.flash('message17', 'Tables found');
+            res.render('ViewFeedbackGUI', { alldata: alldata, message: req.flash('message17') });
+        }
+    });
+});
+
+app.post('/createfeedback', (req,res) =>{
+    const myJSON = {
+        feedback : req.body.feedback
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON)
+    var pythonProcess = spawn('python',["./CreateFeedbackController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    req.flash('message', null);
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message','Unable to create Feedback.')
+        res.redirect('/createfeedback')
+    }
+    else
+    {
+        req.flash('message','Feedback Created')
+        res.redirect('/createfeedback')
+    }
+})
+})
 
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))
