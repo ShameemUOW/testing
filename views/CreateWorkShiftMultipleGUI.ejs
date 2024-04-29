@@ -31,16 +31,18 @@
     </script>
     <div id="options" class="flex-container">
         <div class = "form-container">
-        <h1>Create Working Shift</h1><br>
+        <h1>Create Mutliple Working Shifts</h1><br>
         <% if (message.length > 0) { %>
             <div><%= message %></div>
         <% } %>
             <div class="container">
-                <form action="/manager_createws" method="POST">
+                <form action="/manager_createwsmutliple" method="POST">
                     <fieldset>
                         <legend>Enter Shift Details</legend>
                         <label for="date">Date:</label><br>
-                        <input type="date" id="date" name="date"><br><br>
+                        <input type="date" id="date" name="startdate"><br><br>
+                        <label for="date">Date:</label><br>
+                        <input type="date" id="date" name="enddate"><br><br>
                         <label for="shift">Shift Type:</label><br>
                         <input type="text" id="shift" name="shift"><br><br>
                         <label for="start">Start Time:</label><br>

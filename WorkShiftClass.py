@@ -22,6 +22,21 @@ class WorkShift:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+    def CreateMultipleWorkshifts(self, start_date_str, end_date_str, shift, start, end):
+        try:
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+            end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
+            # Generate a list of dates between start_date and end_date
+            dates = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
+            
+            # Insert each date along with shift, start, and end into the database
+            for date in dates:
+                mycursor.execute("INSERT INTO workshift (date, shift, start, end) VALUES (%s, %s, %s, %s)", (date.strftime("%Y-%m-%d"), shift, start, end))
+            
+            mydb.commit()
+            print("Success")
+        except mysql.connector.Error as error:
+            print("Failed")
     def ManagerViewWorkShifts(self):
         try:
             mycursor.execute("select * from workshift;")
@@ -52,7 +67,7 @@ class WorkShift:
         print(result)
     def ManagerFilterWorkShift(self, selectedoption,value):
         try:
-            mycursor.execute("select * from workshift where {} LIKE '%{}%';'".format(selectedoption,value))
+            mycursor.execute("select * from workshift where {} LIKE '%{}%';".format(selectedoption,value))
             data = mycursor.fetchall()
             numberofrow = mycursor.rowcount
             if(numberofrow==0):

@@ -1156,6 +1156,50 @@ app.post('/manager_createws', (req, res) => {
     });
   });
 
+  app.get('/manager_createwsmutliple', (req, res) => {
+    const countrycode = "SG"
+    const holidays = new Holiday(countrycode);
+
+    // Get the current year
+    const currentYear = new Date().getFullYear();
+
+    // Get the current month
+    const currentMonth = new Date().getMonth() + 1; // Note: month is 0-indexed
+
+    // Fetch holidays for the current month
+    const currentMonthHolidays = holidays.getHolidays(currentYear, currentMonth)
+    .filter(holiday => holiday.start.getMonth() === currentMonth - 1);
+    console.log(currentMonthHolidays)
+        // Render the UpdateManagerAccount.ejs page
+    res.render('CreateWorkShiftMultipleGUI',{message: req.flash('message99'), holidays: currentMonthHolidays});
+});
+
+app.post('/manager_createwsmutliple', (req, res) => {
+    const { startdate,enddate, shift, start, end } = req.body;
+    const dataToSend = JSON.stringify({ startdate,enddate, shift, start, end });
+    console.log(dataToSend)
+    // Spawn Python process and pass JSON data as argument
+    const pythonProcess = spawn('python', ['./CreateWorkShiftMultipleController.py', dataToSend]);
+    
+    pythonProcess.stdout.on('data', (data) => {
+        req.flash('message99', null);
+        const result = data.toString().trim();
+        console.log(result)
+        if (result === 'Failed') {
+            req.flash('message99','Failed to Create Workshifts')
+            res.redirect('/manager_createwsmutliple')
+        } else {
+            req.flash('message99','Workshifts Created')
+            res.redirect('/manager_createwsmutliple')
+        }
+    });
+  
+    pythonProcess.stderr.on('data', (data) => {
+      console.error('Error from Python Script:', data.toString());
+      res.status(500).send('Error from python script');
+    });
+  });
+
 app.get('/managerfilterpreference', (req,res) =>{
     var pythonProcess = spawn('python',["./grabShiftPreferenceController.py"])
     pythonProcess.stdout.on('data',(data) =>{

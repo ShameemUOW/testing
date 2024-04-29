@@ -114,3 +114,7 @@ CREATE TABLE ManagerInCharge (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
+
+create TABLE Feedback(
+	FeedbackInfo VARCHAR(50) NOT NULL
+);
