@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/AdminViewProfileTable.css">
+    <link rel="stylesheet" href="css/EmployeeViewAccount.css">
 </head>
 <body>
     <div id="adminpage">
@@ -31,19 +31,21 @@
         <h1>My Account</h1><br>
         <% if(Array.isArray(alldata) && alldata.length > 0) { %>
             <table>
-                <thead>
-                    <tr>
-                        <th>Fullname</th>
-                        <th>Email</th>
-                        <th>Contact Number</th>
-                        <th>Max Hours</th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr>
+                        <td>Fullname:</td>
                         <td><%= alldata[1] %></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
                         <td><%= alldata[3] %></td>
+                    </tr>
+                    <tr>
+                        <td>Contact Number:</td>
                         <td><%= alldata[4] %></td>
+                    </tr>
+                    <tr>
+                        <td>Max Hours:</td>
                         <td><%= alldata[6] %></td>
                     </tr>
                 </tbody>
