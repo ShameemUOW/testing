@@ -17,6 +17,7 @@ select * from EmployeeLeave;
 select * from ApprovedEmployeeLeave;
 select * from attendance;
 select * from workshift;
+select * from feedback;
 select * from workshift where date = "2024-04-12";
 select employeeid, fullname, shiftpref, mainrole,job from useraccount natural join employeeshiftinformation natural join userprofile where shiftPref = 'Day';
 select employeeid, Fullname, Address,Email,mobile,maxhours,job from useraccount natural join userprofile where mainrole = 'Employee';

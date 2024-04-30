@@ -22,15 +22,26 @@
         function closeNav() {
             document.getElementById("mySidepanel").style.width = "0";
         }
+        function speak(text) {
+            var utterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utterance);
+        }
     </script>
     <div id="options">
         <h1>What would you like to Update?</h1><br>
 
         <div class="container">
             <table>
-                <td><button id="employee_updateleave" onclick="document.location='/updateemployeeaccount'"><img src="img/update.png" class="image"><h3>Personal Info</h3></button></td>
-                <td><button id="employee_viewaccount" onclick="document.location='/employeeupdateshiftpref'"><img src="img/preference.png" class="image"><h3>Shift Preference</h3></button></td>
-                <td><button id="employee_viewaccount" onclick="document.location='/employee_updateleave'"><img src="img/preference.png" class="image"><h3>Leave</h3></button></td>
+                <tr>
+                    <td><button id="employee_updateleave" onclick="document.location='/updateemployeeaccount'"><img src="img/update.png" class="image"><h3>Personal Info</h3></button></td>
+                    <td><button id="employee_viewaccount" onclick="document.location='/employeeupdateshiftpref'"><img src="img/preference.png" class="image"><h3>Shift Preference</h3></button></td>
+                    <td><button id="employee_viewaccount" onclick="document.location='/employee_updateleave'"><img src="img/leave.png" class="image"><h3>Leave</h3></button></td>
+                </tr>
+                <tr align="center">
+                    <td><button id = "tts" onclick="speak('Update My Information')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
+                    <td><button id = "tts" onclick="speak('Update my Shift preference')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
+                    <td><button id = "tts" onclick="speak('Update My Leave')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
+                </tr>
             </table>
         </div>
     </div>
