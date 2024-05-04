@@ -23,6 +23,8 @@ class UserProfile:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def createUserProfile(self,employeeid,selectedoption,role):
         try:
             self.mycursor.execute("INSERT INTO  userProfile VALUES ('{}','{}', '{}')".format(employeeid,selectedoption,role))
@@ -30,6 +32,8 @@ class UserProfile:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def updateUserProfile(self,employeeid,selectedoption,role):
         if (selectedoption == "Profile"):
             try:
@@ -40,6 +44,8 @@ class UserProfile:
                 print("Success")
             except mysql.connector.Error as error:
                 print("Failed")
+            finally:
+                self.mydb.close()
         elif (selectedoption == "Role"):
             try:
                 self.mycursor.execute("update userProfile SET job = '{}' where employeeid = '{}'".format(role,employeeid))
@@ -47,6 +53,8 @@ class UserProfile:
                 print("Success")
             except mysql.connector.Error as error:
                 print("Failed")
+            finally:
+                self.mydb.close()
     def AdminViewUserProfile(self):
         try:
             self.mycursor.execute("select employeeid, mainrole, job from userProfile;")
@@ -59,6 +67,8 @@ class UserProfile:
                 print(result)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
 
 
             
