@@ -18,12 +18,15 @@ class UserAccount:
         data = self.mycursor.fetchall()
         numberofrow = self.mycursor.rowcount
         if(numberofrow==0):
+            self.mydb.close()
             return False
         else:
             data2 = data[0]
             if username == data2[0] and sha256(password.encode('utf-8')).hexdigest() == data2[1] and data2[2] == mainrole:
+                self.mydb.close()
                 return True
             else:
+                self.mydb.close()
                 return False
     def getEmployeeID(self,username,password,mainrole):
         try:
@@ -37,6 +40,8 @@ class UserAccount:
                 print(result)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def createAdminAccount(self, fullname, address, email, mobile, username,password,Chatid,MaxHours):
         try:
             self.mycursor.execute("INSERT INTO  userAccount (fullname, address, email, mobile, username,pass,MaxHours,Chatid,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','{}','Admin')".format(fullname, address, email, mobile, username,password,MaxHours,Chatid))
@@ -45,6 +50,8 @@ class UserAccount:
             self.HashPlainPasswords()
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def createEmployeeAccount(self, fullname, address, email, mobile, username,password,Chatid, MaxHours):
         try:
             self.mycursor.execute("INSERT INTO  userAccount (fullname, address, email, mobile, username,pass,MaxHours,Chatid,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','{}','Employee')".format(fullname, address, email, mobile, username,password,MaxHours,Chatid))
@@ -53,6 +60,8 @@ class UserAccount:
             self.HashPlainPasswords()
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def createManagerAccount(self, fullname, address, email, mobile, username,password,Chatid, MaxHours):
         try:
             self.mycursor.execute("INSERT INTO  userAccount (fullname, address, email, mobile, username,pass,MaxHours,Chatid,PlaceHolder) VALUES ('{}','{}', '{}','{}', '{}', '{}','{}','{}','Manager')".format(fullname, address, email, mobile, username,password,MaxHours,Chatid))
@@ -61,6 +70,8 @@ class UserAccount:
             self.HashPlainPasswords()
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def AdminUpdateAdminAccount(self,employeeid,selectedoption,value):
         try:
             self.mycursor.execute("select mainrole from userProfile where employeeid = '{}'".format(employeeid))
@@ -78,6 +89,8 @@ class UserAccount:
                 print("Failed")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def AdminUpdateManagerAccount(self,employeeid,selectedoption,value):
         try:
             self.mycursor.execute("select mainrole from userProfile where employeeid = '{}'".format(employeeid))
@@ -95,6 +108,8 @@ class UserAccount:
                 print("Failed")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def AdminUpdateEmployeeAccount(self,employeeid,selectedoption,value):
         try:
             self.mycursor.execute("select mainrole from userProfile where employeeid = '{}'".format(employeeid))
@@ -112,6 +127,8 @@ class UserAccount:
                 print("Failed")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def DeleteAdminAccount(self,employeeid):
         try:
             self.mycursor.execute("select mainrole from userProfile where employeeid = '{}'".format(employeeid))
@@ -128,6 +145,8 @@ class UserAccount:
                 print("Failed")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def DeleteManagerAccount(self,employeeid):
         try:
             self.mycursor.execute("select mainrole from userProfile where employeeid = '{}'".format(employeeid))
@@ -144,6 +163,8 @@ class UserAccount:
                 print("Failed")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def DeleteEmployeeAccount(self,employeeid):
         try:
             today = datetime.now().date()
@@ -166,6 +187,8 @@ class UserAccount:
                     print("Failed")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def EmployeeViewAccount(self, employeeid):
         try:
             self.mycursor.execute("SELECT employeeid, Fullname, Address, Email, mobile, Username, maxhours FROM userAccount WHERE employeeid = '{}'".format(employeeid))
@@ -177,7 +200,8 @@ class UserAccount:
                 print(result)
         except mysql.connector.Error as error:
             print("Failed to execute query:", error)
-
+        finally:
+            self.mydb.close()
     def AdminViewAdminAccount(self):
         try:
             self.mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,chatid,maxhours from userAccount where placeholder = 'Admin';")
@@ -190,6 +214,8 @@ class UserAccount:
                 print(result)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def AdminViewManagerAccount(self):
         try:
             self.mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,chatid,maxhours from userAccount where placeholder = 'Manager';")
@@ -202,6 +228,8 @@ class UserAccount:
                 print(result)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def AdminViewEmployeeAccount(self):
         try:
             self.mycursor.execute("select employeeid, Fullname, Address,Email,mobile,Username,chatid,maxhours from userAccount where placeholder = 'Employee';")
@@ -214,6 +242,8 @@ class UserAccount:
                 print(result)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def updateManagerAccount(self,employeeid,selectedoption,value):
         try:
             self.mycursor.execute("UPDATE userAccount SET {} = '{}' where employeeid = {}".format(selectedoption,value,employeeid))
@@ -222,6 +252,8 @@ class UserAccount:
             self.HashPlainPasswords()
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def updateEmployeeAccount(self,employeeid,selectedoption,value):
         try:
             self.mycursor.execute("UPDATE userAccount SET {} = '{}' where employeeid = {}".format(selectedoption,value,employeeid))
@@ -230,6 +262,8 @@ class UserAccount:
             self.HashPlainPasswords()
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def searchAdminAccount(self, selectedoption,value):
         try:
             self.mycursor.execute("select Fullname,Address,Email,Mobile,Username,pass,chatid,MaxHours from userAccount where {} = '{}' and placeholder = 'Admin'".format(selectedoption,value))
@@ -242,6 +276,8 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def filterAdminAccount(self, selectedoption,value):
         try:
             self.mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username from userAccount where {} LIKE '%{}%' and placeholder = 'Admin'".format(selectedoption,value))
@@ -254,6 +290,8 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def searchManagerAccount(self, selectedoption,value):
         try:
             self.mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username,pass,chatid,MaxHours from userAccount where {} = '{}' and placeholder = 'Manager'".format(selectedoption,value))
@@ -266,6 +304,8 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def filterManagerAccount(self, selectedoption,value):
         try:
             self.mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username from userAccount where {} LIKE '%{}%' and placeholder = 'Manager'".format(selectedoption,value))
@@ -278,6 +318,8 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def searchEmployeeAccount(self, selectedoption,value):
         try:
             self.mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username,pass,chatid,MaxHours from userAccount where {} = '{}' and placeholder = 'Employee'".format(selectedoption,value))
@@ -290,6 +332,8 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def filterEmployeeAccount(self, selectedoption,value):
         try:
             self.mycursor.execute("select EmployeeID,Fullname,Address,Email,Mobile,Username from userAccount where {} LIKE '%{}%' and placeholder = 'Employee'".format(selectedoption,value))
@@ -302,15 +346,19 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def grabUserAccountTableColumns(self):
         self.mycursor.execute("select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'userAccount' and column_name not in ('EmployeeID')")
         data = self.mycursor.fetchall()
         result = json.dumps(data)
+        self.mydb.close()
         print(result)
     def grabFilterUserAccountTableColumns(self):
         self.mycursor.execute("select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'userAccount' and column_name not in ('pass','chatid','PlaceHolder','MaxHours')")
         data = self.mycursor.fetchall()
         result = json.dumps(data)
+        self.mydb.close()
         print(result)
     def ManagerViewEmployeeAccount(self):
         try:
@@ -324,10 +372,13 @@ class UserAccount:
                 print(result)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def ManagerFiltergrabTableColumns(self):
         self.mycursor.execute("select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'userAccount' and column_name not in ('PlaceHolder','Username','pass') union select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'userProfile' and column_name not in ('EmployeeID','MainRole') union select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'EmployeeShiftInformation' and column_name not in ('EmployeeID','ShiftPref');")
         data = self.mycursor.fetchall()
         result = json.dumps(data)
+        self.mydb.close()
         print(result)
     def ManagerFilterEmployees(self, selectedoption,value):
         try:
@@ -341,6 +392,8 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def ManagerSearchEmployees(self, selectedoption,value):
         try:
             self.mycursor.execute("select DISTINCT EmployeeID,FullName,Address,Email,Mobile,chatid,MaxHours,Job,NoOfHrsWorked from userAccount natural join EmployeeShiftInformation natural join userProfile where {} = '{}';'".format(selectedoption,value))
@@ -353,6 +406,8 @@ class UserAccount:
                 print(searchingresult)
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def HashPlainPasswords(self):
         try:
             self.mycursor.execute("update userAccount set userAccount.Pass = sha2(userAccount.Pass,0) where userAccount.EmployeeID > 0 AND char_length(userAccount.Pass) < 64")
@@ -360,6 +415,8 @@ class UserAccount:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def ResetPassword(self, newpassword, employeeid):
         try:
             self.mycursor.execute("update userAccount set userAccount.Pass = sha2('{}',0) where userAccount.EmployeeID = {}".format(newpassword, employeeid))
@@ -368,6 +425,8 @@ class UserAccount:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def SetManagerInCharge(self, employeeid):
         try:
             # Retrieve employee details
@@ -385,4 +444,6 @@ class UserAccount:
                 print("Employee not found")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
 
