@@ -2,24 +2,21 @@ import mysql.connector
 import json
 from datetime import datetime
 
-mydb = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='root',
-    auth_plugin='mysql_native_password'
-)
-
-mycursor = mydb.cursor()
-mycursor.execute("use FYP;")
-
 class Attendance:
     def __init__(self):
-        pass
+        self.mydb = mysql.connector.connect(
+            host ='bdpspl67hpsxmkiiukdu-mysql.services.clever-cloud.com',
+            user ='u5fgsonwyoke5bff',
+            password='nHsZUdEJQ30AYtYXN6nF',
+            database='bdpspl67hpsxmkiiukdu',
+            port = '3306'
+        )
+        self.mycursor = self.mydb.cursor()
     def ManagerViewAttendance(self):
         try:
-            mycursor.execute("SELECT * FROM attendance;")
-            data = mycursor.fetchall()
-            numberofrow = mycursor.rowcount
+            self.mycursor.execute("SELECT * FROM attendance;")
+            data = self.mycursor.fetchall()
+            numberofrow = self.mycursor.rowcount
             if numberofrow == 0:
                 print("No table left")
             else:
@@ -32,16 +29,19 @@ class Attendance:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print("Failed to fetch data:", error)
+        finally:
+            self.mydb.close()
     def grabAttendanceTableColumns(self):
-        mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'Attendance' and column_name not in ('ClockIn','ClockOut')")
-        data = mycursor.fetchall()
+        self.mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'Attendance' and column_name not in ('ClockIn','ClockOut')")
+        data = self.mycursor.fetchall()
         result = json.dumps(data)
+        self.mydb.close()
         print(result)
     def ManagerFilterAttendance(self, selectedoption,value):
         try:
-            mycursor.execute("select * from Attendance where {} LIKE '%{}%';'".format(selectedoption,value))
-            data = mycursor.fetchall()
-            numberofrow = mycursor.rowcount
+            self.mycursor.execute("select * from Attendance where {} LIKE '%{}%';'".format(selectedoption,value))
+            data = self.mycursor.fetchall()
+            numberofrow = self.mycursor.rowcount
             if(numberofrow==0):
                 print("No table left")
             else:
@@ -54,6 +54,8 @@ class Attendance:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print("Failed to fetch data:", error)
+        finally:
+            self.mydb.close()
     def EmployeeClockIn(self, employeeid, datein, timein):
         try:
             # Parse date and time strings into datetime objects
@@ -61,8 +63,8 @@ class Attendance:
             time_obj = datetime.strptime(timein, "%I:%M:%S %p")
 
             # Check if the provided shift ID exists for the employee
-            mycursor.execute("SELECT * FROM EmployeeShift WHERE shiftDate = %s AND EmployeeID = %s", (date_obj.strftime("%Y-%m-%d"), employeeid))
-            shift_record = mycursor.fetchone()
+            self.mycursor.execute("SELECT * FROM EmployeeShift WHERE shiftDate = %s AND EmployeeID = %s", (date_obj.strftime("%Y-%m-%d"), employeeid))
+            shift_record = self.mycursor.fetchone()
             if shift_record:
                 shiftID = shift_record[1]
             elif not shift_record:
@@ -70,8 +72,8 @@ class Attendance:
             
 
             # Retrieve the start time of the shift from the workshift table
-            mycursor.execute("SELECT date, start FROM workshift WHERE id = %s", (shiftID,))
-            shift_date_obj, shift_start_time = mycursor.fetchone()
+            self.mycursor.execute("SELECT date, start FROM workshift WHERE id = %s", (shiftID,))
+            shift_date_obj, shift_start_time = self.mycursor.fetchone()
 
             shift_date_obj = datetime.strptime(shift_date_obj, "%Y-%m-%d").date()
             # Convert shift_start_time to a time object
@@ -88,12 +90,12 @@ class Attendance:
 
             # Compare clock-in time with shift start time and insert into attendance table accordingly
             if clock_in_datetime > shiftstartdatetime:
-                mycursor.execute("INSERT INTO attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'Late'))
+                self.mycursor.execute("INSERT INTO attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'Late'))
             else:
-                mycursor.execute("INSERT INTO attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'On time'))
+                self.mycursor.execute("INSERT INTO attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'On time'))
 
             # Commit changes to the database
-            mydb.commit()
+            self.mydb.commit()
             return "Clock in successful."
         except mysql.connector.Error as error:
             print("Failed to execute query:", error)
@@ -101,26 +103,30 @@ class Attendance:
         except ValueError as e:
             print("Error:", e)
             return "Failed Attendance Class"
+        finally:
+            self.mydb.close()
     def EmployeeClockOut(self, employeeid,timeout):
         time_obj = datetime.strptime(timeout, "%I:%M:%S %p")
         formatted_time = time_obj.strftime("%H:%M:%S")
         try:
-            mycursor.execute("SELECT AttendanceID FROM Attendance WHERE EmployeeID = %s AND ClockOut IS NULL",(employeeid,))
-            unclocked_entry = mycursor.fetchone()
+            self.mycursor.execute("SELECT AttendanceID FROM Attendance WHERE EmployeeID = %s AND ClockOut IS NULL",(employeeid,))
+            unclocked_entry = self.mycursor.fetchone()
             if unclocked_entry:
                 attendance_id = unclocked_entry[0]
-                mycursor.execute("UPDATE Attendance SET ClockOut = %s WHERE AttendanceID = %s",(formatted_time,attendance_id,))
-                mydb.commit()
+                self.mycursor.execute("UPDATE Attendance SET ClockOut = %s WHERE AttendanceID = %s",(formatted_time,attendance_id,))
+                self.mydb.commit()
                 print("Clock-out time updated successfully.")
             else:
                 print("No unclocked entry found for the employee.")
         except mysql.connector.Error as error:
             print("Failed to update clock-out time:", error)
+        finally:
+            self.mydb.close()
     def EmployeeViewPastWorkHistory(self,employeeid):
         try:
-            mycursor.execute("SELECT Date,ClockIn,ClockOut,Attendance FROM attendance where employeeid = '{}';".format(employeeid))
-            data = mycursor.fetchall()
-            numberofrow = mycursor.rowcount
+            self.mycursor.execute("SELECT Date,ClockIn,ClockOut,Attendance FROM attendance where employeeid = '{}';".format(employeeid))
+            data = self.mycursor.fetchall()
+            numberofrow = self.mycursor.rowcount
             if numberofrow == 0:
                 print("No table left")
             else:
@@ -133,4 +139,6 @@ class Attendance:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print("Failed to fetch data:", error)
+        finally:
+            self.mydb.close()
 
