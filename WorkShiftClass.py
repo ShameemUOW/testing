@@ -19,6 +19,8 @@ class WorkShift:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def CreateMultipleWorkshifts(self, start_date_str, end_date_str, shift, start, end):
         try:
             start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
@@ -34,6 +36,8 @@ class WorkShift:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()
     def ManagerViewWorkShifts(self):
         try:
             self.mycursor.execute("select * from workshift;")
@@ -50,6 +54,8 @@ class WorkShift:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def ManagerDeleteWorkShifts(self, id):
         try:
             self.mycursor.execute("delete from workshift where id = '{}'".format(id))
@@ -57,10 +63,13 @@ class WorkShift:
             print("Success")
         except mysql.connector.Error as error:
            print("Failed {}".format(error))
+        finally:
+            self.mydb.close()
     def grabWorkShiftTableColumn(self):
         self.mycursor.execute("select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'workshift'")
         data = self.mycursor.fetchall()
         result = json.dumps(data)
+        self.mydb.close()
         print(result)
     def ManagerFilterWorkShift(self, selectedoption,value):
         try:
@@ -78,7 +87,8 @@ class WorkShift:
                 print(json.dumps(result))
         except mysql.connector.Error as error:
             print ("Failed")
-
+        finally:
+            self.mydb.close()
     def updateWorkShift(self, id, selectedoption, value):
         try:
             self.mycursor.execute("update workshift set {} = '{}' where id = '{}'".format(selectedoption,value,id))
@@ -86,3 +96,5 @@ class WorkShift:
             print("Success")
         except mysql.connector.Error as error:
             print("Failed")
+        finally:
+            self.mydb.close()

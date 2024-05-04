@@ -2,34 +2,35 @@ import mysql.connector
 import json
 from datetime import datetime, timedelta
 
-mydb = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='root',
-    auth_plugin='mysql_native_password'
-)
-
-mycursor = mydb.cursor()
-mycursor.execute("use FYP;")
-
 class Feedback:
     def __init__(self):
-        pass
+        self.mydb = mysql.connector.connect(
+            host ='bdpspl67hpsxmkiiukdu-mysql.services.clever-cloud.com',
+            user ='u5fgsonwyoke5bff',
+            password='nHsZUdEJQ30AYtYXN6nF',
+            database='bdpspl67hpsxmkiiukdu',
+            port = '3306'
+        )
+        self.mycursor = self.mydb.cursor()
     def ViewFeedback(self):
         try:
-            mycursor.execute("SELECT * FROM Feedback;")
-            data = mycursor.fetchall()
-            numberofrow = mycursor.rowcount
+            self.mycursor.execute("SELECT * FROM Feedback;")
+            data = self.mycursor.fetchall()
+            numberofrow = self.mycursor.rowcount
             if(numberofrow==0):
                 print("No table left")
             else:
                 print(json.dumps(data))
         except mysql.connector.Error as error:
             print ("Failed")
+        finally:
+            self.mydb.close()
     def CreateFeedback(self,feedback):
         try:
-            mycursor.execute("INSERT INTO Feedback (FeedbackInfo) VALUES ('{}')".format(feedback))
-            mydb.commit()
+            self.mycursor.execute("INSERT INTO Feedback (FeedbackInfo) VALUES ('{}')".format(feedback))
+            self.mydb.commit()
             print("Success")
         except mysql.connector.Error as error:
             print(error) 
+        finally:
+            self.mydb.close()
