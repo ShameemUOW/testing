@@ -21,7 +21,3 @@ try:
                 print(searchingresult)
 except mysql.connector.Error as error:
             print ("Failed")
-
-            test
-
-            test
