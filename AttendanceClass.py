@@ -14,7 +14,7 @@ class Attendance:
         self.mycursor = self.mydb.cursor()
     def ManagerViewAttendance(self):
         try:
-            self.mycursor.execute("SELECT * FROM attendance;")
+            self.mycursor.execute("SELECT * FROM Attendance;")
             data = self.mycursor.fetchall()
             numberofrow = self.mycursor.rowcount
             if numberofrow == 0:
@@ -32,7 +32,7 @@ class Attendance:
         finally:
             self.mydb.close()
     def grabAttendanceTableColumns(self):
-        self.mycursor.execute("select column_name from information_schema.columns where table_schema = 'FYP' and table_name = 'Attendance' and column_name not in ('ClockIn','ClockOut')")
+        self.mycursor.execute("select column_name from information_schema.columns where table_schema = 'bdpspl67hpsxmkiiukdu' and table_name = 'Attendance' and column_name not in ('ClockIn','ClockOut')")
         data = self.mycursor.fetchall()
         result = json.dumps(data)
         self.mydb.close()
@@ -90,9 +90,9 @@ class Attendance:
 
             # Compare clock-in time with shift start time and insert into attendance table accordingly
             if clock_in_datetime > shiftstartdatetime:
-                self.mycursor.execute("INSERT INTO attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'Late'))
+                self.mycursor.execute("INSERT INTO Attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'Late'))
             else:
-                self.mycursor.execute("INSERT INTO attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'On time'))
+                self.mycursor.execute("INSERT INTO Attendance (EmployeeID, Date, ClockIn, Attendance) VALUES (%s, %s, %s, %s)", (employeeid, date_obj.strftime("%Y-%m-%d"), time_obj.strftime("%H:%M:%S"), 'On time'))
 
             # Commit changes to the database
             self.mydb.commit()
@@ -124,7 +124,7 @@ class Attendance:
             self.mydb.close()
     def EmployeeViewPastWorkHistory(self,employeeid):
         try:
-            self.mycursor.execute("SELECT Date,ClockIn,ClockOut,Attendance FROM attendance where employeeid = '{}';".format(employeeid))
+            self.mycursor.execute("SELECT Date,ClockIn,ClockOut,Attendance FROM Attendance where employeeid = '{}';".format(employeeid))
             data = self.mycursor.fetchall()
             numberofrow = self.mycursor.rowcount
             if numberofrow == 0:
