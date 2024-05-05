@@ -158,7 +158,7 @@ app.post("/logingui", (req,res)=>{
         req.flash('message', null);
         req.flash('message','Invalid User')
             // Redirect to login page
-        res.redirect('/');
+        res.redirect('/logout');
     }
     else
     {
