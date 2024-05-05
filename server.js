@@ -2670,5 +2670,30 @@ app.post('/createfeedback', (req,res) =>{
 })
 })
 
+app.get('/managerviewemployeeworkshift', (req, res) => {
+    var pythonProcess = spawn('python', ["./ManagerViewEmployeeShiftController.py"])
+    pythonProcess.stdout.on('data', (data) => {
+        req.flash('message17', null);
+        try {
+            var shiftsData = JSON.parse(data.toString());
+            console.log("Shifts data:", shiftsData); // Check the shiftsData here
+            if (!Array.isArray(shiftsData)) {
+                shiftsData = []; // Ensure shiftsData is an array
+            }
+        } catch (error) {
+            console.log("Error parsing JSON data:", error);
+            shiftsData = []; // Set empty array if parsing fails
+        }
+        if (shiftsData.length === 0) {
+            req.flash('message17', 'No Table Left');
+            res.render('ManagerViewEmployeeWorkShiftGUI', { message: req.flash('message17') });
+        } else {
+            req.flash('message17', 'Tables found');
+            res.render('ManagerViewEmployeeWorkShiftGUI', { shiftsData: shiftsData, message: req.flash('message17') });
+        }
+    });
+});
+
+
 //Listening to port 3000
 app.listen(port, () => console.info('Listening on port ',port))
