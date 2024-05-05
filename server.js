@@ -151,9 +151,9 @@ app.post("/logingui", (req,res)=>{
     var pythonProcess = spawn('python',["./LoginController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
     req.flash('message', null)
-    var bool = data.toString()
+    var bool = data.toString().trim()
     console.log(bool)
-    if (bool == "False\r\n")
+    if (bool == "False")
     {
         req.flash('message', null);
         req.flash('message','Invalid User')
