@@ -1783,6 +1783,7 @@ app.get('/employee_clockinout', (req,res) =>{
 })
 
 app.get('/employeeclockin', (req,res) =>{
+    process.env.TZ = 'Asia/Singapore';
     const currentDate = new Date().toLocaleDateString()
     const currentTime = new Date().toLocaleTimeString()
     console.log(currentTime)
@@ -1791,6 +1792,7 @@ app.get('/employeeclockin', (req,res) =>{
 
 app.post('/employeeclockin', (req, res) => {
     // Get current date and time
+    process.env.TZ = 'Asia/Singapore';
     ssn = req.session
     employeeid = req.session.emlpoyeeidentity
     const currentDate = new Date().toLocaleDateString()
@@ -1833,6 +1835,7 @@ app.post('/employeeclockin', (req, res) => {
 });
 
 app.get('/employeeclockout', (req,res) =>{
+    process.env.TZ = 'Asia/Singapore';
     const currentDate = new Date().toLocaleDateString()
     const currentTime = new Date().toLocaleTimeString()
     console.log(currentTime)
@@ -1840,6 +1843,7 @@ app.get('/employeeclockout', (req,res) =>{
 })
 
 app.post('/employeeclockout', (req, res) => {
+    process.env.TZ = 'Asia/Singapore';
     // Get current date and time
     ssn = req.session
     employeeid = req.session.emlpoyeeidentity
@@ -2172,12 +2176,14 @@ app.get('/employee_viewnotification', (req, res) => {
 });
 
 app.get('/employeeclockinQR', (req, res) => {
+    process.env.TZ = 'Asia/Singapore';
     const currentDate = new Date().toLocaleDateString()
     const currentTime = new Date().toLocaleTimeString()
     res.render('ClockInQrCodeGUI',{ currentDate, currentTime, message6: req.flash('message6')});
 });
 
 app.post('/employeeclockinQR', (req, res) => {
+    process.env.TZ = 'Asia/Singapore';
     // Get current date and time
     const currentDate = new Date().toLocaleDateString()
     const currentTime = new Date().toLocaleTimeString()
@@ -2220,6 +2226,7 @@ app.post('/employeeclockinQR', (req, res) => {
 
 
 app.get('/employeeclockoutQR', (req,res) =>{
+    process.env.TZ = 'Asia/Singapore';
     const currentDate = new Date().toLocaleDateString()
     const currentTime = new Date().toLocaleTimeString()
     console.log(currentTime)
@@ -2227,6 +2234,7 @@ app.get('/employeeclockoutQR', (req,res) =>{
 })
 
 app.post('/employeeclockoutQR', (req, res) => {
+    process.env.TZ = 'Asia/Singapore';
     // Get current date and time
     const currentTime = new Date().toLocaleTimeString()
     const clockInTime = new Date().toLocaleString()
