@@ -157,15 +157,9 @@ app.post("/logingui", (req,res)=>{
     {
         req.flash('message', null);
         req.flash('message','Invalid User')
-        req.session.destroy(err => {
-            if (err) {
-                console.error('Error destroying session:', err);
-                return res.status(500).send('Error destroying session');
-            }
+        delete ssn
             // Redirect to login page
-            res.redirect('/logingui');
-        });
-        
+        res.redirect('/');
     }
     else
     {
