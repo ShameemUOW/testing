@@ -17,7 +17,7 @@ class UserProfile:
             searchingdata = self.mycursor.fetchall()
             numberofrow = self.mycursor.rowcount
             if(numberofrow==0):
-                print("No table left")
+                print("Why")
             else:
                 searchingresult = json.dumps(searchingdata)
                 print(searchingresult)
