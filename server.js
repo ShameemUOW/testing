@@ -157,8 +157,21 @@ app.post("/logingui", (req,res)=>{
     {
         req.flash('message', null);
         req.flash('message','Invalid User')
-        res.redirect('/logingui')
-        
+        var pythonProcessProfiles = spawn('python',["./UserProfileSelectorController.py"])
+        pythonProcessProfiles.stdout.on('data',(data) =>{
+            try{
+                var myList = JSON.parse(data.toString())
+                res.render('LoginGUI',{myList, message: req.flash('message')})
+                console.log(myList)
+            }catch(error){
+                console.error('Error parsing JSON data:, error')
+                res.status(500).send('Error parsing JSON data')
+            }
+        })
+        pythonProcessProfiles.stderr.on('data',(data) =>{
+            console.error('Error from Python Script:', data.toString())
+            res.status(500).send('Error from python script')
+        })
     }
     else
     {
