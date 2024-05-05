@@ -87,6 +87,12 @@ class Attendance:
             # Check if the clock-in time is more than 2 hours before the shift start time
             if time_difference.total_seconds() > 7200:  # 2 hours in seconds
                 raise ValueError("You cannot clock in more than 2 hours before the shift start time.")
+            self.mycursor.execute("SELECT COUNT(*) FROM Attendance WHERE EmployeeID = %s AND ClockOut IS NULL", (employeeid,))
+            existing_attendance = self.mycursor.fetchone()[0]
+
+            # If an existing entry with no clock-out time is found, prevent the new clock-in entry
+            if existing_attendance > 0:
+                raise ValueError("Employee has an active attendance entry. Clock out first.")
 
             # Compare clock-in time with shift start time and insert into attendance table accordingly
             if clock_in_datetime > shiftstartdatetime:
