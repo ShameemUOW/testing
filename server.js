@@ -115,17 +115,27 @@ app.get('/logout', (req,res) => {
     res.redirect('/')
 })
 
-app.get('/logingui', (req, res) => {
-    ssn = req.session;
-    fetchDataFromUserProfileController((err, myList) => {
-        if (err) {
-            console.error('Error fetching user profile data:', err);
-            return res.status(500).send('Error fetching user profile data');
+app.get('/logingui', (req,res) =>{
+    ssn = req.session
+    var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])
+    pythonProcess.stdout.on('data',(data) =>{
+        try{
+            var myList = JSON.parse(data.toString())
+            res.render('LoginGUI',{myList, message: req.flash('message')})
+            console.log(myList)
+        }catch(error){
+            console.error('Error parsing JSON data:, error')
+            res.status(500).send('Error parsing JSON data')
         }
-        res.render('LoginGUI', { myList, message: req.flash('message') });
-        console.log(myList);
-    });
-});
+    })
+    pythonProcess.stderr.on('data',(data) =>{
+        console.error('Error from Python Script:', data.toString())
+        res.status(500).send('Error from python script')
+    })
+    if(ssn.userprof){
+        res.redirect("/homepage")
+    }
+})
 
 app.post("/logingui", (req,res)=>{
     ssn = req.session
@@ -169,30 +179,6 @@ app.post("/logingui", (req,res)=>{
     }
 })
 })
-
-function fetchDataFromUserProfileController(callback) {
-    var pythonProcess = spawn('python', ["./UserProfileSelectorController.py"]);
-    var dataBuffer = '';
-    
-    pythonProcess.stdout.on('data', (data) => {
-        dataBuffer += data.toString();
-    });
-
-    pythonProcess.stderr.on('data', (data) => {
-        console.error('Error from Python Script:', data.toString());
-        callback(new Error('Error from Python script'));
-    });
-
-    pythonProcess.on('close', (code) => {
-        try {
-            const myList = JSON.parse(dataBuffer);
-            callback(null, myList);
-        } catch (error) {
-            console.error('Error parsing JSON data:', error);
-            callback(error);
-        }
-    });
-}
 
 app.get('/createuserorprofile', (req,res) =>{
     res.render('CreateUserOrProfile');
