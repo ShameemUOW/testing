@@ -116,6 +116,7 @@ app.get('/logout', (req,res) => {
 })
 
 app.get('/logingui', (req,res) =>{
+    ssn = req.session
     var pythonProcess = spawn('python',["./UserProfileSelectorController.py"])
     pythonProcess.stdout.on('data',(data) =>{
         try{
