@@ -14,7 +14,8 @@ app.use(bodyParser.json())
 app.use(session({
     secret:'oHn2mKV567n1m$%^',
     resave:false,
-    saveUninitialized:true
+    saveUninitialized:true,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }))
 app.use(flush())
 
