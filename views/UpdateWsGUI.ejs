@@ -37,7 +37,7 @@
             alert("Please fill in all the required fields.");
             event.preventDefault(); // Prevent form submission
         }
-    });
+        });
 
     </script>
     <div id="options">
@@ -50,10 +50,10 @@
                 <%}%>
                 <fieldset>
                     <label for="id">Work Shift ID:</label><br>
-                    <input type="text" id="id" name="id"><br><br>
+                    <input type="text" id="id" name="id" required><br><br>
 
                     <label for="typeVariable">Value:</label><br>
-                    <input type="text" id="typeVariable" name="value"><br><br>
+                    <input type="text" id="typeVariable" name="value" required><br><br>
 
                     <label for="category">Select Category to Update:</label><br>
                     <select class="profile-select" name = "selectedoption">
