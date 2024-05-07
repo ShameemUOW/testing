@@ -164,8 +164,8 @@ class EmployeeShift:
             employee_email = self.mycursor.fetchone()[0]
             notification.send_email_for_ws(employee_email, shift_type, shift_date)
             print("Success")
-        except mysql.connector.Error as error:
-            print("Failed")
+        except Exception as error:
+            print(error)
         finally:
             self.mydb.close()
     def ManagerReassignWorkShift(self,employeeid,id):
