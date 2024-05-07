@@ -161,7 +161,7 @@ class EmployeeShift:
             shift_date = shifts[0][3]
             notification = NotificationClass.Notification()
             self.mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (employeeid))
-            employee_email = self.mycursor.fetchone()[0]
+            employee_email = "simfypesr@gmail.com"
             notification.send_email_for_ws(employee_email, shift_type, shift_date)
             print("Success")
         except Exception as error:
