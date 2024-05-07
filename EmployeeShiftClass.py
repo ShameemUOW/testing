@@ -153,15 +153,15 @@ class EmployeeShift:
             self.mydb.close()
     def AdminReassignWorkShift(self,employeeid,id):
         try:
-            self.mycursor.execute("Update EmployeeShift set employeeid = %s where employeeshiftid = %s", (employeeid, id))
+            self.mycursor.execute("Update EmployeeShift set employeeid = %s where employeeshiftid = %s", (employeeid, id,))
             self.mydb.commit()
-            self.mycursor.execute("SELECT * FROM EmployeeShift WHERE employeeshiftid = %s", (id))
+            self.mycursor.execute("SELECT * FROM EmployeeShift WHERE employeeshiftid = %s", (id,))
             shifts = self.mycursor.fetchall()
             shift_type = shifts[0][4]
-            shift_date = shifts[0][3]
+            shift_date = shifts[0][3].strftime('%Y-%m-%d')
             notification = NotificationClass.Notification()
-            self.mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (employeeid))
-            employee_email = "simfypesr@gmail.com"
+            self.mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (employeeid,))
+            employee_email = self.mycursor.fetchone()[0]
             notification.send_email_for_ws(employee_email, shift_type, shift_date)
             print("Success")
         except Exception as error:
@@ -170,19 +170,19 @@ class EmployeeShift:
             self.mydb.close()
     def ManagerReassignWorkShift(self,employeeid,id):
         try:
-            self.mycursor.execute("Update EmployeeShift set employeeid = %s where employeeshiftid = %s", (employeeid, id))
+            self.mycursor.execute("Update EmployeeShift set employeeid = %s where employeeshiftid = %s", (employeeid, id,))
             self.mydb.commit()
-            self.mycursor.execute("SELECT * FROM EmployeeShift WHERE employeeshiftid = %s", (id))
+            self.mycursor.execute("SELECT * FROM EmployeeShift WHERE employeeshiftid = %s", (id,))
             shifts = self.mycursor.fetchall()
             shift_type = shifts[0][4]
             shift_date = shifts[0][3].strftime('%Y-%m-%d')
             notification = NotificationClass.Notification()
-            self.mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (employeeid))
+            self.mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (employeeid,))
             employee_email = self.mycursor.fetchone()[0]
             notification.send_email_for_ws(employee_email, shift_type, shift_date)
             print("Success")
-        except mysql.connector.Error as error:
-            print("Failed")
+        except Exception as error:
+            print(error)
         finally:
             self.mydb.close()
     def ViewCalenderFormatWork(self):
