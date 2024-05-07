@@ -158,7 +158,7 @@ class EmployeeShift:
             self.mycursor.execute("SELECT * FROM EmployeeShift WHERE employeeshiftid = %s", (id))
             shifts = self.mycursor.fetchall()
             shift_type = shifts[0][4]
-            shift_date = shifts[0][3].strftime('%Y-%m-%d')
+            shift_date = shifts[0][3]
             notification = NotificationClass.Notification()
             self.mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (employeeid))
             employee_email = self.mycursor.fetchone()[0]
