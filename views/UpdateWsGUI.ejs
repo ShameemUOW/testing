@@ -27,13 +27,24 @@
             // Add functionality to go back
             window.history.back();
         }
+        document.getElementById("myFormm").addEventListener("submit", function(event) {
+        // Get the values of the required fields
+        var idValue = document.getElementById("id").value;
+        var valueValue = document.getElementById("typeVariable").value;
+
+        // Check if any required field is empty
+        if (idValue.trim() === "" || valueValue.trim() === "") {
+            alert("Please fill in all the required fields.");
+            event.preventDefault(); // Prevent form submission
+        }
+    });
 
     </script>
     <div id="options">
         <h1>Update Work Shift</h1><br>
 
         <div class="container">
-            <form action="/manager_updatews" method="post">
+            <form action="/manager_updatews" method="post" id="myFormm">
                 <% if(message.length>0) {%>
                     <div><%= message%></div>
                 <%}%>
