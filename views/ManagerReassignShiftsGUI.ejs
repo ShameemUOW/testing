@@ -5,7 +5,7 @@
     </head>
     <body>
         <div id="managerpage">
-            <h1 onclick="document.location='/homepage'">Manager Page</h1>
+            <h1 onclick="document.location='/homepage'" style="text-align: center;">Smart Employee Roster</h1>
         </div>
 
         <div id="mySidepanel" class="sidepanel">
@@ -27,25 +27,21 @@
         <div id="backbutton">
             <button id="back" onclick="document.location='/homepage'"><b>&laquo;back</b></button>
         </div>
-        <form action = "/managerautoassignemp" method = "POST">
+        <form action = "/manager_reassignshifts" method = "POST">
             <div id="options">
                 <table class = "creating">
+                    <h1>Reassign Employee Shifts</h1><br>
                     <% if(message.length>0) {%>
                         <div><%= message%></div>
                     <%}%>
-                    <h1>Auto-Assign Employees</h1><br>
-                    <tr>
-                        <td><input id="start" class = "textbox" type="text" name="start" placeholder="Enter Start Date"></td>
-                        <td><input id="end" class = "textbox" type="text" name="end" placeholder="Enter End Date"></td>
-                    </tr>
                     <tr>
                         <td></td>
-                        <td><input id="number" class = "textbox" type="text" name="number" placeholder="Enter Number Of Employees"></td>
+                        <td><input id="employeeid" class = "textbox" type="text" name="employeeid" placeholder="Enter Employee ID"></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><button class = "rounded-button" id="button"><b>Auto-Assign</b></button></td>
+                        <td><button class = "rounded-button" id="button"><b>View Workshifts</b></button></td>
                         <td></td>
                     </tr>
                 </table>
