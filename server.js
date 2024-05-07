@@ -1695,7 +1695,6 @@ app.post('/managerfilterattendance', (req,res) =>{
 app.get('/managermanualassignemployees', (req,res) =>{
     var pythonProcess = spawn('python',["./grabShiftPreferenceController.py"])
     pythonProcess.stdout.on('data',(data) =>{
-        req.flash('message4', null);
         try{
             var myList = JSON.parse(data.toString())
             var shiftPrefList = JSON.parse(myList.shift_pref);
