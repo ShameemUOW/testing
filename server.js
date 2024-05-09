@@ -2617,16 +2617,16 @@ app.get('/employeeviewshifts', (req, res) => {
     });
 });
 
-app.get('/createfeedback', (req,res) =>{
-    res.render('CreateFeedbackGUI',{ message: req.flash('message')})
+app.get('/employeecreatefeedback', (req,res) =>{
+    res.render('EmployeeCreateFeedbackGUI',{ message: req.flash('message')})
 })
 
 app.get('/feedbackchoose', (req,res) =>{
     res.render('FeedbackChooseGUI')
 })
 
-app.get('/viewfeedback', (req, res) => {
-    var pythonProcess = spawn('python', ["./ViewFeedbackController.py"]);
+app.get('/adminviewfeedback', (req, res) => {
+    var pythonProcess = spawn('python', ["./AdminViewFeedbackController.py"]);
     pythonProcess.stdout.on('data', (data) => {
         req.flash('message17', null);
         try {
@@ -2637,21 +2637,41 @@ app.get('/viewfeedback', (req, res) => {
         }
         if (data.toString().trim() == "Failed") {
             req.flash('message17', 'No Table Left');
-            res.render('ViewFeedbackGUI', { message: req.flash('message17') });
+            res.render('AdminViewFeedbackGUI', { message: req.flash('message17') });
         } else {
             req.flash('message17', 'Tables found');
-            res.render('ViewFeedbackGUI', { alldata: alldata, message: req.flash('message17') });
+            res.render('AdminViewFeedbackGUI', { alldata: alldata, message: req.flash('message17') });
         }
     });
 });
 
-app.post('/createfeedback', (req,res) =>{
+app.get('/managerviewfeedback', (req, res) => {
+    var pythonProcess = spawn('python', ["./ManagerViewFeedbackController.py"]);
+    pythonProcess.stdout.on('data', (data) => {
+        req.flash('message17', null);
+        try {
+            var alldata = JSON.parse(data.toString());
+            console.log(alldata);
+        } catch (error) {
+            console.log(alldata);
+        }
+        if (data.toString().trim() == "Failed") {
+            req.flash('message17', 'No Table Left');
+            res.render('ManagerViewFeedbackGUI', { message: req.flash('message17') });
+        } else {
+            req.flash('message17', 'Tables found');
+            res.render('ManagerViewFeedbackGUI', { alldata: alldata, message: req.flash('message17') });
+        }
+    });
+});
+
+app.post('/employeecreatefeedback', (req,res) =>{
     const myJSON = {
         feedback : req.body.feedback
     }
     const myJSON2 = JSON.stringify(myJSON)
     console.log(myJSON)
-    var pythonProcess = spawn('python',["./CreateFeedbackController.py",myJSON2])
+    var pythonProcess = spawn('python',["./EmployeeCreateFeedbackController.py",myJSON2])
     pythonProcess.stdout.on('data',(data)=>{
     var bool = data.toString()
     console.log(bool)
@@ -2659,12 +2679,42 @@ app.post('/createfeedback', (req,res) =>{
     if (bool.trim() == "Failed")
     {
         req.flash('message','Unable to create Feedback.')
-        res.redirect('/createfeedback')
+        res.redirect('/employeecreatefeedback')
     }
     else
     {
         req.flash('message','Feedback Created')
-        res.redirect('/createfeedback')
+        res.redirect('/employeecreatefeedback')
+    }
+})
+})
+
+
+app.get('/managercreatefeedback', (req,res) =>{
+    res.render('ManagerCreateFeedbackGUI',{ message: req.flash('message')})
+})
+
+
+app.post('/managercreatefeedback', (req,res) =>{
+    const myJSON = {
+        feedback : req.body.feedback
+    }
+    const myJSON2 = JSON.stringify(myJSON)
+    console.log(myJSON)
+    var pythonProcess = spawn('python',["./ManagerCreateFeedbackController.py",myJSON2])
+    pythonProcess.stdout.on('data',(data)=>{
+    var bool = data.toString()
+    console.log(bool)
+    req.flash('message', null);
+    if (bool.trim() == "Failed")
+    {
+        req.flash('message','Unable to create Feedback.')
+        res.redirect('/managercreatefeedback')
+    }
+    else
+    {
+        req.flash('message','Feedback Created')
+        res.redirect('/managercreatefeedback')
     }
 })
 })
