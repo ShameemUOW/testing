@@ -1,58 +1,56 @@
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/EmployeeViewAccount2.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,600" rel="stylesheet">
+  <link rel="stylesheet" href="css/EmployeeViewAccount2.css">
 </head>
 <body>
-    <div id="adminpage">
-        <h1 onclick="document.location='/homepage'" style="text-align: center;">Smart Employee Roster</h1>
-    </div>
-
-    <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-        <a href="#" onclick="document.location='/logout'">Logout</a>
-        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-    </div>
-    <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image"></button>
-    <script>
-        function openNav() {
-          document.getElementById("mySidepanel").style.width = "250px";
-        }
-        
-        function closeNav() {
-          document.getElementById("mySidepanel").style.width = "0";
-        }
-    </script>
-
-    <div id="backbutton">
-        <button id="back" onclick="document.location='/homepage'"><b>&laquo;back</b></button>
-    </div>
-    <div id="options">
-        <h1>My Account</h1><br>
-        <% if(Array.isArray(alldata) && alldata.length > 0) { %>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>Fullname:</td>
-                        <td><%= alldata[1] %></td>
-                    </tr>
-                    <tr>
-                        <td>Email:</td>
-                        <td><%= alldata[3] %></td>
-                    </tr>
-                    <tr>
-                        <td>Contact Number:</td>
-                        <td><%= alldata[4] %></td>
-                    </tr>
-                    <tr>
-                        <td>Max Hours:</td>
-                        <td><%= alldata[6] %></td>
-                    </tr>
-                </tbody>
-            </table>
-        <% } else { %>
-            <div>No employee accounts found.</div>
-        <% } %>
-    </div>
+  <div id="adminpage">
+    <h1 class="logo" onclick="document.location='/homepage'">Smart Employee Roster</h1>
+    <button class="openbtn" onclick="openNav()">&#9776;</button>
+  </div>
+  <div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#" onclick="document.location='/logout'">Logout</a>
+    <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+  </div>
+  <script>
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+    }
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+    }
+  </script>
+  <div id="backbutton">
+    <button class="rounded-button" onclick="document.location='/homepage'">&laquo; Back</button>
+  </div>
+  <div id="options">
+    <h1>My Account</h1>
+    <% if(Array.isArray(alldata) && alldata.length > 0) { %>
+      <table>
+        <tbody>
+          <tr>
+            <th>Full Name</th>
+            <td><%= alldata[1] %></td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td><%= alldata[3] %></td>
+          </tr>
+          <tr>
+            <th>Contact Number</th>
+            <td><%= alldata[4] %></td>
+          </tr>
+          <tr>
+            <th>Max Hours</th>
+            <td><%= alldata[6] %></td>
+          </tr>
+        </tbody>
+      </table>
+    <% } else { %>
+      <div>No employee accounts found.</div>
+    <% } %>
+  </div>
 </body>
 </html>

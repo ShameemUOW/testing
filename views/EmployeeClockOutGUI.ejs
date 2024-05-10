@@ -1,67 +1,63 @@
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/Managercreatetable.css">
-    </head>
-    <body>
-        <div id="managerpage">
-            <h1 onclick="document.location='/homepage'" style="text-align: center;">Smart Employee Roster</h1>
-        </div>
-
-        <div id="mySidepanel" class="sidepanel">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-            <a href="#" onclick="document.location='/logout'">Logout</a>
-            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-        </div>
-        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image1"></button>
-        <script>
-            function openNav() {
-              document.getElementById("mySidepanel").style.width = "250px";
-            }
-            
-            function closeNav() {
-              document.getElementById("mySidepanel").style.width = "0";
-            }
-        </script>
-
-        <div id="backbutton">
-            <button id="back" onclick="document.location='/homepage'"><b>&laquo;back</b></button>
-        </div>
-        <form action = "/employeeclockout" method = "POST">
-            <div id="options">
-                <table class = "creating">
-                    <h1>Clock-Out</h1><br>
-                    <tr>
-                        <td></td>
-                        <td><p id="currentTime">Current Date: <%= currentDate %>, Current Time: <%= currentTime %></p></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><button class = "rounded-button" id="button"><b>Clock-Out</b></button></td>
-                        <td></td>
-                    </tr>
-                    <% if(message5.length>0) {%>
-                        <div><%= message5%></div>
-                    <%}%>
-                </table>
-            </div>
-        </form>
-        <script>
-            // Function to update the time periodically
-            function updateTime() {
-                // Get current date and time
-                var currentDate = new Date().toLocaleDateString();
-                var currentTime = new Date().toLocaleTimeString();
-                // Update the content of the paragraph element with the current date and time
-                document.getElementById('currentTime').innerText = "Current Date: " + currentDate + ", Current Time: " + currentTime;
-            }
-    
-            // Call updateTime initially to set the time
-            updateTime();
-    
-            // Call updateTime every second to update the time
-            setInterval(updateTime, 1000);
-        </script>
-    </body>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/EmployeeClockOut.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+</head>
+<body>
+  <div id="managerpage">
+    <h1 onclick="document.location='/homepage'" class="logo">Smart Employee Roster</h1>
+    <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image1"></button>
+  </div>
+  <div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+    <a href="#" onclick="document.location='/logout'">Logout</a>
+    <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+  </div>
+  <script>
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+    }
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+    }
+  </script>
+  <div class="container">
+    <div id="backbutton">
+      <button id="back" onclick="document.location='/homepage'" class="rounded-button"><b>&laquo; Back</b></button>
+    </div>
+    <form action="/employeeclockout" method="POST">
+      <div id="options">
+        <h1>Clock-Out</h1>
+        <table class="creating">
+          <tr>
+            <td colspan="3"><p id="currentTime">Current Date: <%= currentDate %>, Current Time: <%= currentTime %></p></td>
+          </tr>
+          <tr>
+            <td colspan="3"><button class="rounded-button" id="button"><b>Clock-Out</b></button></td>
+          </tr>
+          <% if(message5.length > 0) { %>
+            <tr>
+              <td colspan="3"><div class="message"><%= message5 %></div></td>
+            </tr>
+          <% } %>
+        </table>
+      </div>
+    </form>
+  </div>
+  <script>
+    // Function to update the time periodically
+    function updateTime() {
+      // Get current date and time
+      var currentDate = new Date().toLocaleDateString();
+      var currentTime = new Date().toLocaleTimeString();
+      // Update the content of the paragraph element with the current date and time
+      document.getElementById('currentTime').innerText = "Current Date: " + currentDate + ", Current Time: " + currentTime;
+    }
+    // Call updateTime initially to set the time
+    updateTime();
+    // Call updateTime every second to update the time
+    setInterval(updateTime, 1000);
+  </script>
+</body>
 </html>

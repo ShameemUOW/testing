@@ -1,11 +1,9 @@
 body {
     background-color: #f5f5f5;
     font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
   }
   
-  #managerpage {
+  #adminpage {
     position: fixed;
     top: 0;
     left: 0;
@@ -34,7 +32,7 @@ body {
     margin-right: 60px;
   }
   
-  .image1 {
+  .image {
     width: 40px;
     height: 40px;
   }
@@ -74,79 +72,64 @@ body {
     margin-left: 50px;
   }
   
-  #options {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 100px);
-    padding: 40px;
-  }
-  
   .container {
-    max-width: 600px;
-    width: 100%;
+    max-width: 800px;
+    margin: 120px auto;
+    padding: 40px;
     background-color: #fff;
     border-radius: 8px;
-    padding: 40px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  #backbutton {
+    margin-bottom: 20px;
+  }
+  
+  .rounded-button {
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: #e2a349;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .rounded-button:hover {
+    background-color: #d69438;
+  }
+  
+  #options {
+    text-align: center;
   }
   
   h1 {
     font-size: 28px;
     margin-bottom: 20px;
     color: #3c4463;
-    text-align: center;
   }
   
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    display: block;
-    font-size: 18px;
-    color: #3c4463;
-    margin-bottom: 8px;
-  }
-  
-  .form-control {
+  table {
     width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
     padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  .btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-primary {
-    background-color: #e2a349;
-    color: white;
-  }
-  
-  .btn-primary:hover {
-    background-color: #d69438;
-  }
-  
-  .btn-secondary {
-    background-color: #ccc;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
     color: #3c4463;
-    margin-left: 10px;
   }
   
-  .btn-secondary:hover {
-    background-color: #b3b3b3;
+  th {
+    background-color: #f5f5f5;
+    font-weight: bold;
   }
   
   .message {
-    margin-bottom: 20px;
+    margin-top: 20px;
     padding: 10px;
     background-color: #e2a349;
     color: white;
