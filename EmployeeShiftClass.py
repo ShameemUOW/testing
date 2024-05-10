@@ -187,7 +187,7 @@ class EmployeeShift:
             self.mydb.close()
     def ViewCalenderFormatWork(self):
         try:
-            self.mycursor.execute("SELECT u.Fullname, es.shiftDate, es.shiftType FROM EmployeeShift es JOIN userAccount u ON es.EmployeeID = u.EmployeeID;")
+            self.mycursor.execute("SELECT u.Fullname, es.shiftDate, es.shiftType, ws.start, ws.end FROM EmployeeShift es JOIN userAccount u ON es.EmployeeID = u.EmployeeID JOIN workshift ws ON es.shiftID = ws.id;")
             shifts = self.mycursor.fetchall()
 
             formatted_shifts = []
@@ -195,7 +195,9 @@ class EmployeeShift:
                 formatted_shift = {
                     "person": shift[0],
                     "shiftDate": shift[1].strftime('%Y-%m-%d'),
-                    "shiftType": shift[2]
+                    "shiftType": shift[2],
+                    "shifttimestart": datetime.strptime(str(shift[3]), '%H:%M:%S').time().strftime('%H:%M:%S') if shift[3] is not None else None,
+                    "shifttimeend": datetime.strptime(str(shift[4]), '%H:%M:%S').time().strftime('%H:%M:%S') if shift[4] is not None else None
                 }
                 formatted_shifts.append(formatted_shift)
             shifts_json = json.dumps(formatted_shifts)

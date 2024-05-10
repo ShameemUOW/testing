@@ -5,22 +5,25 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
         function openNav() {
-          document.getElementById("mySidepanel").style.width = "250px";
+            document.getElementById("mySidepanel").style.width = "250px";
         }
-            
+
         function closeNav() {
-          document.getElementById("mySidepanel").style.width = "0";
+            document.getElementById("mySidepanel").style.width = "0";
         }
+
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var shiftsData = JSON.parse(decodeURIComponent('<%- encodeURIComponent(JSON.stringify(results)) %>'));
             var events = shiftsData.map(function(shift) {
                 return {
                     title: shift.person + ' - ' + shift.shiftType,
-                    start: shift.shiftDate
-                    // Add other properties if needed
+                    start: shift.shiftDate + 'T' + shift.shifttimestart,
+                    end: shift.shiftDate + 'T' + shift.shifttimeend,
+                    shiftInfo: shift
                 };
             });
+
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 initialDate: '2024-03-07',
@@ -29,14 +32,77 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                events: events // Use events array here
+                events: events,
+                eventClick: function(info) {
+                    var shiftInfo = info.event.extendedProps.shiftInfo;
+                    var popupContent = "<div id='popup'><button id='closeBtn'>&times;</button>" +
+                        "<div><h3>Shift Information</h3>" +
+                        "<p><strong>Employee:</strong> " + shiftInfo.person + "</p>" +
+                        "<p><strong>Shift Type:</strong> " + shiftInfo.shiftType + "</p>" +
+                        "<p><strong>Shift Date:</strong> " + shiftInfo.shiftDate + "</p>" +
+                        "<p><strong>Start Time:</strong> " + shiftInfo.shifttimestart + "</p>" +
+                        "<p><strong>End Time:</strong> " + shiftInfo.shifttimeend + "</p></div>";
+
+                    var popupDiv = document.createElement('div');
+                    popupDiv.innerHTML = popupContent;
+                    popupDiv.classList.add('popup', 'draggable');
+
+                    var isDragging = false;
+                    var currentX;
+                    var currentY;
+                    var initialX;
+                    var initialY;
+                    var xOffset = 0;
+                    var yOffset = 0;
+
+                    function dragStart(e) {
+                        initialX = e.clientX - xOffset;
+                        initialY = e.clientY - yOffset;
+                        isDragging = true;
+                    }
+
+                    function dragEnd(e) {
+                        initialX = currentX;
+                        initialY = currentY;
+                        isDragging = false;
+                    }
+
+                    function drag(e) {
+                        if (isDragging) {
+                            e.preventDefault();
+                            currentX = e.clientX - initialX;
+                            currentY = e.clientY - initialY;
+                            setTranslate(currentX, currentY, popupDiv);
+                        }
+                    }
+
+                    function setTranslate(xPos, yPos, el) {
+                        xOffset = xPos;
+                        yOffset = yPos;
+                        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+                    }
+
+                    popupDiv.addEventListener('mousedown', (e) => {
+                        initialX = e.clientX - xOffset;
+                        initialY = e.clientY - yOffset;
+                        isDragging = true;
+                    });
+                    popupDiv.addEventListener('mouseup', dragEnd);
+                    popupDiv.addEventListener('mousemove', drag);
+                    popupDiv.addEventListener('mouseleave', dragEnd);
+
+                    document.body.appendChild(popupDiv);
+
+                    var closeBtn = popupDiv.querySelector('#closeBtn');
+                    closeBtn.addEventListener('click', function() {
+                        popupDiv.remove();
+                    });
+                }
             });
-    
+
             calendar.render();
         });
     </script>
-    
-    
 </head>
 <body>
     <div id="adminpage">
