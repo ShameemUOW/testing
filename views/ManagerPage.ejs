@@ -1,52 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/Manager.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/ManagerPage.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <div id="managerpage">
+  <header>
+    <nav>
+      <div class="logo">
         <h1 onclick="document.location='/homepage'">Manager Homepage</h1>
-    </div>
-    <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
-        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-    </div>
-    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
-    <script>
-        function openNav() {
-            document.getElementById("mySidepanel").style.width = "250px";
-        }
+      </div>
+      <div class="settings-icon" onclick="openNav()">
+        <i class="fas fa-cog"></i>
+      </div>
+    </nav>
+  </header>
 
-        function closeNav() {
-            document.getElementById("mySidepanel").style.width = "0";
-        }
-    </script>
-    <div id="options">
+  <div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-times"></i></a>
+    <a href="#" onclick="document.location='/logout'" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
+  </div>
 
-        <h1>What would you like to do?</h1><br>
+  <main>
+    <section class="hero">
+      <h1>What would you like to do?</h1>
+    </section>
 
-        <div class="container">
-            <h2>Employee Management</h2>
-            <table>
-                <td><button id="manager_createchoose" onclick="document.location='/createmanagerchoose'"><img src="img/create.png" class="image"><h3>Create</h3></button></td>
-                <td><button id="manager_viewchoose" onclick="document.location='/viewmanagerchoose'"><img src="img/view_all.png" class="image"><h3>View</h3></button></td>
-                <td><button id="manager_searchchoose" onclick="document.location='/searchfiltermanagerchoose'"><img src="img/search.png" class="image"><h3>Search/Filter</h3></button></td>
-                <td><button id="manager_updatechoose" onclick="document.location='/updatemanagerchoose'"><img src="img/update.png" class="image"><h3>Update</h3></button></td>
-                <td><button id="manager_deletechoose" onclick="document.location='/deletemanagerchoose'"><img src="img/delete.png" class="image"><h3>Delete</h3></button></td>
-                <td><button id="manager_rejectapprove" onclick="document.location='/rejectapprovemanagerchoose'"><img src="img/decision-making.png" class="image"><h3>Reject/Approve Leaves</h3></button></td>
-                <td><button id="manager_rejectapprove" onclick="document.location='/feedbackchoose'"><img src="img/feedback.png" class="image"><h3>Feedback</h3></button></td>
-            </table>
+    <section class="container">
+      <h2>Employee Management</h2>
+      <div class="button-grid">
+        <button id="manager_createchoose" onclick="document.location='/createmanagerchoose'">
+          <img src="img/create.png" class="image" alt="Create">
+          <h3>Create</h3>
+        </button>
+        <button id="manager_viewchoose" onclick="document.location='/viewmanagerchoose'">
+          <img src="img/view_all.png" class="image" alt="View">
+          <h3>View</h3>
+        </button>
+        <button id="manager_searchchoose" onclick="document.location='/searchfiltermanagerchoose'">
+          <img src="img/search.png" class="image" alt="Search/Filter">
+          <h3>Search/Filter</h3>
+        </button>
+        <button id="manager_updatechoose" onclick="document.location='/updatemanagerchoose'">
+          <img src="img/update.png" class="image" alt="Update">
+          <h3>Update</h3>
+        </button>
+        <button id="manager_deletechoose" onclick="document.location='/deletemanagerchoose'">
+          <img src="img/delete.png" class="image" alt="Delete">
+          <h3>Delete</h3>
+        </button>
+        <button id="manager_rejectapprove" onclick="document.location='/rejectapprovemanagerchoose'">
+          <img src="img/decision-making.png" class="image" alt="Reject/Approve Leaves">
+          <h3>Reject/Approve Leaves</h3>
+        </button>
+        <button id="manager_feedback" onclick="document.location='/feedbackchoose'">
+          <img src="img/feedback.png" class="image" alt="Feedback">
+          <h3>Feedback</h3>
+        </button>
+      </div>
 
-            <h2>Work Shift Management</h2>
-            <table>
-                <td><button id="managermanualassignemployees" onclick="document.location='/managermanualassignemployees'"><img src="img/customize.png" class="image"><h3>Manual Assign Employees</h3></button></td>
-                <td><button id="managerautoassignemployees" onclick="document.location='/managerautoassignemp'"><img src="img/automatic.png" class="image"><h3>Auto-Assign Employees</h3></button></td>
-                <td><button id="managerautoassignemployees" onclick="document.location='/managerviewcalender'"><img src="img/calendar.png" class="image"><h3>View Workshift (Calender)</h3></button></td>
-                <td><button id="managerautoassignemployees" onclick="document.location='/manager_reassignshifts'"><img src="img/reassign.png" class="image"><h3>Reassign Employees</h3></button></td>
-            </table>
-        </div>
-    </div>
+      <h2>Work Shift Management</h2>
+      <div class="button-grid">
+        <button id="managermanualassignemployees" onclick="document.location='/managermanualassignemployees'">
+          <img src="img/customize.png" class="image" alt="Manual Assign Employees">
+          <h3>Manual Assign Employees</h3>
+        </button>
+        <button id="managerautoassignemployees" onclick="document.location='/managerautoassignemp'">
+          <img src="img/automatic.png" class="image" alt="Auto-Assign Employees">
+          <h3>Auto-Assign Employees</h3>
+        </button>
+        <button id="managerviewcalendar" onclick="document.location='/managerviewcalender'">
+          <img src="img/calendar.png" class="image" alt="View Workshift (Calendar)">
+          <h3>View Workshift (Calendar)</h3>
+        </button>
+        <button id="managerreassignshifts" onclick="document.location='/manager_reassignshifts'">
+          <img src="img/reassign.png" class="image" alt="Reassign Employees">
+          <h3>Reassign Employees</h3>
+        </button>
+      </div>
+    </section>
+  </main>
+  <script>
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+    }
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+    }
+  </script>
 </body>
 </html>

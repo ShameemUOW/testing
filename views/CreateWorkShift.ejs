@@ -1,80 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/CreateWorkShift.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/CreateWorkShift2.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+  <header>
     <div id="managerpage">
-        <h1 onclick="document.location='/homepage'">Welcome to Manager Dashboard</h1>
+      <h1 onclick="document.location='/homepage'">Welcome to Manager Dashboard</h1>
     </div>
     <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
-        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-times"></i></a>
+      <a href="#" onclick="document.location='/logout'" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
     </div>
-    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
-    <script>
-        function openNav() {
-            document.getElementById("mySidepanel").style.width = "250px";
-        }
+    <button class="openbtn" onclick="openNav()" id="settingsbtn"><i class="fas fa-cog"></i></button>
+  </header>
 
-        function closeNav() {
-            document.getElementById("mySidepanel").style.width = "0";
-        }
-
-        function goBack() {
-            // Add functionality to go back
-            window.history.back();
-        }
-
-        document.getElementById("myForm").addEventListener("submit", function(event) {
-        // Get the values of the required fields
-        var dateValue = document.getElementById("date").value;
-        var shiftValue = document.getElementById("shift").value;
-        var startValue = document.getElementById("start").value;
-        var endValue = document.getElementById("end").value;
-
-        // Check if any required field is empty
-        if (dateValue.trim() === "" || shiftValue.trim() === "" || startValue.trim() === "" || endValue.trim() === "") {
-            alert("Please fill in all the required fields.");
-            event.preventDefault(); // Prevent form submission
-        }
-    });
-
-    </script>
+  <main>
     <div id="options" class="flex-container">
-        <div class = "form-container">
-        <h1>Create Working Shift</h1><br>
+      <div class="form-container">
+        <h1>Create Working Shift</h1>
         <% if (message.length > 0) { %>
-            <div><%= message %></div>
+          <div class="message"><%= message %></div>
         <% } %>
-            <div class="container">
-                <form action="/manager_createws" method="POST" id = "myForm">
-                    <fieldset>
-                        <legend>Enter Shift Details</legend>
-                        <label for="date">Date:</label><br>
-                        <input type="date" id="date" name="date" required><br><br>
-                        <label for="shift">Shift Type:</label><br>
-                        <input type="text" id="shift" name="shift" required><br><br>
-                        <label for="start">Start Time:</label><br>
-                        <input type="time" id="start" name="start" required><br><br>
-                        <label for="end">End Time:</label><br>
-                        <input type="time" id="end" name="end" required><br><br>
-                        <button type="submit" name="create">Create</button>
-                        <button type="button" name="back" onclick="goBack()">Back</button>
-                    </fieldset>
-                </form>
-            </div>
+        <div class="container">
+          <form action="/manager_createws" method="POST" id="myForm">
+            <fieldset>
+              <legend>Enter Shift Details</legend>
+              <div class="input-group">
+                <label for="date"><i class="far fa-calendar-alt"></i> Date:</label>
+                <input type="date" id="date" name="date" required>
+              </div>
+              <div class="input-group">
+                <label for="shift"><i class="fas fa-briefcase"></i> Shift Type:</label>
+                <input type="text" id="shift" name="shift" required>
+              </div>
+              <div class="input-group">
+                <label for="start"><i class="far fa-clock"></i> Start Time:</label>
+                <input type="time" id="start" name="start" required>
+              </div>
+              <div class="input-group">
+                <label for="end"><i class="far fa-clock"></i> End Time:</label>
+                <input type="time" id="end" name="end" required>
+              </div>
+              <div class="button-group">
+                <button type="submit" name="create"><i class="fas fa-plus"></i> Create</button>
+                <button type="button" name="back" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+              </div>
+            </fieldset>
+          </form>
         </div>
-            <div id="holidays" class="holidays-container">
-                <h2>Holidays this Month</h2>
-                <ul id="holidayList">
-                    <% holidays.forEach(holiday => { %>
-                        <li><%= holiday.name %> - <%= new Date(holiday.date).toLocaleDateString() %></li>
-                    <% }); %>
-                </ul>
-            </div>
-        </div>
+      </div>
+      <div id="holidays" class="holidays-container">
+        <h2><i class="far fa-calendar-check"></i> Holidays this Month</h2>
+        <ul id="holidayList">
+          <% holidays.forEach(holiday => { %>
+            <li><%= holiday.name %> - <%= new Date(holiday.date).toLocaleDateString() %></li>
+          <% }); %>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+    }
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+    }
+    function goBack() {
+      window.history.back();
+    }
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+      var dateValue = document.getElementById("date").value;
+      var shiftValue = document.getElementById("shift").value;
+      var startValue = document.getElementById("start").value;
+      var endValue = document.getElementById("end").value;
+      if (dateValue.trim() === "" || shiftValue.trim() === "" || startValue.trim() === "" || endValue.trim() === "") {
+        alert("Please fill in all the required fields.");
+        event.preventDefault();
+      }
+    });
+  </script>
 </body>
 </html>
