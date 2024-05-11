@@ -1,64 +1,67 @@
 <!DOCTYPE html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/SearchTable.css">
-    </head>
-    <body>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/ManagerSearchEmpTable.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
         <div id="ownerpage">
             <h1 onclick="document.location='/homepage'">Manager Page</h1>
         </div>
-
         <div id="mySidepanel" class="sidepanel">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-            <a href="#" onclick="document.location='/logout'">Logout</a>
-            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-            <a href="#" onclick="document.location='/homepage'">Go back to Home Page</a>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-arrow-left"></i> Back</a>
+            <a href="#" onclick="document.location='/logout'"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
+            <a href="#" onclick="document.location='/homepage'"><i class="fas fa-home"></i> Go back to Home Page</a>
         </div>
-        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image"></button>
-        <script>
-            function openNav() {
-              document.getElementById("mySidepanel").style.width = "250px";
-            }
-            
-            function closeNav() {
-              document.getElementById("mySidepanel").style.width = "0";
-            }
-        </script>
-    
+        <button class="openbtn" onclick="openNav()"><i class="fas fa-cog"></i></button>
+    </header>
+    <main>
         <div id="options">
-            <h1>viewing all Searched Employees</h1><br>
+            <h1>Viewing All Searched Employees</h1>
             <% if(typeof results !== "undefined") {%>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th>Chat ID</th>
-                            <th>Max Hours</th>
-                            <th>Job</th>
-                            <th>Hours Worked</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for(var i=0; i<results.length;i++) { %>
-                        <tr>
-                            <td><%= results[i][0]%></td>
-                            <td><%= results[i][1]%></td>
-                            <td><%= results[i][2]%></td>
-                            <td><%= results[i][3]%></td>
-                            <td><%= results[i][4]%></td>
-                            <td><%= results[i][5]%></td>
-                            <td><%= results[i][6]%></td>
-                            <td><%= results[i][7]%></td>
-                            <td><%= results[i][9]%></td>
-                        </tr>
-                        <% } %>
-                    </tbody>
-                </table>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Chat ID</th>
+                                <th>Max Hours</th>
+                                <th>Job</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(var i=0; i<results.length;i++) { %>
+                                <tr>
+                                    <td><%= results[i][0]%></td>
+                                    <td><%= results[i][1]%></td>
+                                    <td><%= results[i][2]%></td>
+                                    <td><%= results[i][3]%></td>
+                                    <td><%= results[i][4]%></td>
+                                    <td><%= results[i][5]%></td>
+                                    <td><%= results[i][6]%></td>
+                                    <td><%= results[i][7]%></td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
             <%}%>
         </div>
-    </body>
+    </main>
+    <script>
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+        }
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+        }
+    </script>
+</body>
 </html>

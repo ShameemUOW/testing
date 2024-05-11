@@ -1,0 +1,140 @@
+body {
+    background-color: #f5f5f5;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #3c4463;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#managerpage h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.sidepanel {
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidepanel a {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #3c4463;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidepanel a:hover {
+    background-color: #f5f5f5;
+}
+
+.sidepanel .closebtn {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 24px;
+}
+
+.openbtn {
+    font-size: 24px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+}
+
+main {
+    padding: 40px;
+}
+
+#backbutton {
+    margin-bottom: 20px;
+}
+
+#back {
+    background-color: #e2a349;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#back:hover {
+    background-color: #d19440;
+}
+
+#options {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#options h1 {
+    color: #3c4463;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.message {
+    background-color: #e2a349;
+    color: #ffffff;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.textbox {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.rounded-button {
+    background-color: #e2a349;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.rounded-button:hover {
+    background-color: #d19440;
+}

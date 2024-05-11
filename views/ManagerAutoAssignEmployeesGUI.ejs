@@ -1,67 +1,63 @@
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/ManagerAAE.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/ManagerAAE.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-  <header>
-    <div id="managerpage">
-      <h1 onclick="document.location='/homepage'">Manager Page</h1>
-    </div>
-    <div id="mySidepanel" class="sidepanel">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-times"></i></a>
-      <a href="#" onclick="document.location='/logout'"><i class="fas fa-sign-out-alt"></i> Logout</a>
-      <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
-    </div>
-    <button class="openbtn" onclick="openNav()"><i class="fas fa-cog"></i></button>
-  </header>
-
-  <main>
-    <div id="backbutton">
-      <button id="back" onclick="document.location='/homepage'"><i class="fas fa-arrow-left"></i> Back</button>
-    </div>
-
-    <form action="/managerautoassignemp" method="POST">
-      <div id="options">
-        <h1>Auto-Assign Employees</h1>
-        <% if(message.length > 0) {%>
-          <div class="message"><%= message%></div>
-        <%}%>
-
-        <div class="form-container">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="start"><i class="fas fa-calendar-alt"></i> Start Date</label>
-              <input id="start" class="textbox" type="text" name="start" placeholder="Enter Start Date">
-            </div>
-            <div class="form-group">
-              <label for="end"><i class="fas fa-calendar-alt"></i> End Date</label>
-              <input id="end" class="textbox" type="text" name="end" placeholder="Enter End Date">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="number"><i class="fas fa-users"></i> Number Of Employees</label>
-            <input id="number" class="textbox" type="text" name="number" placeholder="Enter Number Of Employees">
-          </div>
-
-          <div class="form-group">
-            <button class="rounded-button" id="button"><i class="fas fa-magic"></i> Auto-Assign</button>
-          </div>
+    <header>
+        <div id="managerpage">
+            <h1 onclick="document.location='/homepage'">Manager Page</h1>
         </div>
-      </div>
-    </form>
-  </main>
-
-  <script>
-    function openNav() {
-      document.getElementById("mySidepanel").style.width = "250px";
-    }
-    function closeNav() {
-      document.getElementById("mySidepanel").style.width = "0";
-    }
-  </script>
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-times"></i></a>
+            <a href="#" onclick="document.location='/logout'"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()"><i class="fas fa-cog"></i></button>
+    </header>
+    <main>
+        <div id="backbutton">
+            <button id="back" onclick="document.location='/homepage'"><i class="fas fa-arrow-left"></i> Back</button>
+        </div>
+        <form action="/managerautoassignemp" method="POST">
+            <div id="options">
+                <h1>Auto-Assign Employees</h1>
+                <% if(message.length > 0) {%>
+                    <div class="message"><%= message%></div>
+                <%}%>
+                <div class="form-container">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start"><i class="fas fa-calendar-alt"></i> Start Date</label>
+                            <input id="start" class="textbox" type="text" name="start" placeholder="Enter Start Date">
+                        </div>
+                        <div class="form-group">
+                            <label for="end"><i class="fas fa-calendar-alt"></i> End Date</label>
+                            <input id="end" class="textbox" type="text" name="end" placeholder="Enter End Date">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="number"><i class="fas fa-users"></i> Number Of Employees</label>
+                            <input id="number" class="textbox" type="text" name="number" placeholder="Enter Number Of Employees">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="rounded-button" id="button"><i class="fas fa-magic"></i> Auto-Assign</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+    <script>
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+        }
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+        }
+    </script>
 </body>
 </html>

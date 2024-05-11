@@ -1,49 +1,46 @@
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/AdminViewProfileTable.css">
-    </head>
-    <body>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/ManagerViewFeedback.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
         <div id="adminpage">
             <h1 onclick="document.location='/homepage'">Smart Employee Roster</h1>
         </div>
-
         <div id="mySidepanel" class="sidepanel">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-            <a href="#" onclick="document.location='/logout'">Logout</a>
-            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-arrow-left"></i> Back</a>
+            <a href="#" onclick="document.location='/logout'"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
         </div>
-        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image"></button>
-        <script>
-            function openNav() {
-              document.getElementById("mySidepanel").style.width = "250px";
-            }
-            
-            function closeNav() {
-              document.getElementById("mySidepanel").style.width = "0";
-            }
-        </script>
+        <button class="openbtn" onclick="openNav()"><i class="fas fa-cog"></i></button>
+    </header>
+    <main>
         <div id="options">
-            <h1>Viewing all Feedback</h1><br>
-            <% if(message.length>0) {%>
-                <div><%= message%></div>
+            <h1>Viewing All Feedback</h1>
+            <% if(message.length > 0) {%>
+                <div class="message"><%= message%></div>
             <%}%>
             <% if(typeof alldata !== "undefined") {%>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Feedback</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for(var i=0; i<alldata.length;i++) { %>
-                        <tr>
-                            <td><%= alldata[i]%></td>
-                        </tr>
-                        <% } %>
-                    </tbody>
-                </table>
+                <div class="feedback-container">
+                    <% for(var i=0; i<alldata.length;i++) { %>
+                        <div class="feedback-item">
+                            <p><%= alldata[i]%></p>
+                        </div>
+                    <% } %>
+                </div>
             <%}%>
         </div>
-    </body>
+    </main>
+    <script>
+        function openNav() {
+            document.getElementById("mySidepanel").style.width = "250px";
+        }
+        function closeNav() {
+            document.getElementById("mySidepanel").style.width = "0";
+        }
+    </script>
+</body>
 </html>

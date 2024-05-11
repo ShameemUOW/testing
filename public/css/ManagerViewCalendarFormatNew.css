@@ -1,0 +1,162 @@
+body {
+    background-color: #f5f5f5;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #3c4463;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#adminpage h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.sidepanel {
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidepanel a {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #3c4463;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidepanel a:hover {
+    background-color: #f5f5f5;
+}
+
+.sidepanel .closebtn {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 24px;
+}
+
+.openbtn {
+    font-size: 24px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+}
+
+main {
+    padding: 40px;
+}
+
+#backbutton {
+    margin-bottom: 20px;
+}
+
+#back {
+    background-color: #e2a349;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#back:hover {
+    background-color: #d19440;
+}
+
+#calendar {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    max-width: 400px;
+    width: 90%;
+}
+
+.popup h3 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #3c4463;
+}
+
+.popup p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #666666;
+}
+
+.popup button {
+    background-color: #e2a349;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.popup button:hover {
+    background-color: #d19440;
+}
+
+#closeBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff6347;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    transition: background-color 0.3s ease;
+}
+
+#closeBtn:hover {
+    background-color: #e53935;
+}
+
+.popup div {
+    margin-bottom: 20px;
+}
+
+.popup.draggable {
+    cursor: move;
+    user-select: none;
+}

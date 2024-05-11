@@ -1,7 +1,9 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset='utf-8' />
-    <link rel="stylesheet" href="css/AdminViewProfileTable.css">
+    <link rel="stylesheet" href="css/ManagerViewCalendarFormatNew.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
         function openNav() {
@@ -105,19 +107,22 @@
     </script>
 </head>
 <body>
-    <div id="adminpage">
-        <h1 onclick="document.location='/homepage'">Manager Page</h1>
-    </div>
-
-    <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-        <a href="#" onclick="document.location='/logout'">Logout</a>
-        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-    </div>
-    <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image"></button>
-    <div id="backbutton">
-        <button id="back" onclick="document.location='/homepage'"><b>&laquo;back</b></button>
-    </div>
-    <div id='calendar'></div>
+    <header>
+        <div id="adminpage">
+            <h1 onclick="document.location='/homepage'">Manager Page</h1>
+        </div>
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-arrow-left"></i> Back</a>
+            <a href="#" onclick="document.location='/logout'"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()"><i class="fas fa-cog"></i></button>
+    </header>
+    <main>
+        <div id="backbutton">
+            <button id="back" onclick="document.location='/homepage'"><i class="fas fa-arrow-left"></i> Back</button>
+        </div>
+        <div id='calendar'></div>
+    </main>
 </body>
 </html>

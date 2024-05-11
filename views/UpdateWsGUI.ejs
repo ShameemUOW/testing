@@ -2,70 +2,72 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/UpdateManagerAccount.css">
+    <link rel="stylesheet" href="css/ManagerAccountUpdatenew.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <div id="managerpage">
-        <h1 onclick="document.location='/homepage'">Manager</h1>
-    </div>
-    <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
-        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-    </div>
-    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
+    <header>
+        <div id="managerpage">
+            <h1 onclick="document.location='/homepage'">Manager</h1>
+        </div>
+        <div id="mySidepanel" class="sidepanel">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-arrow-left"></i> Back</a>
+            <a href="#" onclick="document.location='/logout'" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
+        </div>
+        <button class="openbtn" onclick="openNav()" id="settingsbtn"><i class="fas fa-cog"></i></button>
+    </header>
+    <main>
+        <div id="options">
+            <h1>Update Work Shift</h1>
+            <div class="container">
+                <form action="/manager_updatews" method="post" id="myFormm">
+                    <% if(message.length > 0) {%>
+                        <div class="message"><%= message%></div>
+                    <%}%>
+                    <div class="form-group">
+                        <label for="id">Work Shift ID:</label>
+                        <input type="text" id="id" name="id" placeholder="Enter Work Shift ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="typeVariable">Value:</label>
+                        <input type="text" id="typeVariable" name="value" placeholder="Enter value" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Select Category to Update:</label>
+                        <select class="profile-select" name="selectedoption">
+                            <% myList.forEach(item => {%>
+                                <option value="<%= item%>"><%= item%></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="update" class="btn btn-update">Update</button>
+                        <button type="button" name="back" class="btn btn-back" onclick="goBack()">Back</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
     <script>
         function openNav() {
             document.getElementById("mySidepanel").style.width = "250px";
         }
-
         function closeNav() {
             document.getElementById("mySidepanel").style.width = "0";
         }
-
         function goBack() {
-            // Add functionality to go back
             window.history.back();
         }
         document.getElementById("myFormm").addEventListener("submit", function(event) {
-        // Get the values of the required fields
-        var idValue = document.getElementById("id").value;
-        var valueValue = document.getElementById("typeVariable").value;
-
-        // Check if any required field is empty
-        if (idValue.trim() === "" || valueValue.trim() === "") {
-            alert("Please fill in all the required fields.");
-            event.preventDefault(); // Prevent form submission
-        }
+            var idValue = document.getElementById("id").value;
+            var valueValue = document.getElementById("typeVariable").value;
+            if (idValue.trim() === "" || valueValue.trim() === "") {
+                alert("Please fill in all the required fields.");
+                event.preventDefault();
+            }
         });
-
     </script>
-    <div id="options">
-        <h1>Update Work Shift</h1><br>
-
-        <div class="container">
-            <form action="/manager_updatews" method="post" id="myFormm">
-                <% if(message.length>0) {%>
-                    <div><%= message%></div>
-                <%}%>
-                <fieldset>
-                    <label for="id">Work Shift ID:</label><br>
-                    <input type="text" id="id" name="id" required><br><br>
-
-                    <label for="typeVariable">Value:</label><br>
-                    <input type="text" id="typeVariable" name="value" required><br><br>
-
-                    <label for="category">Select Category to Update:</label><br>
-                    <select class="profile-select" name = "selectedoption">
-                        <% myList.forEach(item => {%>
-                            <option value = "<%= item%>"><%= item%></option>
-                        <% }); %>
-                    </select><br><br>
-                    <button type="submit" name="update">Update</button>
-                    <button type="button" name="back" onclick="goBack()">Back</button>
-                </fieldset>
-            </form>
-        </div>
-    </div>
 </body>
 </html>
