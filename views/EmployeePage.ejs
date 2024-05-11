@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/Employee.css">
+    <link rel="stylesheet" href="css/EmployeePage.css">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
 </head>
 <body>
     <div id="employeepage">
@@ -23,39 +24,158 @@
             document.getElementById("mySidepanel").style.width = "0";
         }
 
-        function speak(text) {
+        function speak(text, event) {
             var utterance = new SpeechSynthesisUtterance(text);
             speechSynthesis.speak(utterance);
+            if (event) {
+                event.preventDefault(); // Prevent the default button click behavior
+            }
         }
-    </script>
-    <div id="options">
-        <h1>What would you like to do?</h1><br>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var shiftsData = JSON.parse(decodeURIComponent('<%- encodeURIComponent(JSON.stringify(results)) %>'));
+            var events = shiftsData.map(function(shift) {
+                return {
+                    title: shift.person + ' - ' + shift.shiftType,
+                    start: shift.shiftDate + 'T' + shift.shifttimestart,
+                    end: shift.shiftDate + 'T' + shift.shifttimeend,
+                    shiftInfo: shift
+                };
+            });
 
-        <div class="container">
-       
-            <h2>Employee Functions</h2>
-            <table>
-                <tr>
-                    <td><button id="employee_createleavebutton" onclick="document.location='/employee_createLeave'"><img src="img/leave.png" class="image"><h3>Apply For Leave</h3></button></td>
-                    <td><button id="employee_updateleave" onclick="document.location='/empupdatechoose'"><img src="img/update.png" class="image"><h3>Update</h3></button></td>
-                    <td><button id="employee_viewall" onclick="document.location='/employee_viewall'"><img src="img/view_all.png" class="image"><h3>View </h3></button></td>
-                    <td><button id="employee_deleteLeave" onclick="document.location='/employeedeleteleave'"><img src=img/delete.png class="image"><h3>Delete Leave</h3></button></td>
-                    <td><button id="employee_deleteLeave" onclick="document.location='/employee_clockinout'"><img src=img/clock.png class="image"><h3>Clock-in/Clock-out</h3></button></td>
-                    <td><button id="employee_viewnotification" onclick="document.location='/employee_viewnotification'"><img src=img/notification.png class="image"><h3>View Notification</h3></button></td>
-                    <td><button id="employee_viewnotification" onclick="document.location='/employeecreatefeedback'"><img src=img/feedback.png class="image"><h3>Leave Feedback</h3></button></td>
-                </tr>
-                <tr align="center">
-                    <td><button id = "tts" onclick="speak('Apply For Leave')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
-                    <td><button id = "tts" onclick="speak('Update Info')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
-                    <td><button id = "tts" onclick="speak('View')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
-                    <td><button id = "tts" onclick="speak('Delete Leave')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></button></td>
-                    <td><button id = "tts" onclick="speak('Clock-in or Clock-out')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
-                    <td><button id = "tts" onclick="speak('View Notifications')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
-                    <td><button id = "tts" onclick="speak('Feedback')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
-                </tr>
-            </table>
-        </div>
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                initialDate: '2024-03-07',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: events,
+                eventClick: function(info) {
+                    var shiftInfo = info.event.extendedProps.shiftInfo;
+                    var popupContent = "<div id='popup'><button id='closeBtn'>&times;</button>" +
+                        "<div><h3>Shift Information</h3>" +
+                        "<p><strong>Employee:</strong> " + shiftInfo.person + "</p>" +
+                        "<p><strong>Shift Type:</strong> " + shiftInfo.shiftType + "</p>" +
+                        "<p><strong>Shift Date:</strong> " + shiftInfo.shiftDate + "</p>" +
+                        "<p><strong>Start Time:</strong> " + shiftInfo.shifttimestart + "</p>" +
+                        "<p><strong>End Time:</strong> " + shiftInfo.shifttimeend + "</p></div>";
+
+                    var popupDiv = document.createElement('div');
+                    popupDiv.innerHTML = popupContent;
+                    popupDiv.classList.add('popup', 'draggable');
+
+                    var isDragging = false;
+                    var currentX;
+                    var currentY;
+                    var initialX;
+                    var initialY;
+                    var xOffset = 0;
+                    var yOffset = 0;
+
+                    function dragStart(e) {
+                        initialX = e.clientX - xOffset;
+                        initialY = e.clientY - yOffset;
+                        isDragging = true;
+                    }
+
+                    function dragEnd(e) {
+                        initialX = currentX;
+                        initialY = currentY;
+                        isDragging = false;
+                    }
+
+                    function drag(e) {
+                        if (isDragging) {
+                            e.preventDefault();
+                            currentX = e.clientX - initialX;
+                            currentY = e.clientY - initialY;
+                            setTranslate(currentX, currentY, popupDiv);
+                        }
+                    }
+
+                    function setTranslate(xPos, yPos, el) {
+                        xOffset = xPos;
+                        yOffset = yPos;
+                        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+                    }
+
+                    popupDiv.addEventListener('mousedown', (e) => {
+                        initialX = e.clientX - xOffset;
+                        initialY = e.clientY - yOffset;
+                        isDragging = true;
+                    });
+                    popupDiv.addEventListener('mouseup', dragEnd);
+                    popupDiv.addEventListener('mousemove', drag);
+                    popupDiv.addEventListener('mouseleave', dragEnd);
+
+                    document.body.appendChild(popupDiv);
+
+                    var closeBtn = popupDiv.querySelector('#closeBtn');
+                    closeBtn.addEventListener('click', function() {
+                        popupDiv.remove();
+                    });
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+    <div id="left-panel">
+        <h1>Employee Functions</h1>
+        <ul>
+            <li>
+                <a href="/employee_createLeave">
+                    <img src="img/leave.png" alt="Leave Icon">
+                    <span>Apply For Leave</span>
+                    <button class="tts-button" onclick="speak('Apply For Leave', event)"><img src="img/accessibility.png" alt="Speak"></button>
+                </a>
+            </li>
+            <li>
+                <a href="/empupdatechoose">
+                    <img src="img/update.png" alt="Update Icon">
+                    <span>Update</span>
+                    <button class="tts-button" onclick="speak('Update Info', event)"><img src="img/accessibility.png" alt="Speak"></button>
+                </a>
+            </li>
+            <li>
+                <a href="/employee_viewall">
+                    <img src="img/view_all.png" alt="View All Icon">
+                    <span>View</span>
+                    <button class="tts-button" onclick="speak('View', event)"><img src="img/accessibility.png" alt="Speak"></button>
+                </a>
+            </li>
+            <li>
+                <a href="/employeedeleteleave">
+                    <img src="img/delete.png" alt="Delete Leave Icon">
+                    <span>Delete Leave</span>
+                    <button class="tts-button" onclick="speak('Delete Leave', event)"><img src="img/accessibility.png" alt="Speak"></button>
+                </a>
+            </li>
+            <li>
+                <a href="/employee_clockinout">
+                    <img src="img/clock.png" alt="Clock In/Out Icon">
+                    <span>Clock-in/Clock-out</span>
+                    <button class="tts-button" onclick="speak('Clock-in or Clock-out', event)"><img src="img/accessibility.png" alt="Speak"></button>
+                </a>
+            </li>
+            <li>
+                <a href="/employee_viewnotification">
+                    <img src="img/notification.png" alt="View Notification Icon">
+                    <span>View Notification</span>
+                    <button class="tts-button" onclick="speak('View Notifications', event)"><img src="img/accessibility.png" alt="Speak"></button>
+                </a>
+            </li>
+            <li>
+                <a href="/employeecreatefeedback">
+                    <img src="img/feedback.png" alt="Leave Feedback Icon">
+                    <span>Leave Feedback</span>
+                    <button class="tts-button" onclick="speak('Feedback', event)"><img src="img/accessibility.png" alt="Speak"></button>
+                </a>
+            </li>
+        </ul>
     </div>
+    <div id='calendar'></div>
 </body>
 </html>
-

@@ -14,7 +14,8 @@ app.use(bodyParser.json())
 app.use(session({
     secret:'oHn2mKV567n1m$%^',
     resave:false,
-    saveUninitialized:true
+    saveUninitialized:true,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }))
 app.use(flush())
 
@@ -41,7 +42,32 @@ function getFiles() {
 getFiles()
 
 app.get('/homepage', (req,res) =>{
-    res.render(ssn.userprof + 'Page');
+    if (ssn.userprof =="Employee")
+        {
+            var pythonProcess = spawn('python', ["./ViewCalenderFormatWorkController.py"])
+            pythonProcess.stdout.on('data', (data) => {
+                try {
+                    var shiftsData = JSON.parse(data.toString());
+                    console.log("Shifts data:", shiftsData); // Check the shiftsData here
+                    if (!Array.isArray(shiftsData)) {
+                        shiftsData = []; // Ensure shiftsData is an array
+                    }
+                } catch (error) {
+                    console.log("Error parsing JSON data:", error);
+                    shiftsData = []; // Set empty array if parsing fails
+                }
+                if (shiftsData.length === 0) {
+                    res.render(ssn.userprof + 'Page');
+                } else {
+                    res.render(ssn.userprof + 'Page', { results: shiftsData});
+                }
+            });
+
+        }
+    else
+    {
+        res.render(ssn.userprof + 'Page');
+    }
 })
 
 app.get('/resetpassword', (req,res) =>{
