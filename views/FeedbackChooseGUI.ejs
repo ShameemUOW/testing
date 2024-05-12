@@ -1,37 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/Employee.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/ManagerFC.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <div id="employeepage">
-        <h1 onclick="document.location='/homepage'" style="text-align: center;">Smart Employee Roster</h1>
-    </div>
-    <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
-        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-    </div>
-    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
-    <script>
-        function openNav() {
-            document.getElementById("mySidepanel").style.width = "250px";
-        }
+  <header>
+    <nav>
+      <div class="logo">
+        <h1 onclick="document.location='/homepage'">Smart Employee Roster</h1>
+      </div>
+      <div class="settings-icon" onclick="openNav()">
+        <i class="fas fa-cog"></i>
+      </div>
+    </nav>
+  </header>
 
-        function closeNav() {
-            document.getElementById("mySidepanel").style.width = "0";
-        }
-    </script>
-    <div id="options">
-        <h1>What would you like to do?</h1><br>
+  <div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-times"></i></a>
+    <a href="#" onclick="document.location='/logout'" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
+  </div>
 
-        <div class="container">
-            <table>
-                <td><button id="employee_viewnotification" onclick="document.location='/managercreatefeedback'"><img src=img/feedback.png class="image"><h3>Leave Feedback</h3></button></td>
-                <td><button id="employee_viewnotification" onclick="document.location='/managerviewfeedback'"><img src=img/view_all.png class="image"><h3>View Feedbacks</h3></button></td>
-            </table>
-        </div>
-    </div>
+  <main>
+    <section class="hero">
+      <h1>What would you like to do?</h1>
+    </section>
+
+    <section class="container">
+      <div class="button-grid">
+        <button id="employee_viewnotification" onclick="document.location='/managercreatefeedback'">
+          <img src="img/feedback.png" class="image" alt="Leave Feedback">
+          <h3>Leave Feedback</h3>
+        </button>
+        <button id="employee_viewnotification" onclick="document.location='/managerviewfeedback'">
+          <img src="img/view_all.png" class="image" alt="View Feedbacks">
+          <h3>View Feedbacks</h3>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+    }
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+    }
+  </script>
 </body>
 </html>

@@ -1,39 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/Manager.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/ManagerCreateChoose.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <div id="managerpage">
+  <header>
+    <nav>
+      <div class="logo">
         <h1 onclick="document.location='/homepage'">Manager Homepage</h1>
-    </div>
-    <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
-        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-    </div>
-    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
-    <script>
-        function openNav() {
-            document.getElementById("mySidepanel").style.width = "250px";
-        }
+      </div>
+      <div class="settings-icon" onclick="openNav()">
+        <i class="fas fa-cog"></i>
+      </div>
+    </nav>
+  </header>
 
-        function closeNav() {
-            document.getElementById("mySidepanel").style.width = "0";
-        }
-    </script>
-    <div id="options">
+  <div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-times"></i></a>
+    <a href="#" onclick="document.location='/logout'" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
+  </div>
 
-        <h1>What would you like to create?</h1><br>
+  <main>
+    <section class="hero">
+      <h1>What would you like to create?</h1>
+    </section>
 
-        <div class="container2">
-            <table>
-                <td><button id="manager_createemppref" onclick="document.location='/managercreateemppref'"><img src="img/view_all.png" class="image"><h3>Create Employee Pref</h3></button></td>
-                <td><button id="manager_createwsbutton" onclick="document.location='/manager_createws'"><img src="img/create.png" class="image"><h3>Create WorkShift</h3></button></td>
-                <td><button id="manager_createwsbutton" onclick="document.location='/manager_createwsmutliple'"><img src="img/checklist.png" class="image"><h3>Create Multiple WorkShift</h3></button></td>
-            </table>
-        </div>
-    </div>
+    <section class="container">
+      <div class="button-grid">
+        <button id="manager_createemppref" onclick="document.location='/managercreateemppref'">
+          <img src="img/view_all.png" class="image" alt="Create Employee Pref">
+          <h3>Create Employee Pref</h3>
+        </button>
+        <button id="manager_createwsbutton" onclick="document.location='/manager_createws'">
+          <img src="img/create.png" class="image" alt="Create WorkShift">
+          <h3>Create WorkShift</h3>
+        </button>
+        <button id="manager_createwsbutton" onclick="document.location='/manager_createwsmutliple'">
+          <img src="img/checklist.png" class="image" alt="Create Multiple WorkShift">
+          <h3>Create Multiple WorkShift</h3>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+    }
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+    }
+  </script>
 </body>
 </html>

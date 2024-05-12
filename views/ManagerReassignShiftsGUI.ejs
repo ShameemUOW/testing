@@ -1,51 +1,51 @@
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/Managercreatetable.css">
-    </head>
-    <body>
-        <div id="managerpage">
-            <h1 onclick="document.location='/homepage'" style="text-align: center;">Smart Employee Roster</h1>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/ManagerRAS.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="managerpage">
+    <h1 onclick="document.location='/homepage'">Smart Employee Roster</h1>
+  </div>
+  
+  <div id="mySidepanel" class="sidepanel">
+    <a href="#" onclick="document.location='/logout'">Logout</a>
+    <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+  </div>
+  
+  <button class="openbtn" onclick="toggleNav()">&#9776;</button>
+  
+  <script>
+    function toggleNav() {
+      var sidepanel = document.getElementById("mySidepanel");
+      var openbtn = document.querySelector(".openbtn");
+      
+      if (sidepanel.style.right === "0px") {
+        sidepanel.style.right = "-250px";
+        openbtn.innerHTML = "&#9776;";
+      } else {
+        sidepanel.style.right = "0px";
+        openbtn.innerHTML = "&#10006;";
+      }
+    }
+  </script>
+  
+  <div class="container">
+    <form action="/manager_reassignshifts" method="POST">
+      <div id="options">
+        <h1>Reassign Employee Shifts</h1>
+        <% if(message.length > 0) { %>
+          <div class="message"><%= message %></div>
+        <% } %>
+        <div class="form-group">
+          <input id="employeeid" class="textbox" type="text" name="employeeid" placeholder="Enter Employee ID">
         </div>
-
-        <div id="mySidepanel" class="sidepanel">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-            <a href="#" onclick="document.location='/logout'">Logout</a>
-            <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+        <div class="form-group">
+          <button class="rounded-button" id="button">View Workshifts</button>
         </div>
-        <button class="openbtn" onclick="openNav()"><img src="img/settings.png" class="image1"></button>
-        <script>
-            function openNav() {
-              document.getElementById("mySidepanel").style.width = "250px";
-            }
-            
-            function closeNav() {
-              document.getElementById("mySidepanel").style.width = "0";
-            }
-        </script>
-
-        <div id="backbutton">
-            <button id="back" onclick="document.location='/homepage'"><b>&laquo;back</b></button>
-        </div>
-        <form action = "/manager_reassignshifts" method = "POST">
-            <div id="options">
-                <table class = "creating">
-                    <h1>Reassign Employee Shifts</h1><br>
-                    <% if(message.length>0) {%>
-                        <div><%= message%></div>
-                    <%}%>
-                    <tr>
-                        <td></td>
-                        <td><input id="employeeid" class = "textbox" type="text" name="employeeid" placeholder="Enter Employee ID"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><button class = "rounded-button" id="button"><b>View Workshifts</b></button></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </body>
+      </div>
+    </form>
+  </div>
+</body>
 </html>

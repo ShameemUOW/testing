@@ -1,42 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/Manager.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/ManagerVC.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <div id="managerpage">
+  <header>
+    <nav>
+      <div class="logo">
         <h1 onclick="document.location='/homepage'">Manager Homepage</h1>
-    </div>
-    <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
-        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-    </div>
-    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
-    <script>
-        function openNav() {
-            document.getElementById("mySidepanel").style.width = "250px";
-        }
+      </div>
+      <div class="settings-icon" onclick="openNav()">
+        <i class="fas fa-cog"></i>
+      </div>
+    </nav>
+  </header>
 
-        function closeNav() {
-            document.getElementById("mySidepanel").style.width = "0";
-        }
-    </script>
-    <div id="options">
+  <div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-times"></i></a>
+    <a href="#" onclick="document.location='/logout'" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
+  </div>
 
-        <h1>What would you like to View?</h1><br>
+  <main>
+    <section class="hero">
+      <h1>What would you like to View?</h1>
+    </section>
 
-        <div class="container1">
-            <table>
-                <td><button id="manager_viewattendancebutton" onclick="document.location='/manager_viewattendance'"><img src="img/attendance.png" class="image"><h3>Attendance</h3></button></td>
-                <td><button id="manager_viewemployeeaccounts" onclick="document.location='/managerviewemployeeaccounts'"><img src="img/account.png" class="image"><h3>View Employee Accounts</h3></button></td>
-                <td><button id="manager_viewempleavebutton" onclick="document.location='/manager_viewempleave'"><img src="img/leave.png" class="image"><h3>Employee Leave</h3></button></td>
-                <td><button id="manager_viewallbutton" onclick="document.location='/manager_viewws'"><img src="img/shift.png" class="image"><h3>View Workshift</h3></button></td>
-                <td><button id="manager_viewshiftprefbutton" onclick="document.location='/manager_viewshiftpref'"><img src="img/preference.png" class="image"><h3>View Shift Preference</h3></button></td>
-                <td><button id="manager_viewshiftprefbutton" onclick="document.location='/managerviewemployeeworkshift'"><img src="img/empshift.png" class="image"><h3>View Employee Work Shift</h3></button></td>
-            </table>
-        </div>
-    </div>
+    <section class="container">
+      <div class="button-grid">
+        <button id="manager_viewattendancebutton" onclick="document.location='/manager_viewattendance'">
+          <img src="img/attendance.png" class="image" alt="Attendance">
+          <h3>Attendance</h3>
+        </button>
+        <button id="manager_viewemployeeaccounts" onclick="document.location='/managerviewemployeeaccounts'">
+          <img src="img/account.png" class="image" alt="View Employee Accounts">
+          <h3>View Employee Accounts</h3>
+        </button>
+        <button id="manager_viewempleavebutton" onclick="document.location='/manager_viewempleave'">
+          <img src="img/leave.png" class="image" alt="Employee Leave">
+          <h3>Employee Leave</h3>
+        </button>
+        <button id="manager_viewallbutton" onclick="document.location='/manager_viewws'">
+          <img src="img/shift.png" class="image" alt="View Workshift">
+          <h3>View Workshift</h3>
+        </button>
+        <button id="manager_viewshiftprefbutton" onclick="document.location='/manager_viewshiftpref'">
+          <img src="img/preference.png" class="image" alt="View Shift Preference">
+          <h3>View Shift Preference</h3>
+        </button>
+        <button id="manager_viewshiftprefbutton" onclick="document.location='/managerviewemployeeworkshift'">
+          <img src="img/empshift.png" class="image" alt="View Employee Work Shift">
+          <h3>View Employee Work Shift</h3>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+    }
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+    }
+  </script>
 </body>
 </html>
