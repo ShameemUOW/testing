@@ -86,9 +86,33 @@ class EmployeeShift:
                 """
                 self.mycursor.execute(query, (day_mapping[shift_day_of_week], shift_type, shift_date,shift_date))
                 employees_available = self.mycursor.fetchall()
-                if len(employees_available) < int(num_employees_per_shift):
-                    # If not enough employees available, add to unassigned shifts
-                    unassigned_shifts.append((shift_date, shift_type, (int(num_employees_per_shift) - len(employees_available))))
+                if len(employees_available) == 0:
+                    # No employees available for this shift, add it to unassigned_shifts
+                    unassigned_shifts.append((shift_date, shift_type, num_employees_per_shift))
+                elif len(employees_available) < int(num_employees_per_shift):
+                    needed_employees = int(num_employees_per_shift) - len(employees_available)
+                    if needed_employees > 0:
+                        # Add the shift to unassigned_shifts with the number of needed employees
+                        unassigned_shifts.append((shift_date, shift_type, needed_employees))
+                    # Assign the available employees to the shift
+                    for employee in employees_available:
+                        start_hours = shift_start.seconds // 3600
+                        start_minutes = (shift_start.seconds % 3600) // 60
+                        end_hours = shift_end.seconds // 3600
+                        end_minutes = (shift_end.seconds % 3600) // 60
+                        shift_start_regular = '{:02}:{:02}'.format(start_hours, start_minutes)
+                        shift_end_regular = '{:02}:{:02}'.format(end_hours, end_minutes)
+                        assigned_employees.append((employee[0], employee[1], employee[2], shift_date, shift_type, shift_start_regular, shift_end_regular))
+                        # Insert assigned employee into EmployeeShift table
+                        insert_query = "INSERT INTO EmployeeShift (shiftID, EmployeeID, shiftDate, shiftType) VALUES (%s, %s, %s, %s)"
+                        self.mycursor.execute(insert_query, (shift_id, employee[0], shift_date, shift_type))
+                        notification = NotificationClass.Notification()
+                        self.mycursor.execute("SELECT Email FROM userAccount WHERE EmployeeID = %s", (employee[0],))
+                        employee_email = self.mycursor.fetchone()[0]
+                        notification.send_email_for_ws(employee_email, shift_type, shift_date)
+                        # Update EmployeeShiftInformation table
+                        update_query = "UPDATE EmployeeShiftInformation SET NoOfHrsWorked = NoOfHrsWorked + %s WHERE EmployeeID = %s"
+                        self.mycursor.execute(update_query, (shift_duration, employee[0]))
                 else:
                     assigned_employee_ids = []  # List to keep track of assigned employee IDs
                     while len(assigned_employee_ids) < int(num_employees_per_shift):
