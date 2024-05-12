@@ -1,39 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/Employee.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/ClockinClockout.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="employeepage">
-        <h1 onclick="document.location='/homepage'" style="text-align: center;">Smart Employee Roster</h1>
-    </div>
-    <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
-        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-    </div>
-    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
-    <script>
-        function openNav() {
-            document.getElementById("mySidepanel").style.width = "250px";
-        }
-
-        function closeNav() {
-            document.getElementById("mySidepanel").style.width = "0";
-        }
-    </script>
-    <div id="options">
-        <h1>What would you like to do?</h1><br>
-
-        <div class="container">
-       
-            <h2>Employee Functions</h2>
-            <table>
-                <td><button id="employeeclockin" onclick="document.location='/employeeclockin'"><img src="img/clock-in.png" class="image"><h3>Clock-in</h3></button></td>
-                <td><button id="employeeclockout" onclick="document.location='/employeeclockout'"><img src=img/check-out.png class="image"><h3>Clock-out</h3></button></td>
-            </table>
+  <div id="employeepage">
+    <h1 onclick="document.location='/homepage'" style="text-align: center;">Smart Employee Roster</h1>
+  </div>
+  <div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+    <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
+    <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+  </div>
+  <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
+  <script>
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+    }
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+    }
+    function speak(text) {
+      var utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    }
+  </script>
+  <div id="options">
+    <h1>What would you like to do?</h1><br>
+    <div class="container">
+      <h2>Employee Functions</h2>
+      <div class="card-container">
+        <div class="card">
+          <img src="img/clock-in.png" class="card-image">
+          <div class="card-content">
+            <h3>Clock-in</h3>
+            <button class="tts-btn" onclick="speak('Clock In')"><img src="img/accessibility.png" alt="Speak" style="width: 30px; height: 30px;"></button>
+          </div>
+          <div class="card-link" onclick="document.location='/employeeclockin'"></div>
         </div>
+        <div class="card">
+          <img src="img/check-out.png" class="card-image">
+          <div class="card-content">
+            <h3>Clock-out</h3>
+            <button class="tts-btn" onclick="speak('Clock Out')"><img src="img/accessibility.png" alt="Speak" style="width: 30px; height: 30px;"></button>
+          </div>
+          <div class="card-link" onclick="document.location='/employeeclockout'"></div>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>

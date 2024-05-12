@@ -1,49 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/Employee.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/EmpUpdCho.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="employeepage">
-        <h1 onclick="document.location='/homepage'" style="text-align: center;">Smart Employee Roster</h1>
-    </div>
-    <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
-        <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
-        <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
-    </div>
-    <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
-    <script>
-        function openNav() {
-            document.getElementById("mySidepanel").style.width = "250px";
-        }
-
-        function closeNav() {
-            document.getElementById("mySidepanel").style.width = "0";
-        }
-        function speak(text) {
-            var utterance = new SpeechSynthesisUtterance(text);
-            speechSynthesis.speak(utterance);
-        }
-    </script>
-    <div id="options">
-        <h1>What would you like to Update?</h1><br>
-
-        <div class="container">
-            <table>
-                <tr>
-                    <td><button id="employee_updateleave" onclick="document.location='/updateemployeeaccount'"><img src="img/update.png" class="image"><h3>Personal Info</h3></button></td>
-                    <td><button id="employee_viewaccount" onclick="document.location='/employeeupdateshiftpref'"><img src="img/preference.png" class="image"><h3>Shift Preference</h3></button></td>
-                    <td><button id="employee_viewaccount" onclick="document.location='/employee_updateleave'"><img src="img/leave.png" class="image"><h3>Leave</h3></button></td>
-                </tr>
-                <tr align="center">
-                    <td><button id = "tts" onclick="speak('Update My Information')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
-                    <td><button id = "tts" onclick="speak('Update my Shift preference')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
-                    <td><button id = "tts" onclick="speak('Update My Leave')"><img src="img/accessibility.png" alt="Speak" style="width: 40px; height: 40px;"></button></td>
-                </tr>
-            </table>
+  <div id="employeepage">
+    <h1 onclick="document.location='/homepage'" style="text-align: center;">Smart Employee Roster</h1>
+  </div>
+  <div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">back</a>
+    <a href="#" onclick="document.location='/logout'" id="logout">Logout</a>
+    <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
+  </div>
+  <button class="openbtn" onclick="openNav()" id="settingsbtn"><img src="img/settings.png" class="image1"></button>
+  <script>
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+    }
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+    }
+    function speak(text) {
+      var utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    }
+  </script>
+  <div id="options">
+    <h1>What would you like to Update?</h1><br>
+    <div class="container">
+      <div class="card-container">
+        <div class="card">
+          <img src="img/update.png" class="card-image">
+          <div class="card-content">
+            <h3>Personal Info</h3>
+            <button class="tts-btn" onclick="speak('Update My Information')"><img src="img/accessibility.png" alt="Speak" style="width: 30px; height: 30px;"></button>
+          </div>
+          <div class="card-link" onclick="document.location='/updateemployeeaccount'"></div>
         </div>
+        <div class="card">
+          <img src="img/preference.png" class="card-image">
+          <div class="card-content">
+            <h3>Shift Preference</h3>
+            <button class="tts-btn" onclick="speak('Update my Shift preference')"><img src="img/accessibility.png" alt="Speak" style="width: 30px; height: 30px;"></button>
+          </div>
+          <div class="card-link" onclick="document.location='/employeeupdateshiftpref'"></div>
+        </div>
+        <div class="card">
+          <img src="img/leave.png" class="card-image">
+          <div class="card-content">
+            <h3>Leave</h3>
+            <button class="tts-btn" onclick="speak('Update My Leave')"><img src="img/accessibility.png" alt="Speak" style="width: 30px; height: 30px;"></button>
+          </div>
+          <div class="card-link" onclick="document.location='/employee_updateleave'"></div>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>
