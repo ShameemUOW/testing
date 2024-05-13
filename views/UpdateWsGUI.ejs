@@ -1,73 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/ManagerAccountUpdatenew.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/ManagerAccountUpdatenew.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div id="managerpage">
-            <h1 onclick="document.location='/homepage'">Manager</h1>
-        </div>
-        <div id="mySidepanel" class="sidepanel">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-arrow-left"></i> Back</a>
-            <a href="#" onclick="document.location='/logout'" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
-        </div>
-        <button class="openbtn" onclick="openNav()" id="settingsbtn"><i class="fas fa-cog"></i></button>
-    </header>
-    <main>
-        <div id="options">
-            <h1>Update Work Shift</h1>
-            <div class="container">
-                <form action="/manager_updatews" method="post" id="myFormm">
-                    <% if(message.length > 0) {%>
-                        <div class="message"><%= message%></div>
-                    <%}%>
-                    <div class="form-group">
-                        <label for="id">Work Shift ID:</label>
-                        <input type="text" id="id" name="id" placeholder="Enter Work Shift ID" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="typeVariable">Value:</label>
-                        <input type="text" id="typeVariable" name="value" placeholder="Enter value" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Select Category to Update:</label>
-                        <select class="profile-select" name="selectedoption">
-                            <% myList.forEach(item => {%>
-                                <option value="<%= item%>"><%= item%></option>
-                            <% }); %>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" name="update" class="btn btn-update">Update</button>
-                        <button type="button" name="back" class="btn btn-back" onclick="goBack()">Back</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </main>
-    <script>
-        function openNav() {
-            document.getElementById("mySidepanel").style.width = "250px";
-        }
-        function closeNav() {
-            document.getElementById("mySidepanel").style.width = "0";
-        }
-        function goBack() {
-            window.history.back();
-        }
-        document.getElementById("myFormm").addEventListener("submit", function(event) {
-            var idValue = document.getElementById("id").value;
-            var valueValue = document.getElementById("typeVariable").value;
-            if (idValue.trim() === "" || valueValue.trim() === "") {
-                alert("Please fill in all the required fields.");
-                event.preventDefault();
-            }
-        });
-    </script>
+  <header>
+    <div id="managerpage">
+      <h1 onclick="document.location='/homepage'">Manager</h1>
+    </div>
+    <div id="mySidepanel" class="sidepanel">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-arrow-left"></i> Back</a>
+      <a href="#" onclick="document.location='/logout'" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      <a href="#" onclick="document.location='/resetpassword'"><i class="fas fa-lock"></i> Reset Password</a>
+    </div>
+    <button class="openbtn" onclick="openNav()" id="settingsbtn"><i class="fas fa-cog"></i></button>
+  </header>
+  <main>
+    <div id="options">
+      <h1>Update Work Shift</h1>
+      <div class="container">
+        <form action="/manager_updatews" method="post" id="myFormm">
+          <% if(message.length > 0) {%>
+            <div class="message"><%= message%></div>
+          <%}%>
+          <div class="form-group">
+            <label for="id">Work Shift ID:</label>
+            <input type="text" id="id" name="id" placeholder="Enter Work Shift ID" required>
+          </div>
+          <div class="form-group">
+            <label for="typeVariable">Value:</label>
+            <input type="text" id="typeVariable" name="value" placeholder="Enter value" required>
+          </div>
+          <div class="form-group">
+            <label for="category">Select Category to Update:</label>
+            <select class="profile-select" name="selectedoption" onchange="changeInputType()">
+              <% myList.forEach(item => {%>
+                <option value="<%= item%>"><%= item%></option>
+              <% }); %>
+            </select>
+          </div>
+          <div class="form-group">
+            <button type="submit" name="update" class="btn btn-update">Update</button>
+            <button type="button" name="back" class="btn btn-back" onclick="goBack()">Back</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+  <script>
+    function openNav() {
+      document.getElementById("mySidepanel").style.width = "250px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidepanel").style.width = "0";
+    }
+    
+    function goBack() {
+      window.history.back();
+    }
+    
+    function changeInputType() {
+      var selectElement = document.querySelector('.profile-select');
+      var inputElement = document.getElementById('typeVariable');
+      
+      if (selectElement.value === 'Date') {
+        inputElement.type = 'date';
+      } else if (selectElement.value === 'start' || selectElement.value === 'end') {
+        inputElement.type = 'time';
+      } else {
+        inputElement.type = 'text';
+      }
+    }
+    
+    document.getElementById("myFormm").addEventListener("submit", function(event) {
+      var idValue = document.getElementById("id").value;
+      var valueValue = document.getElementById("typeVariable").value;
+      
+      if (idValue.trim() === "" || valueValue.trim() === "") {
+        alert("Please fill in all the required fields.");
+        event.preventDefault();
+      }
+    });
+  </script>
 </body>
 </html>

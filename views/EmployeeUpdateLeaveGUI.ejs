@@ -25,6 +25,16 @@
     function goBack() {
       window.history.back();
     }
+    function changeInputType() {
+      var selectElement = document.querySelector('.profile-select');
+      var inputElement = document.getElementById('data');
+      
+      if (selectElement.value === 'Date') {
+        inputElement.type = 'date';
+      } else {
+        inputElement.type = 'text';
+      }
+    }
   </script>
   <div class="container">
     <div id="backbutton">
@@ -42,7 +52,8 @@
         </div>
         <div class="form-group">
           <label for="category">Select Category to Update:</label>
-          <select class="profile-select form-control" name="selectedoption">
+          <select class="profile-select form-control" name="selectedoption" onchange="changeInputType()">
+            <option value="" selected disabled>Select an option</option>
             <% myList.forEach(item => { %>
               <option value="<%= item %>"><%= item %></option>
             <% }); %>
@@ -50,7 +61,7 @@
         </div>
         <div class="form-group">
           <label for="data">Type New Information:</label>
-          <input type="text" id="typeVariable" name="value" class="form-control">
+          <input type="text" id="data" name="value" class="form-control">
         </div>
         <div class="form-group">
           <button type="submit" name="update" class="rounded-button">Update</button>
