@@ -1820,12 +1820,15 @@ app.post('/employeeclockin', (req, res) => {
     process.env.TZ = 'Asia/Singapore';
     ssn = req.session
     employeeid = req.session.emlpoyeeidentity
+    // Format the date in the desired format ('dd/mm/yyyy')
+    const formatter = new Intl.DateTimeFormat('en-SG', { day: '2-digit', month: '2-digit', year: 'numeric' });
     const currentDate = new Date().toLocaleDateString()
     const currentTime = new Date().toLocaleTimeString()
     const clockInTime = new Date().toLocaleString()
+    const formattedDate = formatter.format(currentDateObj);
     console.log(currentDate)
     console.log(currentTime)
-    const dataToSend = JSON.stringify({ employeeid, currentDate, currentTime });
+    const dataToSend = JSON.stringify({ employeeid, formattedDate, currentTime });
 
     // Send the current time as a response
     const pythonProcess = spawn('python', ['./EmployeeClockInController.py', dataToSend]);
