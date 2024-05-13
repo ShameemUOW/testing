@@ -2390,7 +2390,7 @@ app.post('/employeedeleteleave', (req,res) =>{
     }
     const jsonObj2 = JSON.stringify(jsonObj)
     console.log(jsonObj2)
-    var pythonProcess = spawn('python',["./ManagerApproveLeaveController.py",jsonObj2])
+    var pythonProcess = spawn('python',["./EmployeeDeleteLeaveController.py",jsonObj2])
     pythonProcess.stdout.on('data',(data)=>{
     var alldata = data.toString().trim()
     console.log(alldata)
