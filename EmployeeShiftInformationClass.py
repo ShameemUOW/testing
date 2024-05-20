@@ -13,7 +13,7 @@ class EmployeeShiftInformation:
         self.mycursor = self.mydb.cursor()
     def grabShiftTypes(self):
         try:
-            self.mycursor.execute("SELECT DISTINCT shiftpref FROM EmployeeShiftInformation;")
+            self.mycursor.execute("SELECT DISTINCT shift FROM workshift;")
             shift_pref_data = self.mycursor.fetchall()
             shift_pref_count = self.mycursor.rowcount
             

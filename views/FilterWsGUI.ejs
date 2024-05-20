@@ -8,30 +8,24 @@
   <div id="managerpage">
     <h1 onclick="document.location='/homepage'">Smart Employee Roster</h1>
   </div>
-  
   <div id="mySidepanel" class="sidepanel">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="#" onclick="document.location='/logout'">Logout</a>
     <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
   </div>
-  
   <button class="openbtn" onclick="openNav()">&#9776;</button>
-  
   <script>
     function openNav() {
       document.getElementById("mySidepanel").style.width = "250px";
     }
-    
     function closeNav() {
       document.getElementById("mySidepanel").style.width = "0";
     }
   </script>
-  
   <div class="container">
     <div id="backbutton">
       <button id="back" onclick="document.location='/homepage'">&laquo; Back</button>
     </div>
-    
     <form action="/manager_filterws" method="POST">
       <div id="options">
         <h1>Filter Work Shift</h1>
@@ -40,7 +34,7 @@
         <% } %>
         <div class="form-group">
           <label for="selectedoption">Select Option:</label>
-          <select class="profile-select" name="selectedoption">
+          <select class="profile-select" name="selectedoption" onchange="updateValueInput()">
             <% myList.forEach(item => { %>
               <option value="<%= item %>"><%= item %></option>
             <% }); %>
@@ -56,5 +50,18 @@
       </div>
     </form>
   </div>
+  <script>
+    function updateValueInput() {
+      var selectedOption = document.querySelector(".profile-select").value;
+      var valueInput = document.getElementById("value");
+      if (selectedOption === "Date") {
+        valueInput.type = "date";
+      } else if (selectedOption === "start" || selectedOption === "end") {
+        valueInput.type = "time";
+      } else {
+        valueInput.type = "text";
+      }
+    }
+  </script>
 </body>
 </html>

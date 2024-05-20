@@ -8,19 +8,15 @@
   <div id="managerpage">
     <h1 onclick="document.location='/homepage'">Manager Page</h1>
   </div>
-  
   <div id="mySidepanel" class="sidepanel">
     <a href="#" onclick="document.location='/logout'">Logout</a>
     <a href="#" onclick="document.location='/resetpassword'">Reset Password</a>
   </div>
-  
   <button class="openbtn" onclick="toggleNav()">&#9776;</button>
-  
   <script>
     function toggleNav() {
       var sidepanel = document.getElementById("mySidepanel");
       var openbtn = document.querySelector(".openbtn");
-      
       if (sidepanel.style.right === "0px") {
         sidepanel.style.right = "-250px";
         openbtn.innerHTML = "&#9776;";
@@ -30,7 +26,6 @@
       }
     }
   </script>
-  
   <div class="container">
     <form action="/managerfilterattendance" method="POST">
       <div id="options">
@@ -40,7 +35,7 @@
         <% } %>
         <div class="form-group">
           <label for="selectedoption">Select Option:</label>
-          <select class="profile-select" name="selectedoption">
+          <select class="profile-select" name="selectedoption" onchange="updateValueInput()">
             <% myList.forEach(item => { %>
               <option value="<%= item %>"><%= item %></option>
             <% }); %>
@@ -56,5 +51,16 @@
       </div>
     </form>
   </div>
+  <script>
+    function updateValueInput() {
+      var selectedOption = document.querySelector(".profile-select").value;
+      var valueInput = document.getElementById("value");
+      if (selectedOption === "Date") {
+        valueInput.type = "date";
+      } else {
+        valueInput.type = "text";
+      }
+    }
+  </script>
 </body>
 </html>
