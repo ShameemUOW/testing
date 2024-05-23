@@ -5,23 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Smart Roster</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background-color: #f8f9fa;
             color: #333;
         }
 
         .header {
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             text-align: center;
-            padding: 2em 0;
+            padding: 3em 0;
             position: relative;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 0.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .header .links {
@@ -32,25 +39,34 @@
 
         .header .links a {
             color: white;
-            margin-left: 1em;
+            margin-left: 1.5em;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .header .links a:hover {
-            color: #18bc9c;
+            background-color: rgba(255, 255, 255, 0.4);
         }
 
         .container {
             max-width: 1200px;
-            margin: 2em auto;
+            margin: 3em auto;
             padding: 0 2em;
         }
 
         .product {
             text-align: center;
-            margin-bottom: 3em;
+            margin-bottom: 4em;
+        }
+
+        .product h2 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 1em;
         }
 
         .product img {
@@ -67,44 +83,61 @@
 
         .product p {
             max-width: 800px;
-            margin: 1em auto;
-            line-height: 1.6;
+            margin: 1.5em auto;
+            line-height: 1.8;
             color: #555;
             text-align: left;
         }
 
         .product ul {
             max-width: 800px;
-            margin: 1em auto;
-            padding-left: 20px;
+            margin: 1.5em auto;
+            padding-left: 30px;
             list-style-type: disc;
             text-align: left;
             color: #555;
         }
 
         .product ul li {
-            margin-bottom: 0.5em;
+            margin-bottom: 0.8em;
         }
 
         .team {
             text-align: center;
+            background-color: #fff;
+            padding: 3em 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .team h2 {
+            font-size: 2.5em;
             margin-bottom: 1.5em;
             color: #2c3e50;
         }
 
+        .team-members {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         .team-member {
-            display: inline-block;
             width: 200px;
-            margin: 1em;
-            vertical-align: top;
-            text-align: center;
+            margin: 1.5em;
+            padding: 1.5em;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
         }
 
         .team-member h3 {
-            margin: 0.5em 0 0.2em;
+            margin: 0.5em 0;
             color: #333;
         }
 
@@ -114,6 +147,10 @@
         }
 
         @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+
             .team-member {
                 width: 100%;
                 margin: 1em 0;
@@ -127,7 +164,7 @@
     <div class="header">
         <h1>Employee Smart Roster</h1>
         <div class="links">
-            <a href="/logingui" >Back To Home</a>
+            <a href="/logingui">Back To Home</a>
             <a href="https://github.com/ShameemUOW/testing/" target="_blank">GitHub</a>
             <a href="https://drive.google.com/drive/folders/12o7cr4gPyqtToUXmFGkS9avUj74S24Ff?usp=drive_link" target="_blank">Google Drive</a>
         </div>
@@ -160,20 +197,27 @@
 
         <div class="team">
             <h2>Meet Our Team</h2>
-            <div class="team-member">
-                <h3>Muhammad Danial bin Sharudin</h3>
-            </div>
-            <div class="team-member">
-                <h3>Oh Hwee Xin</h3>
-            </div>
-            <div class="team-member">
-                <h3>Ong Yi Peng</h3>    
-            </div>
-            <div class="team-member">
-                <h3>Seow Jiahao, Larence</h3>
-            </div>
-            <div class="team-member">
-                <h3>Shaik Dawood Shameem Ahamed</h3>
+            <div class="team-members">
+                <div class="team-member">
+                    <h3>Muhammad Danial bin Sharudin</h3>
+                    sharudin002@mymail.sim.edu.sg
+                </div>
+                <div class="team-member">
+                    <h3>Oh Hwee Xin</h3>
+                    <p>hxoh002@mymail.sim.edu.sg</p>
+                </div>
+                <div class="team-member">
+                    <h3>Ong Yi Peng</h3>
+                    <p>ypong008@mymail.sim.edu.sg</p>    
+                </div>
+                <div class="team-member">
+                    <h3>Seow Jiahao, Larence</h3>
+                    <p>jlseow001@mymail.sim.edu.sg</p>
+                </div>
+                <div class="team-member">
+                    <h3>Shaik Dawood Shameem Ahamed</h3>
+                    <p>shaikdsa001@mymail.sim.edu.sg</p>
+                </div>
             </div>
         </div>
     </div>
