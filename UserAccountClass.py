@@ -247,6 +247,10 @@ class UserAccount:
     def updateManagerAccount(self,employeeid,selectedoption,value):
         try:
             self.mycursor.execute("UPDATE userAccount SET {} = '{}' where employeeid = {}".format(selectedoption,value,employeeid))
+            self.mycursor.execute("select EmployeeID from ManagerInCharge")
+            result = self.mycursor.fetchall()[0]
+            if result and selectedoption == "Email":
+                self.mycursor.execute("UPDATE ManagerInCharge SET Email = '{}' where employeeid = {}".format(value,employeeid))
             self.mydb.commit()
             print("Success")
             self.HashPlainPasswords()
