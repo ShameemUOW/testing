@@ -74,6 +74,19 @@ app.get('/resetpassword', (req,res) =>{
     res.render('ResetPassword', {username : ssn.username});
 })
 
+app.get('/submodel', (req,res) =>{
+    res.render('subsciprtionmode');
+})
+
+app.get('/abtus', (req,res) =>{
+    res.render('aboutus');
+})
+
+app.get('/features', (req,res) =>{
+    res.render('featuresgui');
+})
+
+
 app.get('/createmanagerchoose', (req,res) =>{
     res.render('ManagerCreateChooseGUI');
 })

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Background</title>
+    <link rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        nav {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            color: #fff;
+            background-color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        p {
+            font-size: 1.2em;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .feature {
+            background: #f4f4f4;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #764ba2;
+        }
+
+        .feature p {
+            margin-bottom: 20px;
+        }
+
+        .feature-images {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .feature-images img {
+            width: 45%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Project Background</h1>
+        <nav>
+            <ul>
+                <li><a href="/logingui">Home</a></li>
+                <li><a href="/abtus">About Us</a></li>
+                <li><a href="/submodel">Subscription</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <h2>Our Purpose</h2>
+            <p>Deliver solutions to businesses struggling with employee management by streamlining critical processes.</p>
+        </section>
+
+        <section class="section">
+            <h2>Target Audience</h2>
+            <p>Our product is primarily targeted at businesses looking for software to manage employee rostering in a simple, flexible, and user-friendly way. We have equipped our product with many customization features to account for all different kinds of businesses.</p>
+        </section>
+
+        <section class="section">
+            <h2>Technology Stack</h2>
+            <p>We utilize the Node.js and Python ecosystems, with our codebase hosted on GitHub. Node.js handles API calls, Python manages data processing, and both interact seamlessly with our MySQL database on Clever Cloud, all deployed through Render, ensuring a seamless and efficient workflow. Development is carried out using Visual Studio Code.</p>
+        </section>
+
+        <section class="section">
+            <h2>Why Us?</h2>
+            <p>Our application provides a simple and straightforward user experience, specifically designed to aid non-tech-savvy individuals. Unlike other complex solutions, it appeals to all kinds of businesses by streamlining the scheduling process and minimizing manual effort. Additionally, our customizable options offer flexible customization to meet diverse needs.</p>
+        </section>
+
+        <section class="section">
+            <h2>Features</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>Create Feedback Form</h3>
+                    <p>Employees and managers can create feedback.</p>
+                    <div class="feature-images">
+                        <img src="img/feedbackview.png" alt="Create Feedback Form Image 1">
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <h3>View Feedback Form</h3>
+                    <p>Admins and managers can view feedback.</p>
+                    <div class="feature-images">
+                        <img src="img/viewfeedback2.png" alt="View Feedback Form Image 1">
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <h3>Real-Time Updates</h3>
+                    <p>Employees can receive notifications on Gmail and on the application about their new shifts or leave updates.</p>
+                    <div class="feature-images">
+                        <img src="img/viewnotif.png" alt="Real-Time Updates Image 1">
+                        <img src="img/emailupdate.png" alt="Real-Time Updates Image 2">
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <h3>Clock-in or Clock-out with QR Reader</h3>
+                    <p>Employees can show the QR reader their QR to clock in or out.</p>
+                    <div class="feature-images">
+                        <img src="img/qrcodescannerimg.png" alt="QR Reader Image 1">
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <h3>View Employee Shifts in Calendar Mode</h3>
+                    <p>Managers and Employees can view their shifts in calendar mode.</p>
+                    <div class="feature-images">
+                        <img src="img/viewempshift2.png" alt="Calendar Mode Image 1">
+                        <img src="img/viewempshift.png" alt="Calendar Mode Image 2">
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <h3>Shift Flexibility</h3>
+                    <p>Managers and Employees can choose and update the days they prefer to work. Managers can create a work shift and have reference to local holiday dates.</p>
+                    <div class="feature-images">
+                        <img src="img/createwsimg.png" alt="Shift Flexibility Image 1">
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <h3>Auto-assignment</h3>
+                    <p>Managers can choose start and end dates, and the number of employees to auto-assign. Upon auto-assigning, they can view unassigned shifts too.</p>
+                    <div class="feature-images">
+                        <img src="img/aaimg.png" alt="Auto-assignment Image 1">
+                        <img src="img/aaimg2.png" alt="Auto-assignment Image 2">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
