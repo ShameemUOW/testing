@@ -19,32 +19,32 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             text-align: center;
-            padding: 3em 0;
+            padding: 4em 0;
             position: relative;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
         }
 
         .header h1 {
-            font-size: 3em;
+            font-size: 3.5em;
             margin-bottom: 0.5em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .header .links {
             position: absolute;
-            top: 1.5em;
-            right: 1.5em;
+            top: 2em;
+            right: 2em;
         }
 
         .header .links a {
             color: white;
-            margin-left: 1.5em;
+            margin-left: 2em;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
-            padding: 0.5em 1em;
-            border-radius: 5px;
+            padding: 0.7em 1.5em;
+            border-radius: 30px;
             background-color: rgba(255, 255, 255, 0.2);
         }
 
@@ -54,26 +54,27 @@
 
         .container {
             max-width: 1200px;
-            margin: 3em auto;
+            margin: 4em auto;
             padding: 0 2em;
         }
 
         .product {
             text-align: center;
-            margin-bottom: 4em;
+            margin-bottom: 5em;
         }
 
         .product h2 {
-            font-size: 2.5em;
+            font-size: 3em;
             color: #2c3e50;
             margin-bottom: 1em;
+            text-transform: uppercase;
         }
 
         .product img {
             max-width: 100%;
             height: auto;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
         }
 
@@ -83,37 +84,52 @@
 
         .product p {
             max-width: 800px;
-            margin: 1.5em auto;
-            line-height: 1.8;
+            margin: 2em auto;
+            line-height: 2;
             color: #555;
             text-align: left;
         }
 
         .product ul {
             max-width: 800px;
-            margin: 1.5em auto;
-            padding-left: 30px;
+            margin: 2em auto;
+            padding-left: 40px;
             list-style-type: disc;
             text-align: left;
             color: #555;
         }
 
         .product ul li {
-            margin-bottom: 0.8em;
+            margin-bottom: 1em;
         }
 
         .team {
             text-align: center;
             background-color: #fff;
-            padding: 3em 0;
+            padding: 4em 0;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            z-index: -1;
+            transform: rotate(2deg);
         }
 
         .team h2 {
-            font-size: 2.5em;
+            font-size: 3em;
             margin-bottom: 1.5em;
             color: #2c3e50;
+            text-transform: uppercase;
         }
 
         .team-members {
@@ -123,22 +139,24 @@
         }
 
         .team-member {
-            width: 200px;
-            margin: 1.5em;
-            padding: 1.5em;
+            width: 250px;
+            margin: 2em;
+            padding: 2em;
             background-color: #f8f9fa;
             border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
+            text-align: center;
         }
 
         .team-member:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
         }
 
         .team-member h3 {
-            margin: 0.5em 0;
+            margin: 1em 0;
             color: #333;
+            font-size: 1.5em;
         }
 
         .team-member p {
@@ -153,7 +171,7 @@
 
             .team-member {
                 width: 100%;
-                margin: 1em 0;
+                margin: 1.5em 0;
             }
         }
     </style>
@@ -200,7 +218,7 @@
             <div class="team-members">
                 <div class="team-member">
                     <h3>Muhammad Danial bin Sharudin</h3>
-                    sharudin002@mymail.sim.edu.sg
+                    <p>sharudin002@mymail.sim.edu.sg</p>
                 </div>
                 <div class="team-member">
                     <h3>Oh Hwee Xin</h3>
