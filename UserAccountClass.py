@@ -99,6 +99,10 @@ class UserAccount:
             if (result == 'Manager'):
                 try:
                     self.mycursor.execute("update userAccount SET {} = '{}' where employeeid = '{}'".format(selectedoption,value,employeeid))
+                    self.mycursor.execute("select EmployeeID from ManagerInCharge")
+                    result = self.mycursor.fetchone()[0]
+                    if int(result) == int(employeeid) and selectedoption == "Email":
+                        self.mycursor.execute("UPDATE ManagerInCharge SET Email = '{}' where employeeid = {}".format(value,employeeid))
                     self.mydb.commit()
                     print("Success")
                     self.HashPlainPasswords()
@@ -248,8 +252,8 @@ class UserAccount:
         try:
             self.mycursor.execute("UPDATE userAccount SET {} = '{}' where employeeid = {}".format(selectedoption,value,employeeid))
             self.mycursor.execute("select EmployeeID from ManagerInCharge")
-            result = self.mycursor.fetchall()[0]
-            if result and selectedoption == "Email":
+            result = self.mycursor.fetchone()[0]
+            if int(result) == int(employeeid) and selectedoption == "Email":
                 self.mycursor.execute("UPDATE ManagerInCharge SET Email = '{}' where employeeid = {}".format(value,employeeid))
             self.mydb.commit()
             print("Success")
